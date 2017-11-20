@@ -13,7 +13,8 @@ namespace FormsAppTelenav
         {
             InitializeComponent();
 
-            MainPage = new FormsAppTelenav.MainPage();
+            MainPage = new NavigationPage(new FormsAppTelenav.Views.MainView());
+
         }
 
         protected override void OnStart()

@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FormsAppTelenav.Views.MainView"
+             BackgroundColor="AliceBlue">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Credit cost"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" />
+            <Entry 
+                x:Name="CostEntry"
+                Text="" />
+            <Label 
+                Text="Duration in months"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"/>
+            <Entry
+                x:Name="DurationEntry"
+                Text=""
+                />
+            <Label 
+                Text="Total interest in %"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"/>
+            <Entry 
+                x:Name="InterestEntry"
+                Text=""
+               />
+            <Button
+                Text="Analyze credit"
+                Clicked="ShowCreditButton_Clicked"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
