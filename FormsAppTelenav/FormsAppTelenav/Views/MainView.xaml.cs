@@ -16,54 +16,23 @@ namespace FormsAppTelenav.Views
         public MainView()
         {
             InitializeComponent();
+            BindingContext = credit;
         }
 
-        private static Credit credit;
+        public Credit credit = new Credit();
 
         private void ShowCreditButton_Clicked(object sender, EventArgs e)
         {
-            string cost = CostEntry.Text;
-            string duration = DurationEntry.Text;
-            string interest = InterestEntry.Text;
-
-            int i;
-            double d;
-            bool result1 = double.TryParse(CostEntry.Text, out d);
-            bool result2 = int.TryParse(DurationEntry.Text, out i);
-            bool result3 = double.TryParse(InterestEntry.Text, out d);
-            if (result1 && result2 && result3)
-            {
-                credit = new Credit(cost, duration, interest);
-                Navigation.PushAsync(new CreditView());
-            }
-            else
-            {
-                DisplayAlert("Wrong credintials", "", "OK");
-            }
-           
+            var creditView = new CreditView();
+            creditView.BindingContext = credit;
+            Navigation.PushAsync(creditView);
         }
 
-        public static Credit GetCredit()
+        public Credit GetCredit()
         {
             return credit;
         }
 
-        public static List<CreditForCustomRow> GetCreditForCustomRow()
-        {
-            List<CreditForCustomRow> credits = new List<CreditForCustomRow>();
-            for (int i = 1; i <= credit.GetCreditDuration(); i++)
-            {
-                double cost;
-                int currentMonth, monthsRemaining;
-                string auxDuration = credit.GetCreditDuration().ToString();
-                double DAuxDuration = Double.Parse(auxDuration);
-                cost = credit.GetCreditCost() / DAuxDuration;
-                cost += ((credit.GetCreditInterest() / 100) * credit.GetCreditCost()) / DAuxDuration;
-                currentMonth = i;
-                monthsRemaining = credit.GetCreditDuration() - i;
-                credits.Add(new CreditForCustomRow(cost, currentMonth, monthsRemaining));
-            }
-            return credits;
-        }
+
     }
 }

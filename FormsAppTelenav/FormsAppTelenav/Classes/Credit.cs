@@ -1,57 +1,92 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ComponentModel;
+using Xamarin.Forms;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace FormsAppTelenav.Classes
 {
-    public class Credit
+    public class Credit : INotifyPropertyChanged
     {
         private double creditCost;
         private int creditDuration;
+        private List<CreditForCustomRow> payments = new List<CreditForCustomRow>();
         private double creditInterest;
-
-        public Credit(string x_creditCost, string x_creditDuration, string x_creditInterest)
-        {
-            double aux1 = Double.Parse(x_creditCost);
-            int aux2 = int.Parse(x_creditDuration);
-            double aux3 = Double.Parse(x_creditInterest);
-            SetCreditCost(aux1);
-            SetCreditDuration(aux2);
-            SetCreditInterest(aux3);
-
+        public event PropertyChangedEventHandler PropertyChanged;
+        public Credit() {
+            
         }
 
-        public void SetCreditCost(double creditCost)
+        protected void RecomputePayments()
         {
-            this.creditCost = creditCost;
+            payments.Clear();
+            for (int i = 1; i <= creditDuration; i++)
+            {
+                double cost;
+                int currentMonth, monthsRemaining;
+                string auxDuration = creditDuration.ToString();
+                double DAuxDuration = Double.Parse(auxDuration);
+                cost = creditCost / DAuxDuration;
+                cost += ((creditInterest / 100) * creditCost) / DAuxDuration;
+                currentMonth = i;
+                monthsRemaining = creditDuration - i;
+                payments.Add(new CreditForCustomRow(cost, currentMonth, monthsRemaining));
+            }
         }
 
-        public void SetCreditDuration(int creditDuration)
-        {
-            this.creditDuration = creditDuration;
+
+        public List<CreditForCustomRow> Payments{
+            set { payments = value;  }
+            get { return payments; }
         }
 
-        public void SetCreditInterest(double creditInterest)
+        public double Cost
         {
-            this.creditInterest = creditInterest;
+            set {
+                if (creditCost != value)
+                {
+                    creditCost = value;
+                    if (PropertyChanged != null)
+                    {
+                        PropertyChanged(this, new PropertyChangedEventArgs("Cost"));
+                    }
+
+                    RecomputePayments();
+                }
+                 
+            }
+            get { return creditCost; }
         }
 
-        public double GetCreditCost()
-        {
-            return creditCost;
+        public int Duration {
+
+            set {
+                if (creditDuration != value) {
+                    creditDuration = value;
+                    if (PropertyChanged != null){
+                        PropertyChanged(this, new PropertyChangedEventArgs("Duration"));
+                    }
+                    RecomputePayments();
+                }
+            }
+            get { return creditDuration;  }
+        } 
+
+        public double Interest {
+            set {
+                if (creditInterest != value) {
+                    creditInterest = value;
+                    if (PropertyChanged != null){
+                        PropertyChanged(this, new PropertyChangedEventArgs("Interest"));
+                    }
+                    RecomputePayments();
+                }
+            }
+            get { return creditInterest;  }
         }
 
-        public int GetCreditDuration()
-        {
-            return creditDuration;
-        }
-
-        public double GetCreditInterest()
-        {
-            return creditInterest;
-        }
 
     }
 }

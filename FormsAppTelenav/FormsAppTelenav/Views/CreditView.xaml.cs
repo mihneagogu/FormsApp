@@ -14,9 +14,8 @@ namespace FormsAppTelenav.Views
     {
         public CreditView()
         {
-            // sssss
+
             InitializeComponent();
-            creditListView.ItemsSource = MainView.GetCreditForCustomRow();
 
         }
 

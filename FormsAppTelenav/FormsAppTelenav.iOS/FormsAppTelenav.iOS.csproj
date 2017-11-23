@@ -136,7 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FormsAppTelenav\FormsAppTelenav.csproj">
-      <Project>{384f200b-b07a-4f6e-844d-3931fa126181}</Project>
+      <Project>{D55C80E1-7A45-492D-9804-6FDE72A47A9C}</Project>
       <Name>FormsAppTelenav</Name>
     </ProjectReference>
   </ItemGroup>
