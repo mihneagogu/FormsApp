@@ -1,14 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="FormsAppTelenav.Views.MainView" BackgroundColor="AliceBlue">
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FormsAppTelenav.Views.MainView">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Credit cost" VerticalOptions="Center" HorizontalOptions="Center" />
-            <Entry x:Name="CostEntry" Keyboard="Numeric" Text="{Binding Cost, Mode=TwoWay}" />
-            <Label Text="Duration in months" VerticalOptions="Center" HorizontalOptions="Center" />
-            <Entry x:Name="DurationEntry" Keyboard="Numeric" Text="{Binding Duration, Mode=TwoWay}" />
-            <Label Text="Total interest in %" HorizontalOptions="Center" VerticalOptions="Center" />
-            <Entry Keyboard="Numeric" x:Name="InterestEntry" Text="{Binding Interest, Mode=TwoWay}" />
-            <Button Text="Analyze credit" Clicked="ShowCreditButton_Clicked" />
+            <Label Text="{Binding MoneyStatement, Mode=TwoWay}"
+                   HorizontalOptions='Center'/>
+            <Button 
+                Text="Go to the bank"
+                Clicked="ToBank_Clicked"
+                />
+            <Button 
+                Text="Buy and check auctions"
+                Clicked="ToAuctions_Clicked"
+                />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

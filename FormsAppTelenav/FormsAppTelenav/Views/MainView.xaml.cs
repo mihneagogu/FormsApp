@@ -13,26 +13,27 @@ namespace FormsAppTelenav.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainView : ContentPage
     {
+        private Person person = new Person("User1", 2520.5);
+        
+
         public MainView()
         {
             InitializeComponent();
-            BindingContext = credit;
+            BindingContext = new Person("User1", 2520.5);
         }
 
-        public Credit credit = new Credit();
-
-        private void ShowCreditButton_Clicked(object sender, EventArgs e)
+        private void ToBank_Clicked(object sender, EventArgs e)
         {
-            var creditView = new CreditView();
-            creditView.BindingContext = credit;
-            Navigation.PushAsync(creditView);
+            BankView bankView = new BankView();
+            person.MonthlyIncome = 1000;
+            bankView.BindingContext = person;
+            Navigation.PushAsync(bankView);
         }
 
-        public Credit GetCredit()
+        private void ToAuctions_Clicked(object sender, EventArgs e)
         {
-            return credit;
+            AuctionView auctionView = new AuctionView();
+            Navigation.PushAsync(auctionView);
         }
-
-
     }
 }
