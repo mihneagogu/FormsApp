@@ -10,14 +10,11 @@ namespace FormsAppTelenav.Classes
 {
     public class Credit : INotifyPropertyChanged
     {
-        private double doubleCreditCost;
-        private string creditCost;
+        private Nullable<Double> doubleCreditCost = null;
         private int intCreditDuration;
-        private string creditDuration;
         private double buyerMonthlyIncome;
         private List<CreditForCustomRow> payments = new List<CreditForCustomRow>();
-        private double doubleCreditInterest;
-        private string creditInterest;
+        private double doubleCreditInterest; 
         private string affordableCredit = "OK";
         public event PropertyChangedEventHandler PropertyChanged;
         
@@ -34,8 +31,8 @@ namespace FormsAppTelenav.Classes
                 int currentMonth, monthsRemaining;
                 string auxDuration = intCreditDuration.ToString();
                 double DAuxDuration = Double.Parse(auxDuration);
-                cost = doubleCreditCost / DAuxDuration;
-                cost += ((doubleCreditInterest / 100) * doubleCreditCost) / DAuxDuration;
+                cost = doubleCreditCost.Value / DAuxDuration;
+                cost += ((doubleCreditInterest / 100) * doubleCreditCost.Value) / DAuxDuration;
                 currentMonth = i;
                 monthsRemaining = intCreditDuration - i;
                 payments.Add(new CreditForCustomRow(cost, currentMonth, monthsRemaining));
@@ -48,7 +45,7 @@ namespace FormsAppTelenav.Classes
             get { return payments; }
         }
 
-        public double Cost
+        public Nullable<Double> Cost
         {
             set {
                 if (doubleCreditCost != value)
@@ -59,8 +56,11 @@ namespace FormsAppTelenav.Classes
 
                         PropertyChanged(this, new PropertyChangedEventArgs("Cost"));
                     }
-                    CheckAffordability();
-                    RecomputePayments();
+                    if (value != null)
+                    {
+                        CheckAffordability();
+                        RecomputePayments();
+                    }
                 }
                  
             }

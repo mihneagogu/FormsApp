@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 using Xamarin.Forms;
@@ -11,6 +12,8 @@ namespace FormsAppTelenav
     {
         public App()
         {
+            
+
             InitializeComponent();
 
             MainPage = new NavigationPage(new FormsAppTelenav.Views.MainView());

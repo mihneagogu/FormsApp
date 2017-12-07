@@ -3,7 +3,7 @@
     <ContentPage.Content>
         <StackLayout>
             <Label Text="Credit cost" VerticalOptions="Center" HorizontalOptions="Center" />
-            <Entry x:Name="CostEntry" Text="{Binding Cost, Mode=TwoWay}"/>
+            <Entry x:Name="CostEntry" Text="{Binding Cost, Mode=TwoWay, Converter={StaticResource doubleIntCnv}}" />
             <Label Text="Duration in months" VerticalOptions="Center" HorizontalOptions="Center" />
             <Entry x:Name="DurationEntry" Text="{Binding Duration, Mode=TwoWay}" />
             <Label Text="Total interest in %" HorizontalOptions="Center" VerticalOptions="Center" />
