@@ -6,7 +6,7 @@
         <StackLayout>
             <Label Text="{Binding MoneyStatement}" HorizontalOptions="Center"/>
             <Button Text="Buy a credit"
-                    Clicked="ToMainView_Clicked"/>
+                    Clicked="ToCredit_Clicked"/>
             <Label Text="{Binding ExpensesToPay}" HorizontalOptions="Center"/>
             <Label Text="{Binding MonthlyIncomeStatement}" HorizontalOptions="Center"/>
         </StackLayout>

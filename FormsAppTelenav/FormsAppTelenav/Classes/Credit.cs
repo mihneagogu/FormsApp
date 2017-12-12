@@ -14,7 +14,7 @@ namespace FormsAppTelenav.Classes
         private int intCreditDuration;
         private double buyerMonthlyIncome;
         private List<CreditForCustomRow> payments = new List<CreditForCustomRow>();
-        private double doubleCreditInterest; 
+        private Nullable<Double> doubleCreditInterest; 
         private string affordableCredit = "OK";
         public event PropertyChangedEventHandler PropertyChanged;
         
@@ -32,9 +32,9 @@ namespace FormsAppTelenav.Classes
                 string auxDuration = intCreditDuration.ToString();
                 double DAuxDuration = Double.Parse(auxDuration);
                 cost = doubleCreditCost.Value / DAuxDuration;
-                cost += ((doubleCreditInterest / 100) * doubleCreditCost.Value) / DAuxDuration;
+                cost += ((doubleCreditInterest.Value / 100) * doubleCreditCost.Value) / DAuxDuration;
                 currentMonth = i;
-                monthsRemaining = intCreditDuration - i;
+                monthsRemaining = Int32.Parse((intCreditDuration - i).ToString());
                 payments.Add(new CreditForCustomRow(cost, currentMonth, monthsRemaining));
             }
         }
@@ -71,28 +71,34 @@ namespace FormsAppTelenav.Classes
 
             set {
                 if (intCreditDuration != value) {
-                    //creditDuration = value;
+                    
                     intCreditDuration = value;
                     if (PropertyChanged != null){
                         PropertyChanged(this, new PropertyChangedEventArgs("Duration"));
                     }
-                    CheckAffordability();
-                    RecomputePayments();
+                    
+                   
+                        CheckAffordability();
+                        RecomputePayments();
+                   
                 }
             }
             get { return intCreditDuration;  }
         } 
 
-        public double Interest {
+        public Nullable<Double> Interest {
             set {
                 if (doubleCreditInterest != value) {
-                   //creditInterest = value;
+                  
                     doubleCreditInterest = value;
                     if (PropertyChanged != null){
                         PropertyChanged(this, new PropertyChangedEventArgs("Interest"));
                     }
-                    CheckAffordability();
-                    RecomputePayments();
+                    if (value != null)
+                    {
+                        CheckAffordability();
+                        RecomputePayments();
+                    }
                 }
             }
             get { return doubleCreditInterest;  }

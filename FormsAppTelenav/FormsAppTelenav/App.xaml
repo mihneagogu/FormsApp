@@ -5,9 +5,10 @@
              x:Class="FormsAppTelenav.App">
 	<Application.Resources>
 
-		<ResourceDictionary>
-            <local:DoubleStringConverter x:Key="doubleIntCnv" />
+        <ResourceDictionary>
+            <local:DoubleStringConverter x:Key="doubleStringCnv" />
+        
         </ResourceDictionary>
-
-	</Application.Resources>
+    </Application.Resources>
+    
 </Application>

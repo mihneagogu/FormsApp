@@ -1,36 +1,36 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace FormsAppTelenav.Classes
 {
-    public class DoubleStringConverter : Xamarin.Forms.IValueConverter
+    public class IntStringConverter : Xamarin.Forms.IValueConverter
     {
-
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null){
+            if (value == null)
+            {
                 return "";
             }
-            if (value is double) {
+            if (value is int)
+            {
                 return value.ToString();
             }
             return value;
-
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value.Equals("")){
+            if (value.Equals(""))
+            {
                 return null;
             }
-            double number;
-            bool canConvert = Double.TryParse(value.ToString(), out number);
-            if (canConvert)
+            if (value is string)
             {
-                if (value is string)
-                {
-                    return Double.Parse(value.ToString());
-                }
+                return Int32.Parse(value.ToString());
             }
             return value;
         }

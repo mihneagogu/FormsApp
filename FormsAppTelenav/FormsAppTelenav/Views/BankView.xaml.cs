@@ -19,7 +19,7 @@ namespace FormsAppTelenav.Views
 			InitializeComponent ();
 		}
 
-        private void ToMainView_Clicked(object sender, EventArgs e)
+        private void ToCreditView_Clicked(object sender, EventArgs e)
         {
             CreditView creditView = new CreditView();
             Navigation.PushAsync(creditView);
