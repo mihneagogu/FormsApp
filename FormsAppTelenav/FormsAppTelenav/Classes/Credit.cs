@@ -6,48 +6,59 @@ using Xamarin.Forms;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace FormsAppTelenav.Classes
 {
     public class Credit : INotifyPropertyChanged
     {
         private Nullable<Double> doubleCreditCost = null;
-        private int intCreditDuration;
+        private Nullable<Double> doubleCreditDuration;
         private double buyerMonthlyIncome;
         private List<CreditForCustomRow> payments = new List<CreditForCustomRow>();
-        private Nullable<Double> doubleCreditInterest; 
+        private Nullable<Double> doubleCreditInterest;
         private string affordableCredit = "OK";
         public event PropertyChangedEventHandler PropertyChanged;
-        
-        public Credit() {
-            
+        private string KEY_COST_CHANGED = "Cost";
+        private string KEY_DURATION_CHANGED = "Duration";
+        private string KEY_INTEREST_CHANGED = "Interest";
+
+
+
+        public Credit()
+        {
+
         }
 
         protected void RecomputePayments()
         {
             payments.Clear();
-            for (int i = 1; i <= intCreditDuration; i++)
+            for (int i = 1; i <= doubleCreditDuration; i++)
             {
                 double cost;
                 int currentMonth, monthsRemaining;
-                string auxDuration = intCreditDuration.ToString();
+                string auxDuration = doubleCreditDuration.Value.ToString();
                 double DAuxDuration = Double.Parse(auxDuration);
                 cost = doubleCreditCost.Value / DAuxDuration;
                 cost += ((doubleCreditInterest.Value / 100) * doubleCreditCost.Value) / DAuxDuration;
                 currentMonth = i;
-                monthsRemaining = Int32.Parse((intCreditDuration - i).ToString());
+                string auxMonthsRemaining = (doubleCreditDuration.Value - i).ToString();
+                monthsRemaining = int.Parse(auxMonthsRemaining);
                 payments.Add(new CreditForCustomRow(cost, currentMonth, monthsRemaining));
             }
         }
 
 
-        public List<CreditForCustomRow> Payments{
-            set { payments = value;  }
+        public List<CreditForCustomRow> Payments
+        {
+            set { payments = value; }
             get { return payments; }
         }
 
         public Nullable<Double> Cost
         {
-            set {
+            set
+            {
+                //ChangeNotify changedNotif = new ChangeNotify(KEY_COST_CHANGED, doubleCreditCost, value, PropertyChanged, this);
                 if (doubleCreditCost != value)
                 {
                     doubleCreditCost = value;
@@ -56,72 +67,86 @@ namespace FormsAppTelenav.Classes
 
                         PropertyChanged(this, new PropertyChangedEventArgs("Cost"));
                     }
-                    if (value != null)
+                    if (value != null && doubleCreditInterest != null && doubleCreditDuration != null)
                     {
                         CheckAffordability();
                         RecomputePayments();
                     }
                 }
-                 
+
             }
-            get { return doubleCreditCost;  }
+
+            get { return doubleCreditCost; }
         }
 
-        public int Duration {
+        public Nullable<Double> Duration
+        {
 
-            set {
-                if (intCreditDuration != value) {
-                    
-                    intCreditDuration = value;
-                    if (PropertyChanged != null){
+            set
+            {
+                if (doubleCreditDuration != value)
+                {
+
+                    doubleCreditDuration = value;
+                    if (PropertyChanged != null)
+                    {
                         PropertyChanged(this, new PropertyChangedEventArgs("Duration"));
                     }
-                    
-                   
+                    if (value != null && doubleCreditInterest != null && doubleCreditCost != null)
+                    {
                         CheckAffordability();
                         RecomputePayments();
-                   
+                    }
+
                 }
             }
-            get { return intCreditDuration;  }
-        } 
+            get { return doubleCreditDuration; }
+        }
 
-        public Nullable<Double> Interest {
-            set {
-                if (doubleCreditInterest != value) {
-                  
+        public Nullable<Double> Interest
+        {
+            set
+            {
+                if (doubleCreditInterest != value)
+                {
+
                     doubleCreditInterest = value;
-                    if (PropertyChanged != null){
+                    if (PropertyChanged != null)
+                    {
                         PropertyChanged(this, new PropertyChangedEventArgs("Interest"));
                     }
-                    if (value != null)
+                    if (value != null && doubleCreditCost != null && doubleCreditDuration != null)
                     {
                         CheckAffordability();
                         RecomputePayments();
                     }
                 }
             }
-            get { return doubleCreditInterest;  }
+            get { return doubleCreditInterest; }
         }
 
         public double BuyerMonthlyIncome
         {
             set { buyerMonthlyIncome = value; }
             get { return buyerMonthlyIncome; }
-            
+
         }
 
         private bool IsAffordable()
         {
-            string auxDuration = intCreditDuration.ToString();
+
+            double totalInterest = (doubleCreditInterest.Value / 100) * doubleCreditCost.Value;
+            string auxDuration = doubleCreditDuration.Value.ToString();
             double DAuxDuration = Double.Parse(auxDuration);
-            if (doubleCreditCost/DAuxDuration > (buyerMonthlyIncome*15)/100)
+            bool aff = true;
+            if (((doubleCreditCost + totalInterest) / DAuxDuration) > ((buyerMonthlyIncome * 15) / 100))
             {
-                return false;
-            } 
-            else {
-                return true;
+                aff = false;
+                return aff;
             }
+            return aff;
+
+
         }
         private void CheckAffordability()
         {
@@ -131,13 +156,35 @@ namespace FormsAppTelenav.Classes
             }
             else
             {
-                AffordableCredit = "The credit is too expensive for you";
+                double auxCost;
+                string auxDuration = doubleCreditDuration.Value.ToString();
+                double DAuxDuration = Double.Parse(auxDuration);
+                auxCost = doubleCreditCost.Value / DAuxDuration;
+                if (doubleCreditInterest != null)
+                {
+                    auxCost += ((doubleCreditInterest.Value / 100) * doubleCreditCost.Value) / DAuxDuration;
+                    double percentage = (auxCost / BuyerMonthlyIncome) * 100;
+                    double auxPercentage = Math.Round(percentage, 3);
+                    double idealNrOfMonths = DAuxDuration * percentage / 15;
+                    double auxIdealNrOfMonths = Math.Ceiling(idealNrOfMonths);
+                    string builder = "You cannot afford it because the credit costs " + auxPercentage + "% of your monthly wage. ";
+                    builder += "You could afford it if the duration were " + auxIdealNrOfMonths + " months";
+
+                    AffordableCredit = builder;
+                }
+                else
+                {
+                    AffordableCredit = "Please fill in all the fields";
+                }
+
             }
-            
+
         }
+
         public string AffordableCredit
         {
-            set {
+            set
+            {
                 if (affordableCredit != value)
                 {
                     affordableCredit = value;
@@ -147,9 +194,12 @@ namespace FormsAppTelenav.Classes
                     }
                 }
             }
-            get {
+            get
+            {
                 return affordableCredit;
-           }
+            }
         }
+
+
     }
 }
