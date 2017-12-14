@@ -20,6 +20,8 @@ namespace FormsAppTelenav.Views
         {
             InitializeComponent();
             BindingContext = new Person("User1", 2520.5);
+            AuctionsFromAPI auctions = new AuctionsFromAPI();
+            auctions.GetAuction();
         }
 
         private void ToBank_Clicked(object sender, EventArgs e)

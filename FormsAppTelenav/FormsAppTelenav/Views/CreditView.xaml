@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="FormsAppTelenav.Views.CreditView" BackgroundColor="AliceBlue">
 
     <ContentPage.Content>
+        <ScrollView>
         <StackLayout>
             <Label Text="Credit cost" VerticalOptions="Center" HorizontalOptions="Center" />
             <Entry x:Name="CostEntry" Text="{Binding Cost, Mode=TwoWay, Converter={StaticResource doubleStringCnv}}" />
@@ -12,5 +13,6 @@
             <Button Text="Analyze credit" Clicked="ShowCreditButton_Clicked" />
             <Label Text="{Binding AffordableCredit, Mode=TwoWay}" HorizontalOptions="Center"/>
         </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

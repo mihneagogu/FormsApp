@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FormsAppTelenav.Classes
 {
-    public class Credit : INotifyPropertyChanged
+    public class Credit : ChangeNotify
     {
         private Nullable<Double> doubleCreditCost = null;
         private Nullable<Double> doubleCreditDuration;
@@ -17,10 +17,11 @@ namespace FormsAppTelenav.Classes
         private List<CreditForCustomRow> payments = new List<CreditForCustomRow>();
         private Nullable<Double> doubleCreditInterest;
         private string affordableCredit = "OK";
-        public event PropertyChangedEventHandler PropertyChanged;
+
         private string KEY_COST_CHANGED = "Cost";
         private string KEY_DURATION_CHANGED = "Duration";
         private string KEY_INTEREST_CHANGED = "Interest";
+        private string KEY_AFFORDABLE_CREDIT_CHANGED = "AffordableCredit";
 
 
 
@@ -58,21 +59,14 @@ namespace FormsAppTelenav.Classes
         {
             set
             {
-                //ChangeNotify changedNotif = new ChangeNotify(KEY_COST_CHANGED, doubleCreditCost, value, PropertyChanged, this);
-                if (doubleCreditCost != value)
-                {
-                    doubleCreditCost = value;
-                    if (PropertyChanged != null)
-                    {
 
-                        PropertyChanged(this, new PropertyChangedEventArgs("Cost"));
-                    }
-                    if (value != null && doubleCreditInterest != null && doubleCreditDuration != null)
-                    {
-                        CheckAffordability();
-                        RecomputePayments();
-                    }
+                OnPropertyChanged(KEY_COST_CHANGED, ref doubleCreditCost, value);
+                if (value != null && doubleCreditInterest != null && doubleCreditDuration != null)
+                {
+                    CheckAffordability();
+                    RecomputePayments();
                 }
+
 
             }
 
@@ -84,21 +78,15 @@ namespace FormsAppTelenav.Classes
 
             set
             {
-                if (doubleCreditDuration != value)
+
+                OnPropertyChanged(KEY_DURATION_CHANGED, ref doubleCreditDuration, value);
+                if (value != null && doubleCreditInterest != null && doubleCreditCost != null)
                 {
-
-                    doubleCreditDuration = value;
-                    if (PropertyChanged != null)
-                    {
-                        PropertyChanged(this, new PropertyChangedEventArgs("Duration"));
-                    }
-                    if (value != null && doubleCreditInterest != null && doubleCreditCost != null)
-                    {
-                        CheckAffordability();
-                        RecomputePayments();
-                    }
-
+                    CheckAffordability();
+                    RecomputePayments();
                 }
+
+
             }
             get { return doubleCreditDuration; }
         }
@@ -107,20 +95,14 @@ namespace FormsAppTelenav.Classes
         {
             set
             {
-                if (doubleCreditInterest != value)
-                {
 
-                    doubleCreditInterest = value;
-                    if (PropertyChanged != null)
-                    {
-                        PropertyChanged(this, new PropertyChangedEventArgs("Interest"));
-                    }
-                    if (value != null && doubleCreditCost != null && doubleCreditDuration != null)
-                    {
-                        CheckAffordability();
-                        RecomputePayments();
-                    }
+                OnPropertyChanged(KEY_INTEREST_CHANGED, ref doubleCreditInterest, value);
+                if (value != null && doubleCreditCost != null && doubleCreditDuration != null)
+                {
+                    CheckAffordability();
+                    RecomputePayments();
                 }
+
             }
             get { return doubleCreditInterest; }
         }
@@ -185,15 +167,11 @@ namespace FormsAppTelenav.Classes
         {
             set
             {
-                if (affordableCredit != value)
-                {
-                    affordableCredit = value;
-                    if (PropertyChanged != null)
-                    {
-                        PropertyChanged(this, new PropertyChangedEventArgs("AffordableCredit"));
-                    }
-                }
+
+                OnPropertyChanged(KEY_AFFORDABLE_CREDIT_CHANGED, ref affordableCredit, value);
+
             }
+
             get
             {
                 return affordableCredit;
