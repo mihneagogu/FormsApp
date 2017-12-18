@@ -8,6 +8,7 @@ namespace FormsAppTelenav.Classes
 {
     public class Auction
     {
+        
         private double auctionValue;
         public Auction(double auctionValue)
         {

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FormsAppTelenav.Classes
 {
-    public class Credit : ChangeNotify
+    public class Credit : FormsAppTelenav.Classes.ChangeNotify
     {
         private Nullable<Double> doubleCreditCost = null;
         private Nullable<Double> doubleCreditDuration;
