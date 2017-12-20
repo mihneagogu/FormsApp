@@ -14,14 +14,14 @@ namespace FormsAppTelenav.Views
     public partial class MainView : ContentPage
     {
         private Person person = new Person("User1", 2520.5);
-        
+        AuctionsFromAPI auctionHouse = new AuctionsFromAPI();
 
         public MainView()
         {
             InitializeComponent();
             BindingContext = new Person("User1", 2520.5);
-            AuctionsFromAPI auctions = new AuctionsFromAPI();
-            auctions.GetAuction();
+            
+            auctionHouse.GetAuction();
         }
 
         private void ToBank_Clicked(object sender, EventArgs e)
@@ -35,6 +35,7 @@ namespace FormsAppTelenav.Views
         private void ToAuctions_Clicked(object sender, EventArgs e)
         {
             AuctionView auctionView = new AuctionView();
+            auctionView.BindingContext = auctionHouse;
             Navigation.PushAsync(auctionView);
         }
     }
