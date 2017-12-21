@@ -1,10 +1,10 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FormsAppTelenav.Views.MainView">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="{Binding MoneyStatement, Mode=TwoWay}"
+            <Label Text="{Binding Person.MoneyStatement, Mode=TwoWay}"
                    HorizontalOptions='Center'/>
             <Button 
                 Text="Go to the bank"
@@ -12,7 +12,7 @@
                 />
             <Button 
                 Text="Buy and check auctions"
-                Clicked="ToAuctions_Clicked"
+                Command="{Binding AuctionHouseCommand}"
                 />
         </StackLayout>
     </ContentPage.Content>

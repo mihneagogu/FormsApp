@@ -1,15 +1,14 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="FormsAppTelenav.Views.AuctionHouseView">
-    <ContentPage.Content>
-        <ScrollView>
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="FormsAppTelenav.Views.AuctionHouseView">
+	<ContentPage.Content>
+       
+        <ScrollView Orientation="Vertical">
             <StackLayout>
-                <Button Text="MicroSoft auctions" Clicked="ToMicrosoftAuctions_Clicked" />
-                <Button Text="Apple auctions" />
-                <Button Text="Walmart auctions" />
-                <Button Text="Telenav auctions" />
+            <Button Text="Microsoft Stock" Clicked="ToMicrosoftStock_Clicked" HorizontalOptions="Center"/>
+            <Button Text="Apple Stock" Clicked="ToAppleStock_Clicked" HorizontalOptions="Center"/>
+            <Button Text="Walmart Stock" HorizontalOptions="Center" />
+            <Button Text="Telenav Stock" HorizontalOptions="Center"/>
             </StackLayout>
         </ScrollView>
-    </ContentPage.Content>
+	</ContentPage.Content>
 </ContentPage>

@@ -1,25 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using FormsAppTelenav.Classes;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace FormsAppTelenav.Views
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AuctionHouseView : ContentPage
     {
+        void ToAppleStock_Clicked(object sender, System.EventArgs e)
+        {
+            AuctionView auctionView = new AuctionView("AAPL");
+            Navigation.PushAsync(auctionView);
+           
+        }
+
+        void ToMicrosoftStock_Clicked(object sender, System.EventArgs e)
+        {
+            AuctionView auctionView = new AuctionView("MSFT");
+            Navigation.PushAsync(auctionView);
+       
+
+
+
+        }
+
         public AuctionHouseView()
         {
             InitializeComponent();
-        }
-
-        private void ToMicrosoftAuctions_Clicked(object sender, EventArgs e)
-        {
-
         }
     }
 }

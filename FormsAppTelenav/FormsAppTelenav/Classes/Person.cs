@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FormsAppTelenav.Classes
 {
-    class Person
+    public class Person
     {
         private string name;
         private double currentMoney;

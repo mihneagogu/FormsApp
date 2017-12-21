@@ -1,22 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace FormsAppTelenav.Classes
 {
     public class AuctionsFromAPI
     {
         private HttpClient client = new HttpClient();
-        private string auctionURL = "https://www.quandl.com/api/v1/datasets/WIKI/AAPL.csv?sort_order=asc&trim_start=2017-12-12&trim_end=2017-12-14";
-        private List<Auction> stock = new List<Auction>();
+        private string auctionURL = "https://www.quandl.com/api/v1/datasets/WIKI/{0}.csv?sort_order=asc&trim_start=2017-12-12&trim_end=2017-12-14";
+
+        private ObservableCollection<Auction> stock = new ObservableCollection<Auction>();
         public AuctionsFromAPI()
         {
 
         }
 
-        public async void GetAuction()
+        public async void GetAuction(string symbol, ObservableCollection<Auction> stock)
         {
-            string symbolAuctionURL = auctionURL;
+          
+            string symbolAuctionURL = String.Format(auctionURL, symbol);
             HttpResponseMessage response = await client.GetAsync(symbolAuctionURL);
             if (response.IsSuccessStatusCode)
             {
@@ -24,13 +28,13 @@ namespace FormsAppTelenav.Classes
                 string stringResponse = await response.Content.ReadAsStringAsync();
                 char[] delimiter = { ',' };
                 string[] stats = stringResponse.Split(delimiter);
-                ParseCsvAndAddToList(stats);
-                
+                ParseCsvAndAddToList(stats, stock);
 
             }
+
         }
 
-        private void ParseCsvAndAddToList(string[] stats)
+        private void ParseCsvAndAddToList(string[] stats, ObservableCollection<Auction> stock)
         {
             int indexOfColumn = 0;
             string remember12 = "";
@@ -76,7 +80,7 @@ namespace FormsAppTelenav.Classes
                         {
                             System.Diagnostics.Debug.WriteLine(i + ": " + stockValues[i]);
                         }
-                        AddStock(stockValues);
+                        AddStock(stockValues, stock);
                         indexOfColumn = 0;
                     }
 
@@ -84,7 +88,7 @@ namespace FormsAppTelenav.Classes
             }
         }
 
-        private void AddStock(string[] stockValues)
+        private void AddStock(string[] stockValues, ObservableCollection<Auction> stock)
         {
             
             var currentCulture = System.Globalization.CultureInfo.CurrentUICulture;
@@ -105,11 +109,7 @@ namespace FormsAppTelenav.Classes
             stock.Add(new Auction(stockValues[0], x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12));
         }
 
-        public List<Auction> Stock
-        {
-            set { stock = value; }
-            get { return stock; }
-        }
+
         
     }
 }

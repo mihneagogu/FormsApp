@@ -43,9 +43,6 @@
     <Compile Include="Classes\CreditForCustomRow.cs" />
     <Compile Include="Classes\Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\AuctionHouseView.xaml.cs">
-      <DependentUpon>AuctionHouseView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\AuctionView.xaml.cs">
       <DependentUpon>AuctionView.xaml</DependentUpon>
     </Compile>
@@ -64,9 +61,16 @@
     <Compile Include="Classes\DoubleStringConverter.cs" />
     <Compile Include="Classes\ChangeNotify.cs" />
     <Compile Include="Classes\AuctionsFromAPI.cs" />
+    <Compile Include="Views\AuctionHouseView.xaml.cs">
+      <DependentUpon>AuctionHouseView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\AuctionHouseView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -111,12 +115,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\AuctionView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\AuctionHouseView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
