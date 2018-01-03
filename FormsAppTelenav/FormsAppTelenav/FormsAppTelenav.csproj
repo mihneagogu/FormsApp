@@ -42,6 +42,7 @@
     <Compile Include="Classes\Credit.cs" />
     <Compile Include="Classes\CreditForCustomRow.cs" />
     <Compile Include="Classes\Person.cs" />
+    <Compile Include="Classes\PyAuction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\AuctionView.xaml.cs">
       <DependentUpon>AuctionView.xaml</DependentUpon>
