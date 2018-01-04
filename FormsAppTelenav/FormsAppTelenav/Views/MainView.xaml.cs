@@ -14,7 +14,7 @@ namespace FormsAppTelenav.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainView : ContentPage
     {
-        private Person person = new Person("User1", 2520.5);
+        private Person person = new Person("User1", (App.Current as FormsAppTelenav.App).xApp);
 
         public Person Person {
             set; get;

@@ -10,6 +10,7 @@ namespace FormsAppTelenav
 {
     public partial class App : Application
     {
+        public int xApp = 3;
         public App()
         {
             
