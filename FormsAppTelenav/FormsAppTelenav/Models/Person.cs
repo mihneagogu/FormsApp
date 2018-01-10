@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FormsAppTelenav.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,13 +10,15 @@ namespace FormsAppTelenav.Classes
     public class Person
     {
         private string name;
-        private double currentMoney;
-        private double monthlyIncome;
-
-        public Person(string name, double currentMoney)
+       // private Money currentMoney;
+        private static Money currentMoney = new Money(2000, "USD");
+        private List<Income> incomes;
+        private List<Expense> expenses = new List<Expense>();
+        private List<AuctionBundle> stockPortfolio;
+        public Person(string name)
         {
             this.name = name;
-            this.currentMoney = currentMoney;
+          
         }
         
 
@@ -25,7 +28,7 @@ namespace FormsAppTelenav.Classes
             get { return name; }
         }
 
-        public double CurrentMoney
+        public Money CurrentMoney
         {
             set { currentMoney = value; }
             get { return currentMoney; }
@@ -33,23 +36,26 @@ namespace FormsAppTelenav.Classes
 
         public string MoneyStatement
         {
-            get { return "You currently have " + currentMoney + " $"; }   
+            get { return "You currently have " + currentMoney.AmountInCurrency + " " + currentMoney.CurrencySymbol; }   
         } 
         
-        public string ExpensesToPay
+        public List<Expense> ExpensesToPay
         {
-            get { return ""; }
+            get { return expenses; }
         }
 
-        public double MonthlyIncome
+        public List<Income> MonthlyIncome
         {
-            set { monthlyIncome = value; }
-            get { return monthlyIncome;  }
+            set { incomes = value; }
+            get { return incomes;  }
         }
 
-        public string MonthlyIncomeStatement
+        public List<AuctionBundle> StockPortfolio
         {
-            get { return "Your monthly income is " + MonthlyIncome + " $"; }
+            set { this.stockPortfolio = value; }
+            get { return StockPortfolio; }
         }
+
+       
     }
 }

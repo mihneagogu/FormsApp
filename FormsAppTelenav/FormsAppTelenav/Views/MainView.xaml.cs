@@ -14,8 +14,9 @@ namespace FormsAppTelenav.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainView : ContentPage
     {
-        private Person person = new Person("User1", (App.Current as FormsAppTelenav.App).xApp);
-
+        
+        private Person person = new Person("User1");
+        
         public Person Person {
             set; get;
         }
@@ -25,14 +26,14 @@ namespace FormsAppTelenav.Views
             InitializeComponent();
             Person = person;
             AuctionHouseCommand = new Command(() => Navigation.PushAsync(new AuctionHouseView()));
-            BindingContext = this;
+            BindingContext = person;
 
         }
 
         private void ToBank_Clicked(object sender, EventArgs e)
         {
             BankView bankView = new BankView();
-            person.MonthlyIncome = 1000;
+           
             bankView.BindingContext = person;
             Navigation.PushAsync(bankView);
         }
