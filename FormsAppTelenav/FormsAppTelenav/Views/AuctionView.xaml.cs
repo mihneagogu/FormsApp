@@ -22,9 +22,9 @@ namespace FormsAppTelenav.Views
         public AuctionView(string symbol, string auctionName)
         {
             InitializeComponent();
-            auctions.GetAuction(symbol, Stock);
             this.symbol = symbol;
             this.auctionName = auctionName;
+            MakeAuctions();
             BindingContext = this;
             
         }
@@ -38,6 +38,15 @@ namespace FormsAppTelenav.Views
         {
             BuyAuctionsView buyAuctionsView = new BuyAuctionsView(new ToBuyAuction(symbol ,auctionName, stock[0].CloseValue, stock[0].Date));
             Navigation.PushAsync(buyAuctionsView);
+        }
+
+        private async void MakeAuctions()
+        {
+            bool gotResponse = await auctions.GetAuction(symbol, stock);
+            if (!gotResponse)
+            {
+                await DisplayAlert("", "We can't find the stock market, sorry!", "OK");
+            }
         }
     }
 

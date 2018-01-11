@@ -17,7 +17,7 @@ namespace FormsAppTelenav.Classes
 
         }
 
-        public async void GetAuction(string symbol, ObservableCollection<Auction> stock)
+        public async Task<bool> GetAuction(string symbol, ObservableCollection<Auction> stock)
         {
           
             string symbolAuctionURL = String.Format(auctionURL, symbol);
@@ -29,11 +29,11 @@ namespace FormsAppTelenav.Classes
                 char[] delimiter = { ',' };
                 string[] stats = stringResponse.Split(delimiter);
                 ParseCsvAndAddToList(stats, stock);
-
+                return true;
             }
             else
             {
-                System.Diagnostics.Debug.WriteLine("404 not found");
+                return false;
             }
 
         }
