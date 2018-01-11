@@ -25,7 +25,7 @@ namespace FormsAppTelenav.Views
         {
             InitializeComponent();
             Person = person;
-            AuctionHouseCommand = new Command(() => Navigation.PushAsync(new AuctionHouseView()));
+            //AuctionHouseCommand = new Command(() => Navigation.PushAsync(new AuctionHouseView()));
             BindingContext = person;
 
         }
@@ -38,14 +38,23 @@ namespace FormsAppTelenav.Views
             Navigation.PushAsync(bankView);
         }
 
-        private void ToAuctions_Clicked(object sender, EventArgs e)
+        private void ToAuctionHouse_Clicked(object sender, EventArgs e)
         {
             AuctionHouseView auctionHouseView = new AuctionHouseView();
+
+            
             Navigation.PushAsync(auctionHouseView);
         }
 
-        public ICommand AuctionHouseCommand{
-            set; get;
-        }
+
+
+        /* public ICommand AuctionHouseCommand
+        {
+
+            get
+            {
+                return new Command(() => Navigation.PushAsync(new AuctionHouseView()));
+            }
+        } */
     }
 }

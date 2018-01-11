@@ -12,7 +12,7 @@
                 />
             <Button 
                 Text="Buy and check auctions"
-                Command="{Binding AuctionHouseCommand}"
+                Clicked="ToAuctionHouse_Clicked"
                 />
         </StackLayout>
     </ContentPage.Content>

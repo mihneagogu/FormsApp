@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Collections.ObjectModel;
+using FormsAppTelenav.Models;
 
 namespace FormsAppTelenav.Views
 {
@@ -16,10 +17,14 @@ namespace FormsAppTelenav.Views
     {
         private ObservableCollection<Auction> stock = new ObservableCollection<Auction>();
         private AuctionsFromAPI auctions = new AuctionsFromAPI();
-        public AuctionView(string symbol)
+        private string auctionName;
+        private string symbol;
+        public AuctionView(string symbol, string auctionName)
         {
             InitializeComponent();
             auctions.GetAuction(symbol, Stock);
+            this.symbol = symbol;
+            this.auctionName = auctionName;
             BindingContext = this;
             
         }
@@ -29,7 +34,11 @@ namespace FormsAppTelenav.Views
             get { return stock; }
         }
 
-        
+        private void ToBuyAuctions_Clicked(object sender, EventArgs e)
+        {
+            BuyAuctionsView buyAuctionsView = new BuyAuctionsView(new ToBuyAuction(symbol ,auctionName, stock[0].CloseValue, stock[0].Date));
+            Navigation.PushAsync(buyAuctionsView);
+        }
     }
 
 

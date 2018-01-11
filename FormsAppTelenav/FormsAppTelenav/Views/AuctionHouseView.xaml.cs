@@ -10,7 +10,7 @@ namespace FormsAppTelenav.Views
     {
         void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
         {
-            AuctionView auctionView = new AuctionView((e.SelectedItem as PyAuction).Symbol);
+            AuctionView auctionView = new AuctionView((e.SelectedItem as PyAuction).Symbol, (e.SelectedItem as PyAuction).Name);
             Navigation.PushAsync(auctionView);
         }
 

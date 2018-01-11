@@ -31,6 +31,10 @@ namespace FormsAppTelenav.Classes
                 ParseCsvAndAddToList(stats, stock);
 
             }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("404 not found");
+            }
 
         }
 

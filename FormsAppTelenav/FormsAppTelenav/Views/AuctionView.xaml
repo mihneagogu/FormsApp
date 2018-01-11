@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FormsAppTelenav.Views.AuctionView">
     <ContentPage.Content>
-        
+        <StackLayout>
         <ListView x:Name="auctionListView" ItemsSource="{Binding Stock}">
             <ListView.Header>
                 <Grid Padding="7">
@@ -30,6 +30,8 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        
+        <Button Text="Buy auctions!" 
+                Clicked="ToBuyAuctions_Clicked"/>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>
