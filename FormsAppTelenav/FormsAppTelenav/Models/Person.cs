@@ -11,7 +11,7 @@ namespace FormsAppTelenav.Classes
     {
         private string name;
        // private Money currentMoney;
-        private static Money currentMoney = new Money(2000, "USD");
+        private static Money currentMoney = new Money(2000, Money.Currency.EUR);
         private List<Income> incomes;
         private List<Expense> expenses = new List<Expense>();
         private List<AuctionBundle> stockPortfolio;
@@ -36,7 +36,7 @@ namespace FormsAppTelenav.Classes
 
         public string MoneyStatement
         {
-            get { return "You currently have " + currentMoney.AmountInCurrency + " " + currentMoney.CurrencySymbol; }   
+            get { return "You currently have " + currentMoney.Value + " " + currentMoney.Symbol; }   
         } 
         
         public List<Expense> ExpensesToPay

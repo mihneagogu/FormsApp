@@ -9,56 +9,38 @@ namespace FormsAppTelenav.Classes
     public class Money
     {
         private double absoluteValue;
-        private string currency;
-        /// absolute currency = ron
-        private double USD_VALUE = 0.26;
-        private double EUR_VALUE = 0.22;
-        private double RON_VALUE = 1;
-        private double auxAmount;
-        public Money(double absoluteValue, string currency)
+        private Currency currency;
+
+        public enum Currency { EUR, USD , RON };
+        private double[] currencyValues =  {1, 1.21336, 4.63716};
+        private string[] currencySymbols = { "EUR", "$", "RON" };
+
+        public Money(double absoluteValue, Currency currency)
         {
             this.absoluteValue = absoluteValue;
             this.currency = currency;
-            TransformCurrency(absoluteValue, currency);
+            TransformCurrency(Currency.RON);
         }
 
-        private void TransformCurrency(double absoluteValue, string currency)
+        private void TransformCurrency(Currency desiredCurrency)
         {
-            if (currency.Equals("RON")) {
-                auxAmount = absoluteValue;
-            }
-            if (currency.Equals("USD")){
-                auxAmount = absoluteValue * USD_VALUE;
-            }
-            if (currency.Equals("EUR"))
-            {
-                auxAmount = absoluteValue * EUR_VALUE;
-            }
+            absoluteValue *= currencyValues[(int)desiredCurrency]/currencyValues[(int)currency];
+           
+            currency = desiredCurrency;
         }
 
-        public double AmountInCurrency
+        public double Value
         {
-            set { this.auxAmount = value; }
-            get { return auxAmount; }
+            get { return absoluteValue; }
         }
 
-        public string CurrencySymbol
-        {
-            set { }
-            get
-            {
-                switch (currency)
-                {
-                    case "RON":
-                        return "RON";
-                    case "USD":
-                        return "$";
-                    case "EUR":
-                        return "€";
-                }
-                return "def";
-            }
+        public string Symbol{
+            get { return currencySymbols[(int)currency]; }
         }
+
+
+
+       
 
 
     }
