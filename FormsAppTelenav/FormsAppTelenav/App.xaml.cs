@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-
+using FormsAppTelenav.Databases;
 using Xamarin.Forms;
 
 namespace FormsAppTelenav
 {
     public partial class App : Application
     {
-        public int xApp = 3;
+        private static PersonDataBase database;
         public App()
         {
             
@@ -19,6 +19,18 @@ namespace FormsAppTelenav
 
             MainPage = new NavigationPage(new FormsAppTelenav.Views.MainView());
 
+        }
+
+        public static PersonDataBase DataBase
+        {
+            get
+            {
+                if (database == null)
+                {
+                    database = new PersonDataBase(DependencyService.Get<ILocalFileHelper>().GetLocalFilePath("Employee.db3"));
+                }
+                return database;
+            }
         }
 
         protected override void OnStart()

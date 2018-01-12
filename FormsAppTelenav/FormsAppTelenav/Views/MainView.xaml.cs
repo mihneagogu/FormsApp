@@ -25,6 +25,7 @@ namespace FormsAppTelenav.Views
         {
             InitializeComponent();
             Person = person;
+            CheckPerson();
             //AuctionHouseCommand = new Command(() => Navigation.PushAsync(new AuctionHouseView()));
             BindingContext = person;
 
@@ -45,6 +46,13 @@ namespace FormsAppTelenav.Views
             
             Navigation.PushAsync(auctionHouseView);
         }
+
+        private async void CheckPerson(){
+            List<Person> people = await App.DataBase.GetPerson();
+            if (people.Count == 0){
+                await App.DataBase.CreatePerson(person);
+            }
+         }
 
 
 

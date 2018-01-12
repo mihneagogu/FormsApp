@@ -4,28 +4,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SQLite;
 
 namespace FormsAppTelenav.Classes
 {
     public class Person
     {
-        private string name;
        // private Money currentMoney;
         private static Money currentMoney = new Money(2000, Money.Currency.EUR);
         private List<Income> incomes;
         private List<Expense> expenses = new List<Expense>();
         private List<AuctionBundle> stockPortfolio;
+
         public Person(string name)
         {
-            this.name = name;
+            Name = name;
           
         }
-        
 
+        public Person(){
+            
+        }
+        
+        [PrimaryKey, AutoIncrement]
         public string Name
         {
-            set { name = value; }
-            get { return name; }
+            get; set;
         }
 
         public Money CurrentMoney
@@ -53,7 +57,7 @@ namespace FormsAppTelenav.Classes
         public List<AuctionBundle> StockPortfolio
         {
             set { this.stockPortfolio = value; }
-            get { return StockPortfolio; }
+            get { return stockPortfolio; }
         }
 
        
