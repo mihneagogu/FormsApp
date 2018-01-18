@@ -14,7 +14,6 @@ namespace FormsAppTelenav
         public App()
         {
             
-
             InitializeComponent();
 
             MainPage = new NavigationPage(new FormsAppTelenav.Views.MainView());

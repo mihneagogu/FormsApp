@@ -21,10 +21,16 @@ namespace FormsAppTelenav.Databases
                 return database.Table<Person>().ToListAsync();
             }
 
-            public Task<int> CreatePerson(Person person)
+            public Task<int> SavePerson(Person person)
             {
-                    return database.InsertAsync(person);
-
+                   if (person.Id == 0)
+                   {
+                        return database.InsertAsync(person);
+                   }
+                   else
+                   {
+                        return database.UpdateAsync(person);
+                   }
             } 
 
             /*public Task<Auction> GetAuctionAsync(string symbol)
