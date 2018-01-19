@@ -48,10 +48,9 @@ namespace FormsAppTelenav.Views
         }
 
         private async void CheckPerson(){
+            await App.DataBase.CreatePerson(person);
             List<Person> people = await App.DataBase.GetPerson();
-            if (people.Count == 0){
-                await App.DataBase.CreatePerson(person);
-            }
+            int x = 0;
          }
 
 

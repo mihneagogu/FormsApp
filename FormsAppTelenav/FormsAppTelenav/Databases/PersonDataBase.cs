@@ -13,8 +13,12 @@ namespace FormsAppTelenav.Databases
             public PersonDataBase(string dbPath)
             {
                 database = new SQLiteAsyncConnection(dbPath);
-                database.CreateTableAsync<Person>();
+                CreateTable();   
             }
+
+            private async void CreateTable(){
+                await database.CreateTableAsync<Person>();
+            }       
 
             public Task<List<Person>> GetPerson()
             {
