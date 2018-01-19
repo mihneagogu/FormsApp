@@ -37,6 +37,7 @@ namespace FormsAppTelenav.Views
         private void ConfirmedPayment_Clicked(object sender, EventArgs e)
         {
             //AuctionBundle auctionBundle = new AuctionBundle()
+            // se adauga la stockportfolio al persoanei la lista de AuctionBundle
         }
     }
 }

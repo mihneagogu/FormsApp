@@ -27,8 +27,14 @@ namespace FormsAppTelenav.Databases
 
             public Task<int> CreatePerson(Person person)
             {
-                    return database.InsertAsync(person);
-
+                   if (person.Id == 0)
+                   {
+                        return database.InsertAsync(person);
+                   }
+                   else
+                   {
+                        return database.UpdateAsync(person);
+                   }
             } 
 
             /*public Task<Auction> GetAuctionAsync(string symbol)

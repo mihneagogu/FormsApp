@@ -51,6 +51,7 @@ namespace FormsAppTelenav.Views
             await App.DataBase.CreatePerson(person);
             List<Person> people = await App.DataBase.GetPerson();
             int x = 0;
+
          }
 
 
