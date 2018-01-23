@@ -24,10 +24,9 @@ namespace FormsAppTelenav
         {
             get
             {
-                if (database == null)
-                {
-                    database = new PersonDataBase(DependencyService.Get<ILocalFileHelper>().GetLocalFilePath("Employee.db3"));
-                }
+                
+                database = new PersonDataBase(DependencyService.Get<ILocalFileHelper>().GetLocalFilePath("Employee.db3"));
+
                 return database;
             }
         }
