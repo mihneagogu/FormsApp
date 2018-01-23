@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Windows.Input;
+using SQLite;
+using FormsAppTelenav.Databases;
 
 namespace FormsAppTelenav.Views
 {
@@ -15,7 +17,7 @@ namespace FormsAppTelenav.Views
     public partial class MainView : ContentPage
     {
         
-        private Person person = new Person("User1");
+        
         
         public Person Person {
             set; get;
@@ -24,10 +26,9 @@ namespace FormsAppTelenav.Views
         public MainView()
         {
             InitializeComponent();
-            Person = person;
-            CheckPerson();
+            createDatabase(DependencyService.Get<ILocalFileHelper>().GetLocalFilePath("Person.db3"));
             //AuctionHouseCommand = new Command(() => Navigation.PushAsync(new AuctionHouseView()));
-            BindingContext = person;
+            BindingContext = this;
 
         }
 
@@ -35,7 +36,7 @@ namespace FormsAppTelenav.Views
         {
             BankView bankView = new BankView();
            
-            bankView.BindingContext = person;
+            //bankView.BindingContext = person;
             Navigation.PushAsync(bankView);
         }
 
@@ -47,11 +48,26 @@ namespace FormsAppTelenav.Views
             Navigation.PushAsync(auctionHouseView);
         }
 
-        private async void CheckPerson(){
-           await App.DataBase.SavePerson(person);
-            ///List<Person> people = await App.DataBase.GetPerson();
+        private SQLiteAsyncConnection Database { get; set; }
 
-         }
+        private async void createDatabase(string path)
+        {
+            var connection = new SQLiteAsyncConnection(path);
+            await connection.CreateTableAsync<Person>();
+            await connection.InsertAsync(new Person("Mihnea"));
+            Database = connection;
+            List<Person> ppl = await GetPeople();
+            //await DisplayAlert("ok", ppl.Count.ToString(), "ok");
+            for (int i = 0; i < ppl.Count; i++)
+            {
+                int x = ppl[i].Id;
+            }
+        }
+
+        public Task<List<Person>> GetPeople()
+        {
+            return Database.Table<Person>().ToListAsync();
+        }
 
 
 

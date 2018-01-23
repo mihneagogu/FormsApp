@@ -11,10 +11,10 @@ namespace FormsAppTelenav.Classes
     public class Person
     {
        // private Money currentMoney;
-        private static Money currentMoney = new Money(2000, Money.Currency.EUR);
+        /*private static Money currentMoney = new Money(2000, Money.Currency.EUR);
         private List<Income> incomes;
         private List<Expense> expenses = new List<Expense>();
-        private List<AuctionBundle> stockPortfolio;
+        private List<AuctionBundle> stockPortfolio; */
 
         public Person(string name)
         {
@@ -37,12 +37,12 @@ namespace FormsAppTelenav.Classes
             get; set;
         }
 
-        public Money CurrentMoney
+        /*public Money CurrentMoney
         {
             set { currentMoney = value; }
             get { return currentMoney; }
         }
-
+         
         public string MoneyStatement
         {
             get { return "You currently have " + currentMoney.Value + " " + currentMoney.Symbol; }   
@@ -63,7 +63,7 @@ namespace FormsAppTelenav.Classes
         {
             set { this.stockPortfolio = value; }
             get { return stockPortfolio; }
-        }
+        } */
 
        
     }

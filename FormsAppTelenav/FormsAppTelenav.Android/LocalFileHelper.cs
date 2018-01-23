@@ -16,7 +16,7 @@ using Android.Widget;
 
 
 
-[assembly: Dependency(typeof(FormsAppTelenav.Droid.LocalFileHelper))]
+[assembly: Xamarin.Forms.Dependency(typeof(FormsAppTelenav.Droid.LocalFileHelper))]
 namespace FormsAppTelenav.Droid
 {
     public class LocalFileHelper : ILocalFileHelper
