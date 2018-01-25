@@ -8,34 +8,49 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Windows.Input;
+using SQLite;
+using FormsAppTelenav.Databases;
 
 namespace FormsAppTelenav.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainView : ContentPage
     {
-        
-        private Person person = new Person("User1");
-        
+
+        Person person = new Person("Mikeymike");
         public Person Person {
             set; get;
         }
 
+        DataBase db = new Databases.DataBase();
+        private DataBase LocalDB { get; set; }
+
         public MainView()
         {
             InitializeComponent();
-            Person = person;
-            CheckPerson();
+            
+            db.createDatabase(DependencyService.Get<ILocalFileHelper>().GetLocalFilePath("Person.db3"));
+            MeddleWithDB(person);
+
+            //db.AddPerson(person);
+           
+            //GetPeople();
+            
+
             //AuctionHouseCommand = new Command(() => Navigation.PushAsync(new AuctionHouseView()));
-            BindingContext = person;
+            BindingContext = this;
 
         }
+
+        
+
+
 
         private void ToBank_Clicked(object sender, EventArgs e)
         {
             BankView bankView = new BankView();
            
-            bankView.BindingContext = person;
+            
             Navigation.PushAsync(bankView);
         }
 
@@ -47,13 +62,17 @@ namespace FormsAppTelenav.Views
             Navigation.PushAsync(auctionHouseView);
         }
 
-        private async void CheckPerson(){
-            await App.DataBase.CreatePerson(person);
-            List<Person> people = await App.DataBase.GetPerson();
-            int x = 0;
-
-         }
-
+        private async void MeddleWithDB(Person person)
+        {
+           // int x = await db.AddPerson(person);
+            List<Person> ppl = await db.GetPeople();
+            int q = 0;
+            for (int i = 0; i < ppl.Count; i++)
+            {
+                System.Diagnostics.Debug.WriteLine(ppl[i].Id+ " " + ppl[i].StockPortfolio + " " + ppl[i].Name + " | ");
+            }
+            
+        }
 
 
         /* public ICommand AuctionHouseCommand

@@ -10,7 +10,7 @@ namespace FormsAppTelenav
 {
     public partial class App : Application
     {
-        private static PersonDataBase database;
+        
         public App()
         {
             
@@ -20,16 +20,7 @@ namespace FormsAppTelenav
 
         }
 
-        public static PersonDataBase DataBase
-        {
-            get
-            {
-                
-                database = new PersonDataBase(DependencyService.Get<ILocalFileHelper>().GetLocalFilePath("Employee.db3"));
-
-                return database;
-            }
-        }
+       
 
         protected override void OnStart()
         {

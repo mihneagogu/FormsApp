@@ -37,6 +37,11 @@ namespace FormsAppTelenav.Classes
             get; set;
         }
 
+        public string StockPortfolio
+        {
+            get; set;
+        }
+
         /*public Money CurrentMoney
         {
             set { currentMoney = value; }

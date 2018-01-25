@@ -13,15 +13,24 @@ namespace FormsAppTelenav.Models
         private double openValueAtDateBought;
         private double closeValueAtDateBought;
         private string dateBought;
-        private double number;
-        public AuctionBundle(string symbol, string name, double openValueAtDateBought, double closeValueAtDateBought, string dateBought, double number)
+        private string number;
+        public AuctionBundle(string symbol, string name, double openValueAtDateBought, double closeValueAtDateBought, string dateBought, string number)
         {
-            this.symbol = symbol;
-            this.name = name;
-            this.openValueAtDateBought = openValueAtDateBought;
-            this.closeValueAtDateBought = closeValueAtDateBought;
-            this.dateBought = dateBought;
-            this.number = number;
+            Symbol = symbol;
+            Name = name;
+            OpenValueAtDateBought = openValueAtDateBought;
+            CloseValueAtDateBought = closeValueAtDateBought;
+            DateBought = dateBought;
+            Number = number;
         }
+
+        public string Symbol { get; set; }
+        public string Name { get; set; }
+        public double OpenValueAtDateBought { get; set; }
+        public double CloseValueAtDateBought { get; set; }
+        public string DateBought { get; set; }
+        public string Number { get; set; }
+
+
     }
 }
