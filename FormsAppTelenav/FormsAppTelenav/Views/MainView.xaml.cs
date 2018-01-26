@@ -10,6 +10,7 @@ using Xamarin.Forms.Xaml;
 using System.Windows.Input;
 using SQLite;
 using FormsAppTelenav.Databases;
+using FormsAppTelenav.Models;
 
 namespace FormsAppTelenav.Views
 {
@@ -22,19 +23,16 @@ namespace FormsAppTelenav.Views
             set; get;
         }
 
-        DataBase db = new Databases.DataBase();
-        private DataBase LocalDB { get; set; }
+
 
         public MainView()
         {
             InitializeComponent();
-            
-            db.createDatabase(DependencyService.Get<ILocalFileHelper>().GetLocalFilePath("Person.db3"));
+            person.CurrencyID = 2;
+            person.Amount = 5000;
             MeddleWithDB(person);
 
-            //db.AddPerson(person);
-           
-            //GetPeople();
+
             
 
             //AuctionHouseCommand = new Command(() => Navigation.PushAsync(new AuctionHouseView()));
@@ -64,13 +62,11 @@ namespace FormsAppTelenav.Views
 
         private async void MeddleWithDB(Person person)
         {
-           // int x = await db.AddPerson(person);
-            List<Person> ppl = await db.GetPeople();
-            int q = 0;
-            for (int i = 0; i < ppl.Count; i++)
-            {
-                System.Diagnostics.Debug.WriteLine(ppl[i].Id+ " " + ppl[i].StockPortfolio + " " + ppl[i].Name + " | ");
-            }
+            int x = await App.LocalDataBase.AddPerson(person);
+            List<Person> ppl = await App.LocalDataBase.GetPeople();
+            Person p = ppl[ppl.Count - 1];
+            Currency curr = await App.LocalDataBase.GetCurrency(p.CurrencyID);
+            await DisplayAlert("ok", p.Name + " " + p.Amount + " " + curr.Name, "ok");
             
         }
 

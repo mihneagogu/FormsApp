@@ -76,6 +76,7 @@
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\StockSymbols.cs" />
     <Compile Include="Databases\ILocalFileHelper.cs" />
+    <Compile Include="Models\Currency.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="App.xaml">

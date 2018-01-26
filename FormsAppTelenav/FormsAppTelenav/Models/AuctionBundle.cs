@@ -24,6 +24,7 @@ namespace FormsAppTelenav.Models
             Number = number;
         }
 
+        public int PersonID { get; set; }
         public string Symbol { get; set; }
         public string Name { get; set; }
         public double OpenValueAtDateBought { get; set; }

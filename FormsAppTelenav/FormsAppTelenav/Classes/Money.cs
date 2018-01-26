@@ -22,6 +22,10 @@ namespace FormsAppTelenav.Classes
             TransformCurrency(Currency.RON);
         }
 
+        public Money() {
+            
+        }
+
         private void TransformCurrency(Currency desiredCurrency)
         {
             absoluteValue *= currencyValues[(int)desiredCurrency]/currencyValues[(int)currency];

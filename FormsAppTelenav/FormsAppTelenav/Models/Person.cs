@@ -42,6 +42,12 @@ namespace FormsAppTelenav.Classes
             get; set;
         }
 
+        public double Amount {
+            get; set;
+        }
+
+        public int CurrencyID { get; set; }
+
         /*public Money CurrentMoney
         {
             set { currentMoney = value; }
