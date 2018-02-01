@@ -16,10 +16,13 @@ namespace FormsAppTelenav.Views
     public partial class BuyAuctionsView : ContentPage
     {
         private ToBuyAuction auctionToBuy;
-        public BuyAuctionsView(ToBuyAuction auctionToBuy)
+        private string key;
+        public BuyAuctionsView(ToBuyAuction auctionToBuy, string key)
         {
             InitializeComponent();
             this.auctionToBuy = auctionToBuy;
+            this.key = key;
+            BuyOrSellLabel.Text = "How many auctions do you want to " + key + "?";          
             BindingContext = this;
         }
 
@@ -45,17 +48,59 @@ namespace FormsAppTelenav.Views
         private async void AddBundleToStockPortfolio(AuctionBundle auctionBundle)
         {
             List<Person> ppl = await App.LocalDataBase.GetPeople();
-            /* ppl[ppl.Count - 1].StockPortfolio += auctionBundle.Symbol + "|" + auctionBundle.Name + "|" + auctionBundle.OpenValueAtDateBought + "|" 
-                 + "|" + auctionBundle.CloseValueAtDateBought + "|" + auctionBundle.DateBought + "|" + auctionBundle.Number + "\n";
-            int awaiter = await App.LocalDataBase.SavePerson(ppl[ppl.Count - 1] as Person); */
-            auctionBundle.PersonID = ppl.Count;
-            int awaiter = await App.LocalDataBase.AddAuctionBundle(auctionBundle);
-            List<AuctionBundle> aBundles = await App.LocalDataBase.GetAuctionBundles();
-            Person person = ppl[ppl.Count - 1] as Person;
-            person.StockIDs += aBundles[aBundles.Count - 1].Id.ToString() + "|";
-            awaiter = await App.LocalDataBase.SavePerson(person);
-            ppl = await App.LocalDataBase.GetPeople();
-            int q = 0;
+            if (key.Equals("buy"))
+            {
+                auctionBundle.PersonID = ppl.Count;
+                int awaiter = await App.LocalDataBase.AddAuctionBundle(auctionBundle);
+                List<AuctionBundle> aBundles = await App.LocalDataBase.GetAuctionBundles();
+                Person person = ppl[ppl.Count - 1] as Person;
+                person.StockIDs += aBundles[aBundles.Count - 1].Id.ToString() + "|";
+                awaiter = await App.LocalDataBase.SavePerson(person);
+                ppl = await App.LocalDataBase.GetPeople();
+                int q = 0;
+            }
+            else
+            {
+                ///trebuie verificat daca persoana are actiuni de la firma respectiva, adica daca exista un ID de actiuni cu simbolul respectiv si cu ID-ul persoanei respective
+                Person person = ppl[ppl.Count - 1] as Person;
+                string symbol = auctionBundle.Symbol;
+                List<AuctionBundle> personsAuctionBundles = await App.LocalDataBase.GetAuctionBundlesForPerson(person);
+                if (personsAuctionBundles.Count == 0)
+                {
+                    await DisplayAlert("", "You have no auctions", "OK");
+                }
+                else
+                {
+                    List<AuctionBundle> auctionsBundlesForCurrentSymbol = new List<AuctionBundle>();
+                    foreach (AuctionBundle a in personsAuctionBundles)
+                    {
+                        if (a.Symbol == auctionBundle.Symbol)
+                        {
+                            auctionsBundlesForCurrentSymbol.Add(a);
+                        }
+                    }
+                    if (auctionsBundlesForCurrentSymbol.Count() == 0)
+                    {
+                        await DisplayAlert("", "You have not bought auctions from " + auctionBundle.Name, "OK");
+                    }
+                    else
+                    {
+                        double medianValue;
+                        double totalCost = 0;
+                        double totalNumber = 0;
+                        foreach(AuctionBundle a in auctionsBundlesForCurrentSymbol)
+                        {
+                            double auxNumber = double.Parse(a.Number, System.Globalization.CultureInfo.InvariantCulture);
+                            totalCost += auxNumber * a.OpenValueAtDateBought;
+                            totalNumber += auxNumber;
+                        }
+                        medianValue = totalCost / totalNumber;
+                        double profit = (auctionBundle.OpenValueAtDateBought - medianValue) * double.Parse(auctionBundle.Number, System.Globalization.CultureInfo.InvariantCulture);
+                        ProfitLabel.Text = "You gain " + profit + " from transactioning " + auctionBundle.Number + " auctions from " + auctionBundle.Name;
+                        ProfitLabel.IsVisible = true;
+                    }
+                }
+            }
 
         }
     }

@@ -64,7 +64,19 @@ namespace FormsAppTelenav.Databases
             
         }
 
-
+        public async Task<List<AuctionBundle>> GetAuctionBundlesForPerson(Person person)
+        {
+            int pID = person.Id;
+            try
+            {
+                return await connection.Table<AuctionBundle>().Where(a => a.PersonID == pID).ToListAsync();
+            }
+            catch (InvalidOperationException e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message);
+                return null;
+            }
+        }
 
         public async void createCurrencyTable(){
             await connection.CreateTableAsync<Currency>();

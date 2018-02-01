@@ -18,6 +18,8 @@ namespace FormsAppTelenav.Views
         private ObservableCollection<Auction> stock = new ObservableCollection<Auction>();
         private AuctionsFromAPI auctions = new AuctionsFromAPI();
         private string auctionName;
+        private string KEY_BUY = "buy";
+        private string KEY_SELL = "sell";
         private string symbol;
         public AuctionView(string symbol, string auctionName)
         {
@@ -36,7 +38,7 @@ namespace FormsAppTelenav.Views
 
         private void ToBuyAuctions_Clicked(object sender, EventArgs e)
         {
-            BuyAuctionsView buyAuctionsView = new BuyAuctionsView(new ToBuyAuction(symbol ,auctionName, stock[0].CloseValue, stock[0].Date));
+            BuyAuctionsView buyAuctionsView = new BuyAuctionsView(new ToBuyAuction(symbol ,auctionName, stock[0].CloseValue, stock[0].Date), KEY_BUY);
             Navigation.PushAsync(buyAuctionsView);
         }
 
@@ -47,6 +49,12 @@ namespace FormsAppTelenav.Views
             {
                 await DisplayAlert("", "We can't find the stock market, sorry!", "OK");
             }
+        }
+
+        private void ToSellAuctions_Clicked(object sender, EventArgs e)
+        {
+            BuyAuctionsView buyAuctionsView = new BuyAuctionsView(new ToBuyAuction(symbol, auctionName, stock[0].CloseValue, stock[0].Date), KEY_SELL);
+            Navigation.PushAsync(buyAuctionsView);
         }
     }
 
