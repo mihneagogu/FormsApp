@@ -66,7 +66,7 @@ namespace FormsAppTelenav.Views
             List<Person> ppl = await App.LocalDataBase.GetPeople();
             Person p = ppl[ppl.Count - 1];
             Currency curr = await App.LocalDataBase.GetCurrency(p.CurrencyID);
-            await DisplayAlert("ok", p.Name + " " + p.Amount + " " + curr.Name, "ok");
+            await DisplayAlert("ok", ppl.Count.ToString(), "ok");
             
         }
 

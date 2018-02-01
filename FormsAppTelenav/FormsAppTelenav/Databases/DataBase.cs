@@ -21,6 +21,8 @@ namespace FormsAppTelenav.Databases
                 }
                 return connection;
             }
+             
+            set { connection = value; }
             
         }
 
@@ -30,9 +32,12 @@ namespace FormsAppTelenav.Databases
 
         public DataBase(string path)
         {
+            connection = new SQLiteAsyncConnection(path);
             Path = path;
-            createPersonTable();
-            createCurrencyTable();
+            connection.CreateTableAsync<Person>().Wait();
+            connection.CreateTableAsync<Currency>().Wait();
+            /*createPersonTable();
+            createCurrencyTable(); */
             CheckSymbols();
 
         }
@@ -41,6 +46,7 @@ namespace FormsAppTelenav.Databases
             for (int i = 0; i < currencySymbols.Count(); i++)
             {
                 var currency = await GetCurrency(currencySymbols[i]);
+                int q = 0;
                 if (currency == null){
                     currency = new Currency();
                     currency.Name = currencySymbols[i];
@@ -52,24 +58,26 @@ namespace FormsAppTelenav.Databases
                    
 
             }
+            
         }
 
 
 
         public async void createCurrencyTable(){
-            await Connection.CreateTableAsync<Currency>();
+            await connection.CreateTableAsync<Currency>();
+            
 
         } 
 
         public async Task<int> AddCurrency(Currency currency)
         {
-            return await Connection.InsertAsync(currency);
+            return await connection.InsertAsync(currency);
         }
 
         public async Task<Currency> GetCurrency(string symbol){
             try
             {
-                return await Connection.Table<Currency>().Where(row => row.Name.Equals(symbol)).FirstAsync();
+                return await connection.Table<Currency>().Where(row => row.Name.Equals(symbol)).FirstAsync();
             }
             catch(InvalidOperationException) {
                 return null;
@@ -79,7 +87,7 @@ namespace FormsAppTelenav.Databases
         public async Task<Currency> GetCurrency(int id){
             try
             {
-                return await Connection.Table<Currency>().Where(row => row.Id == id).FirstAsync();
+                return await connection.Table<Currency>().Where(row => row.Id == id).FirstAsync();
             }
             catch (InvalidOperationException)
             {
@@ -88,32 +96,33 @@ namespace FormsAppTelenav.Databases
         }
 
         public async Task<List<Currency>> GetCurrencies(){
-            return await Connection.Table<Currency>().ToListAsync();
+            return await connection.Table<Currency>().ToListAsync();
         }
 
         public async Task<int> SaveCurrency(Currency currency){
-            return await Connection.UpdateAsync(currency);
+            return await connection.UpdateAsync(currency);
         }
 
         public async void createPersonTable()
         {
-            await Connection.CreateTableAsync<Person>();
+            await connection.CreateTableAsync<Person>();
+            
 
         }
 
         public async Task<int> AddPerson(Person person)
         {
-            return await Connection.InsertAsync(person);
+            return await connection.InsertAsync(person);
         }
 
         public Task<List<Person>> GetPeople()
         {
-            return Connection.Table<Person>().ToListAsync();
+            return connection.Table<Person>().ToListAsync();
         }
 
         public Task<int> SavePerson(Person person)
         {
-            return Connection.UpdateAsync(person);
+            return connection.UpdateAsync(person);
         }
 
 
