@@ -36,11 +36,14 @@ namespace FormsAppTelenav.Databases
             Path = path;
             connection.CreateTableAsync<Person>().Wait();
             connection.CreateTableAsync<Currency>().Wait();
+            connection.CreateTableAsync<AuctionBundle>().Wait();
             /*createPersonTable();
             createCurrencyTable(); */
             CheckSymbols();
 
         }
+
+        
 
         private async void CheckSymbols(){
             for (int i = 0; i < currencySymbols.Count(); i++)
@@ -65,9 +68,18 @@ namespace FormsAppTelenav.Databases
 
         public async void createCurrencyTable(){
             await connection.CreateTableAsync<Currency>();
-            
-
         } 
+
+
+        public async Task<int> AddAuctionBundle(AuctionBundle auctionBundle)
+        {
+            return await connection.InsertAsync(auctionBundle);
+        }
+
+        public async Task<List<AuctionBundle>> GetAuctionBundles()
+        {
+            return await connection.Table<AuctionBundle>().ToListAsync();
+        }
 
         public async Task<int> AddCurrency(Currency currency)
         {

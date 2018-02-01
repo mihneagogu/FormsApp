@@ -64,6 +64,7 @@ namespace FormsAppTelenav.Views
         {
             int x = await App.LocalDataBase.AddPerson(person);
             List<Person> ppl = await App.LocalDataBase.GetPeople();
+            List<AuctionBundle> aunctionBundles = await App.LocalDataBase.GetAuctionBundles();
             Person p = ppl[ppl.Count - 1];
             Currency curr = await App.LocalDataBase.GetCurrency(p.CurrencyID);
             await DisplayAlert("ok", ppl.Count.ToString(), "ok");

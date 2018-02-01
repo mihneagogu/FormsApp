@@ -45,10 +45,13 @@ namespace FormsAppTelenav.Views
         private async void AddBundleToStockPortfolio(AuctionBundle auctionBundle)
         {
             List<Person> ppl = await App.LocalDataBase.GetPeople();
-            ppl[ppl.Count - 1].StockPortfolio += auctionBundle.Symbol + "|" + auctionBundle.Name + "|" + auctionBundle.OpenValueAtDateBought + "|" 
+            /* ppl[ppl.Count - 1].StockPortfolio += auctionBundle.Symbol + "|" + auctionBundle.Name + "|" + auctionBundle.OpenValueAtDateBought + "|" 
                  + "|" + auctionBundle.CloseValueAtDateBought + "|" + auctionBundle.DateBought + "|" + auctionBundle.Number + "\n";
-            int awaiter = await App.LocalDataBase.SavePerson(ppl[ppl.Count - 1] as Person);
-            ppl = await App.LocalDataBase.GetPeople();
+            int awaiter = await App.LocalDataBase.SavePerson(ppl[ppl.Count - 1] as Person); */
+            auctionBundle.PersonID = ppl.Count;
+            int awaiter = await App.LocalDataBase.AddAuctionBundle(auctionBundle);
+            List<AuctionBundle> aBundles = await App.LocalDataBase.GetAuctionBundles();
+            int q = 0;
 
         }
     }
