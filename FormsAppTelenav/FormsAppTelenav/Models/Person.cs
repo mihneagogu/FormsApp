@@ -37,7 +37,7 @@ namespace FormsAppTelenav.Classes
             get; set;
         }
 
-        public string StockPortfolio
+        public string StockIDs
         {
             get; set;
         }
