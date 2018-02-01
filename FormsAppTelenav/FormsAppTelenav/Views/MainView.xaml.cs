@@ -62,8 +62,13 @@ namespace FormsAppTelenav.Views
 
         private async void MeddleWithDB(Person person)
         {
-            int x = await App.LocalDataBase.AddPerson(person);
+
             List<Person> ppl = await App.LocalDataBase.GetPeople();
+            if (ppl.Count == 0)
+            {
+                int awaiter = await App.LocalDataBase.AddPerson(person);
+            }
+            
             List<AuctionBundle> aunctionBundles = await App.LocalDataBase.GetAuctionBundles();
             Person p = ppl[ppl.Count - 1];
             Currency curr = await App.LocalDataBase.GetCurrency(p.CurrencyID);

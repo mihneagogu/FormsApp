@@ -53,6 +53,8 @@ namespace FormsAppTelenav.Views
             List<AuctionBundle> aBundles = await App.LocalDataBase.GetAuctionBundles();
             Person person = ppl[ppl.Count - 1] as Person;
             person.StockIDs += aBundles[aBundles.Count - 1].Id.ToString() + "|";
+            awaiter = await App.LocalDataBase.SavePerson(person);
+            ppl = await App.LocalDataBase.GetPeople();
             int q = 0;
 
         }

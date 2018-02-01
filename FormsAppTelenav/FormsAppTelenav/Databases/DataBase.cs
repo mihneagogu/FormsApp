@@ -70,6 +70,10 @@ namespace FormsAppTelenav.Databases
             await connection.CreateTableAsync<Currency>();
         } 
 
+        public async Task<int> DeletePerson(Person person)
+        {
+            return await connection.DeleteAsync(person);
+        }
 
         public async Task<int> AddAuctionBundle(AuctionBundle auctionBundle)
         {
@@ -129,7 +133,15 @@ namespace FormsAppTelenav.Databases
 
         public Task<List<Person>> GetPeople()
         {
-            return connection.Table<Person>().ToListAsync();
+            try
+            {
+                return connection.Table<Person>().ToListAsync();
+            }
+            catch (InvalidOperationException e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message);
+                return null;
+            }
         }
 
         public Task<int> SavePerson(Person person)
