@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FormsAppTelenav.Models;
+using System.Runtime.ExceptionServices;
 
 namespace FormsAppTelenav.Databases
 {
@@ -37,10 +38,21 @@ namespace FormsAppTelenav.Databases
             connection.CreateTableAsync<Person>().Wait();
             connection.CreateTableAsync<Currency>().Wait();
             connection.CreateTableAsync<AuctionBundle>().Wait();
+            connection.CreateTableAsync<PersonToAuctionBundleConnection>().Wait();
             /*createPersonTable();
             createCurrencyTable(); */
             CheckSymbols();
 
+        }
+
+        public async Task<List<PersonToAuctionBundleConnection>> GetPersonToAuctionBundleConncetions()
+        {
+            return await connection.Table<PersonToAuctionBundleConnection>().ToListAsync();
+        }
+
+        public async Task<int> AddPersonToAuctionBundleConnection(PersonToAuctionBundleConnection con)
+        {
+            return await connection.InsertAsync(con);
         }
 
         
@@ -103,13 +115,21 @@ namespace FormsAppTelenav.Databases
         }
 
         public async Task<Currency> GetCurrency(string symbol){
+            ExceptionDispatchInfo capturedException = null;
             try
             {
                 return await connection.Table<Currency>().Where(row => row.Name.Equals(symbol)).FirstAsync();
             }
-            catch(InvalidOperationException) {
+            catch(InvalidOperationException e) {
+                capturedException = ExceptionDispatchInfo.Capture(e);
+                if (capturedException != null)
+                {
+                    return null;
+                }
                 return null;
+                
             }
+            
         }
 
         public async Task<Currency> GetCurrency(int id){

@@ -49,6 +49,11 @@ namespace FormsAppTelenav.Views
             {
                 await DisplayAlert("", "We can't find the stock market, sorry!", "OK");
             }
+            else
+            {
+                SellButton.IsEnabled = true;
+                BuyButton.IsEnabled = true;
+            }
         }
 
         private void ToSellAuctions_Clicked(object sender, EventArgs e)

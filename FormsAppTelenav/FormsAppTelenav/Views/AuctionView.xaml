@@ -30,10 +30,11 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button Text="Buy auctions" 
-                Clicked="ToBuyAuctions_Clicked"/>
-            <Button Text="Sell auctions"
-                    Clicked="ToSellAuctions_Clicked"/>
+        <Button x:Name="BuyButton" Text="Buy auctions" 
+                Clicked="ToBuyAuctions_Clicked" IsEnabled="False"/>
+            <Button x:Name="SellButton"
+                Text="Sell auctions"
+                    Clicked="ToSellAuctions_Clicked" IsEnabled="False"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
