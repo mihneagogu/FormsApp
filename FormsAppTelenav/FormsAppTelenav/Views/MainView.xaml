@@ -4,7 +4,7 @@
              x:Class="FormsAppTelenav.Views.MainView">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="asdasd"
+            <Label Text="{Binding MoneyStatement, Mode=TwoWay}"
                    HorizontalOptions='Center'/>
             <Button 
                 Text="Go to the bank"
@@ -14,6 +14,9 @@
                 Text="Buy and check auctions"
                 Clicked="ToAuctionHouse_Clicked"
                 />
+            <Button Text="Check your purchase history"
+                    Clicked="ToHistory_Clicked"
+                    />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
