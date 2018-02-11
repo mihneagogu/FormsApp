@@ -82,7 +82,35 @@ namespace FormsAppTelenav.Databases
         }
 
         private async void CheckSymbols(){
-            for (int i = 0; i < currencySymbols.Count(); i++)
+            List<Currency> currencies = await GetCurrencies();
+            if (currencies.Count == 0)
+            {
+                for (int i = 0; i < currencySymbols.Count(); i++)
+                {
+                    Currency currency = new Currency();
+                    currency.Name = currencySymbols[i];
+                    currency.ExchangeRate = currencyValues[i];
+                    await AddCurrency(currency);
+                    App.Currencies.Add(currency);
+                    System.Diagnostics.Debug.WriteLine("Added currency: " + currency.Name);
+                }
+            }
+            else
+            {
+               if (currencySymbols.Count() != currencies.Count())
+               {
+                    for (int i = currencies.Count() - 1; i < currencySymbols.Count(); i++)
+                    {
+                        Currency currency = new Currency();
+                        currency.Name = currencySymbols[i];
+                        currency.ExchangeRate = currencyValues[i];
+                        await AddCurrency(currency);
+                        App.Currencies.Add(currency);
+                        System.Diagnostics.Debug.WriteLine("Added currency: " + currency.Name);
+                    }
+               }
+            }
+            /*for (int i = 0; i < currencySymbols.Count(); i++)
             {
                 var currency = await GetCurrency(currencySymbols[i]);
                 int q = 0;
@@ -96,7 +124,7 @@ namespace FormsAppTelenav.Databases
                 }
                    
 
-            }
+            } */
             
         }
 

@@ -44,15 +44,15 @@ namespace FormsAppTelenav.Views
 
         
 
-        private double CalculateMoneyToEarn(DateTime constantTime)
+        private double CalculateMoneyToEarn(DateTime constantTime, Person person)
         {
             DateTime timeNow = DateTime.Now.ToLocalTime();
             TimeSpan span = timeNow.Subtract(constantTime);
             double minutes = span.TotalMinutes;
             double amount = 0;
-            amount += 10 * Math.Floor(minutes);
+            amount += 1 * Math.Floor(minutes);
             double currentAmount = person.Amount + amount;
-            MoneyStatement = "You have " + currentAmount + "currency";
+            MoneyStatement = "You have " + currentAmount + " currency";
             return currentAmount;
             
             
@@ -98,7 +98,7 @@ namespace FormsAppTelenav.Views
             {
                 AppSettings setting = settings[settings.Count - 1] as AppSettings;
                 DateTime currentTime = DateTime.Now.ToLocalTime();
-                double currentAmount = CalculateMoneyToEarn(Convert.ToDateTime(setting.LastLogin));
+                double currentAmount = CalculateMoneyToEarn(Convert.ToDateTime(setting.LastLogin), person);
                 if (currentAmount != person.Amount)
                 {
                     setting.LastLogin = currentTime.ToString();
