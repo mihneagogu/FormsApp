@@ -39,11 +39,14 @@ namespace FormsAppTelenav.Databases
             connection.CreateTableAsync<Currency>().Wait();
             connection.CreateTableAsync<AuctionBundle>().Wait();
             connection.CreateTableAsync<PersonToAuctionBundleConnection>().Wait();
+            connection.CreateTableAsync<AppSettings>().Wait();
             /*createPersonTable();
             createCurrencyTable(); */
             CheckSymbols();
 
         }
+
+        
 
         public async Task<List<PersonToAuctionBundleConnection>> GetPersonToAuctionBundleConncetions()
         {
@@ -55,7 +58,28 @@ namespace FormsAppTelenav.Databases
             return await connection.InsertAsync(con);
         }
 
-        
+        public async Task<int> AddAppSetting(AppSettings setting)
+        {
+            return await connection.InsertAsync(setting);
+        }
+
+        public Task<List<AppSettings>> GetAppSettings()
+        {
+            try
+            {
+                return connection.Table<AppSettings>().ToListAsync();
+            }
+            catch (InvalidOperationException e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+        public async Task<int> SaveAppSetting(AppSettings setting)
+        {
+            return await connection.UpdateAsync(setting);
+        }
 
         private async void CheckSymbols(){
             for (int i = 0; i < currencySymbols.Count(); i++)

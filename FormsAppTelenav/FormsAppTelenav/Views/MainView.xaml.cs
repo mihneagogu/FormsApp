@@ -30,8 +30,9 @@ namespace FormsAppTelenav.Views
             InitializeComponent();
             person.CurrencyID = 2;
             person.Amount = 5000;
+            MoneyStatement = "You have " + person.Amount + " currency";
             MeddleWithDB(person);
-            CalculateMoneyToEarn();
+            
 
 
             
@@ -43,16 +44,16 @@ namespace FormsAppTelenav.Views
 
         
 
-        private void CalculateMoneyToEarn()
+        private double CalculateMoneyToEarn(DateTime constantTime)
         {
-            DateTime constantTime = new DateTime(2018, 2, 10, 9, 1, 1, DateTimeKind.Local);
             DateTime timeNow = DateTime.Now.ToLocalTime();
             TimeSpan span = timeNow.Subtract(constantTime);
             double minutes = span.TotalMinutes;
             double amount = 0;
-            amount += 1 * Math.Floor(minutes / 10);
+            amount += 10 * Math.Floor(minutes);
             double currentAmount = person.Amount + amount;
-            MoneyStatement = "You have currently " + currentAmount + "$";
+            MoneyStatement = "You have " + currentAmount + "currency";
+            return currentAmount;
             
             
             
@@ -82,7 +83,35 @@ namespace FormsAppTelenav.Views
             {
                 int awaiter = await App.LocalDataBase.AddPerson(person);
             }
-            
+            ppl = await App.LocalDataBase.GetPeople();
+            person = ppl[ppl.Count - 1] as Person;
+            List<AppSettings> settings = await App.LocalDataBase.GetAppSettings();
+            if (settings.Count == 0)
+            {
+                AppSettings currentSetting = new AppSettings();
+                currentSetting.CurrentPerson = person.Id;
+                DateTime currentTime = DateTime.Now.ToLocalTime();
+                currentSetting.LastLogin = currentTime.ToString();
+                int awaiter = await App.LocalDataBase.AddAppSetting(currentSetting);
+            }
+            else
+            {
+                AppSettings setting = settings[settings.Count - 1] as AppSettings;
+                DateTime currentTime = DateTime.Now.ToLocalTime();
+                double currentAmount = CalculateMoneyToEarn(Convert.ToDateTime(setting.LastLogin));
+                if (currentAmount != person.Amount)
+                {
+                    setting.LastLogin = currentTime.ToString();
+                    int awaiter = await App.LocalDataBase.SaveAppSetting(setting);
+                    person.Amount = currentAmount;
+                    awaiter = await App.LocalDataBase.SavePerson(person);
+
+                }
+
+            }
+
+            ppl = await App.LocalDataBase.GetPeople();
+            settings = await App.LocalDataBase.GetAppSettings();
             List<AuctionBundle> aunctionBundles = await App.LocalDataBase.GetAuctionBundles();
             
             PersonToAuctionBundleConnection conn = new PersonToAuctionBundleConnection();
@@ -90,7 +119,7 @@ namespace FormsAppTelenav.Views
             Person p = ppl[ppl.Count - 1];
             Currency curr = await App.LocalDataBase.GetCurrency(p.CurrencyID);
             int q = 0;
-            await DisplayAlert("ok", ppl.Count.ToString(), "ok");
+                    
             
         }
 
