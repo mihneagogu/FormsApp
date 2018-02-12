@@ -88,7 +88,7 @@ namespace FormsAppTelenav.Views
                     List<AuctionBundle> auctionsBundlesForCurrentSymbol = new List<AuctionBundle>();
                     foreach (AuctionBundle a in personsAuctionBundles)
                     {
-                        if (a.Symbol == auctionBundle.Symbol)
+                        if (a.Symbol == auctionBundle.Symbol /*&& a.Number != "0"*/)
                         {
                             auctionsBundlesForCurrentSymbol.Add(a);
                         }
@@ -118,6 +118,24 @@ namespace FormsAppTelenav.Views
                         }
                         else
                         {
+                            AuctionBundle temporaryBundle = auctionBundle;
+                            foreach(AuctionBundle a in auctionsBundlesForCurrentSymbol)
+                            {
+                                double auxPersonNumber = double.Parse(a.Number, System.Globalization.CultureInfo.InvariantCulture);
+                                double auxToBuyNumber = double.Parse(temporaryBundle.Number, System.Globalization.CultureInfo.InvariantCulture);
+                                if ((auxPersonNumber - auxToBuyNumber) < 0)
+                                {
+                                    a.Number = "0";
+                                    auxToBuyNumber -= auxPersonNumber;
+                                    temporaryBundle.Number = auxToBuyNumber.ToString();
+                                }
+                                else
+                                {
+                                    a.Number = (auxPersonNumber - auxToBuyNumber).ToString();
+                                    temporaryBundle.Number = "0";
+                                    
+                                }
+                            }
                             ProfitLabel.IsVisible = true;
                         }
                     }

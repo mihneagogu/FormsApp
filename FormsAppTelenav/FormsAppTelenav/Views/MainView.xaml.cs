@@ -48,7 +48,7 @@ namespace FormsAppTelenav.Views
             TimeSpan span = timeNow.Subtract(constantTime);
             double minutes = span.TotalMinutes;
             double amount = 0;
-            amount += 1 * Math.Floor(minutes);
+            amount += 10 * Math.Floor(minutes);
             double currentAmount = person.Amount + amount;
             string builder = "You have " + currentAmount + " currency";
             binding.MoneyStatement = builder;
