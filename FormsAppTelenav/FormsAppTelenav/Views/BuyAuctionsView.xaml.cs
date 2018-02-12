@@ -50,18 +50,28 @@ namespace FormsAppTelenav.Views
             List<Person> ppl = await App.LocalDataBase.GetPeople();
             if (key.Equals("buy"))
             {
-                auctionBundle.PersonID = ppl.Count;
-                int awaiter = await App.LocalDataBase.AddAuctionBundle(auctionBundle);
-                List<AuctionBundle> aBundles = await App.LocalDataBase.GetAuctionBundles();
                 Person person = ppl[ppl.Count - 1] as Person;
-                //person.StockIDs += aBundles[aBundles.Count - 1].Id.ToString() + "|";
-                //awaiter = await App.LocalDataBase.SavePerson(person);
-                PersonToAuctionBundleConnection conn = new PersonToAuctionBundleConnection();
-                conn.PersonID = person.Id;
-                conn.AuctionBundleID = aBundles[aBundles.Count() - 1].Id;
-                awaiter = await App.LocalDataBase.AddPersonToAuctionBundleConnection(conn);
-                ppl = await App.LocalDataBase.GetPeople();
-                int q = 0;
+                string auctionNumber = auctionBundle.Number;
+                double auxAuctionNumber = double.Parse(auctionNumber);
+                if (person.Amount < (auctionBundle.CloseValueAtDateBought * auxAuctionNumber))
+                {
+                    await DisplayAlert("", "You do not have enough money", "OK");
+                }
+                else
+                {
+                    auctionBundle.PersonID = ppl.Count;
+                    int awaiter = await App.LocalDataBase.AddAuctionBundle(auctionBundle);
+                    List<AuctionBundle> aBundles = await App.LocalDataBase.GetAuctionBundles();
+                    person = ppl[ppl.Count - 1] as Person;
+                    PersonToAuctionBundleConnection conn = new PersonToAuctionBundleConnection();
+                    conn.PersonID = person.Id;
+                    conn.AuctionBundleID = aBundles[aBundles.Count() - 1].Id;
+                    awaiter = await App.LocalDataBase.AddPersonToAuctionBundleConnection(conn);
+                    await DisplayAlert("", "Congratulations, you have just bought " + auctionBundle.Number + " auctions", "OK");
+                    ppl = await App.LocalDataBase.GetPeople();
+                    int q = 0;
+                    
+                }
             }
             else
             {
@@ -101,7 +111,15 @@ namespace FormsAppTelenav.Views
                         medianValue = totalCost / totalNumber;
                         double profit = (auctionBundle.OpenValueAtDateBought - medianValue) * double.Parse(auctionBundle.Number, System.Globalization.CultureInfo.InvariantCulture);
                         ProfitLabel.Text = "You gain " + profit + " from transactioning " + auctionBundle.Number + " auctions from " + auctionBundle.Name;
-                        ProfitLabel.IsVisible = true;
+                        double auctionNumber = double.Parse(auctionBundle.Number);
+                        if (auctionNumber > totalNumber)
+                        {
+                            await DisplayAlert("", "You do not have this many auctions in your portfolio", "OK");
+                        }
+                        else
+                        {
+                            ProfitLabel.IsVisible = true;
+                        }
                     }
                 }
             }

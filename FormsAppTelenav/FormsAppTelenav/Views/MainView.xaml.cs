@@ -24,7 +24,10 @@ namespace FormsAppTelenav.Views
             set; get;
         }
 
-
+        protected override async void OnAppearing()
+        {
+            await MeddleWithDB(person);
+        }
 
         public MainView()
         {
@@ -32,12 +35,6 @@ namespace FormsAppTelenav.Views
             person.CurrencyID = 2;
             person.Amount = 5000;
             
-            MeddleWithDB(person);
-            
-
-
-            
-
             //AuctionHouseCommand = new Command(() => Navigation.PushAsync(new AuctionHouseView()));
             BindingContext = binding;
 
@@ -77,7 +74,7 @@ namespace FormsAppTelenav.Views
             Navigation.PushAsync(auctionHouseView);
         }
 
-        private async void MeddleWithDB(Person person)
+        private async Task<int> MeddleWithDB(Person person)
         {
 
             List<Person> ppl = await App.LocalDataBase.GetPeople();
@@ -125,7 +122,7 @@ namespace FormsAppTelenav.Views
             Person p = ppl[ppl.Count - 1];
             Currency curr = await App.LocalDataBase.GetCurrency(p.CurrencyID);
             int q = 0;
-
+            return 0;
                     
             
         }
