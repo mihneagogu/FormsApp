@@ -15,9 +15,10 @@ using FormsAppTelenav.Models;
 namespace FormsAppTelenav.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MainView : ContentPage
+    public partial class MainView : ContentPage 
     {
-        private string moneyStatement = "";
+        
+        private MainViewBindingModel binding = new MainViewBindingModel();
         Person person = new Person("Mikeymike");
         public Person Person {
             set; get;
@@ -30,7 +31,7 @@ namespace FormsAppTelenav.Views
             InitializeComponent();
             person.CurrencyID = 2;
             person.Amount = 5000;
-            MoneyStatement = "You have " + person.Amount + " currency";
+            
             MeddleWithDB(person);
             
 
@@ -38,7 +39,7 @@ namespace FormsAppTelenav.Views
             
 
             //AuctionHouseCommand = new Command(() => Navigation.PushAsync(new AuctionHouseView()));
-            BindingContext = this;
+            BindingContext = binding;
 
         }
 
@@ -52,7 +53,8 @@ namespace FormsAppTelenav.Views
             double amount = 0;
             amount += 1 * Math.Floor(minutes);
             double currentAmount = person.Amount + amount;
-            MoneyStatement = "You have " + currentAmount + " currency";
+            string builder = "You have " + currentAmount + " currency";
+            binding.MoneyStatement = builder;
             return currentAmount;
             
             
@@ -85,6 +87,7 @@ namespace FormsAppTelenav.Views
             }
             ppl = await App.LocalDataBase.GetPeople();
             person = ppl[ppl.Count - 1] as Person;
+            binding.MoneyStatement = "You have " + person.Amount + " currency";
             List<AppSettings> settings = await App.LocalDataBase.GetAppSettings();
             if (settings.Count == 0)
             {
@@ -104,13 +107,16 @@ namespace FormsAppTelenav.Views
                     setting.LastLogin = currentTime.ToString();
                     int awaiter = await App.LocalDataBase.SaveAppSetting(setting);
                     person.Amount = currentAmount;
+                    
                     awaiter = await App.LocalDataBase.SavePerson(person);
-
+                    string builder = "You have  " + currentAmount + " currency";
                 }
 
             }
-
+           
             ppl = await App.LocalDataBase.GetPeople();
+            person = ppl[ppl.Count - 1] as Person;
+            binding.MoneyStatement = "You have " + person.Amount + " currency";
             settings = await App.LocalDataBase.GetAppSettings();
             List<AuctionBundle> aunctionBundles = await App.LocalDataBase.GetAuctionBundles();
             
@@ -119,6 +125,7 @@ namespace FormsAppTelenav.Views
             Person p = ppl[ppl.Count - 1];
             Currency curr = await App.LocalDataBase.GetCurrency(p.CurrencyID);
             int q = 0;
+
                     
             
         }
@@ -129,10 +136,7 @@ namespace FormsAppTelenav.Views
             Navigation.PushAsync(historyView);
         }
 
-        public string MoneyStatement
-        {
-            set; get;
-        }
+        
 
 
         /* public ICommand AuctionHouseCommand
