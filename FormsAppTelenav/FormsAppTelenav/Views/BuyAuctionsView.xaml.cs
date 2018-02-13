@@ -47,6 +47,7 @@ namespace FormsAppTelenav.Views
 
         private async void AddBundleToStockPortfolio(AuctionBundle auctionBundle)
         {
+            string numberToBuy = auctionBundle.Number;
             List<Person> ppl = await App.LocalDataBase.GetPeople();
             if (key.Equals("buy"))
             {
@@ -59,6 +60,7 @@ namespace FormsAppTelenav.Views
                 }
                 else
                 {
+                    string KEY_BOUGHT = "BOUGHT";
                     auctionBundle.PersonID = ppl.Count;
                     int awaiter = await App.LocalDataBase.AddAuctionBundle(auctionBundle);
                     List<AuctionBundle> aBundles = await App.LocalDataBase.GetAuctionBundles();
@@ -76,7 +78,11 @@ namespace FormsAppTelenav.Views
                     person = ppl[ppl.Count - 1] as Person;
                     person.Amount -= amountToPay;
                     awaiter = await App.LocalDataBase.SavePerson(person);
-                    
+                    AuctionBundleForHistory bundle = new AuctionBundleForHistory(auctionBundle.Symbol, auctionBundle.Name, auctionBundle.OpenValueAtDateBought, auctionBundle.CloseValueAtDateBought, auctionBundle.DateBought, auctionBundle.Number, KEY_BOUGHT);
+                    bundle.PersonID = person.Id;
+                    awaiter = await App.LocalDataBase.AddAuctionBundleToHistory(bundle);
+                    List<AuctionBundleForHistory> bundles = await App.LocalDataBase.GetHistory();
+                    int x = 0;
                 }
             }
             else
@@ -124,6 +130,7 @@ namespace FormsAppTelenav.Views
                         }
                         else
                         {
+                            string KEY_SOLD = "SOLD";
                             AuctionBundle temporaryBundle = auctionBundle;
                             foreach(AuctionBundle a in auctionsBundlesForCurrentSymbol)
                             {
@@ -150,9 +157,14 @@ namespace FormsAppTelenav.Views
                             person = ppl[ppl.Count - 1] as Person;
                             person.Amount += totalCost;
                             int awaiter = await App.LocalDataBase.SavePerson(person);
-                            await DisplayAlert("", "Congratulations, you have just bought " + auctionBundle.Number + " auctions", "OK");
+                            AuctionBundleForHistory bundle = new AuctionBundleForHistory(auctionBundle.Symbol, auctionBundle.Name, auctionBundle.OpenValueAtDateBought, auctionBundle.CloseValueAtDateBought, auctionBundle.DateBought, numberToBuy, KEY_SOLD);
+                            bundle.PersonID = person.Id;
+                            awaiter = await App.LocalDataBase.AddAuctionBundleToHistory(bundle);
+                            await DisplayAlert("", "Congratulations, you have just sold " + numberToBuy + " auctions", "OK");
                             /// foreach auction in a > saveAuctionBundle si la person se adauga cat se vinde din actiuni
                             ProfitLabel.IsVisible = true;
+                            List<AuctionBundleForHistory> bundles = await App.LocalDataBase.GetHistory();
+                            int x = 0;
                         }
                     }
                 }

@@ -45,6 +45,7 @@
     <Compile Include="Classes\Money.cs" />
     <Compile Include="Databases\DataBase.cs" />
     <Compile Include="Models\AuctionBundle.cs" />
+    <Compile Include="Models\AuctionBundleForHistory.cs" />
     <Compile Include="Models\MainViewBindingModel.cs" />
     <Compile Include="Models\PersonToAuctionBundleConnection.cs" />
     <Compile Include="Models\ToBuyAuction.cs" />

@@ -119,6 +119,7 @@ namespace FormsAppTelenav.Views
             
             PersonToAuctionBundleConnection conn = new PersonToAuctionBundleConnection();
             List<PersonToAuctionBundleConnection> conns = await App.LocalDataBase.GetPersonToAuctionBundleConncetions();
+            List<AuctionBundleForHistory> bundles = await App.LocalDataBase.GetHistory();
             Person p = ppl[ppl.Count - 1];
             Currency curr = await App.LocalDataBase.GetCurrency(p.CurrencyID);
             int q = 0;

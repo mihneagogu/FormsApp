@@ -40,13 +40,22 @@ namespace FormsAppTelenav.Databases
             connection.CreateTableAsync<AuctionBundle>().Wait();
             connection.CreateTableAsync<PersonToAuctionBundleConnection>().Wait();
             connection.CreateTableAsync<AppSettings>().Wait();
+            connection.CreateTableAsync<AuctionBundleForHistory>().Wait();
             /*createPersonTable();
             createCurrencyTable(); */
             CheckSymbols();
 
         }
 
-        
+        public async Task<int> AddAuctionBundleToHistory(AuctionBundleForHistory auctionBundleForHistory)
+        {
+            return await connection.InsertAsync(auctionBundleForHistory);
+        }
+
+        public async Task<List<AuctionBundleForHistory>> GetHistory()
+        {
+            return await connection.Table<AuctionBundleForHistory>().ToListAsync();
+        }
 
         public async Task<List<PersonToAuctionBundleConnection>> GetPersonToAuctionBundleConncetions()
         {
