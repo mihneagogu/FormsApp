@@ -70,6 +70,12 @@ namespace FormsAppTelenav.Views
                     await DisplayAlert("", "Congratulations, you have just bought " + auctionBundle.Number + " auctions", "OK");
                     ppl = await App.LocalDataBase.GetPeople();
                     int q = 0;
+                    double auxNumber = double.Parse(auctionBundle.Number, System.Globalization.CultureInfo.InvariantCulture);
+                    double amountToPay = auctionBundle.CloseValueAtDateBought * auxNumber;
+                    ppl = await App.LocalDataBase.GetPeople();
+                    person = ppl[ppl.Count - 1] as Person;
+                    person.Amount -= amountToPay;
+                    awaiter = await App.LocalDataBase.SavePerson(person);
                     
                 }
             }
@@ -136,6 +142,16 @@ namespace FormsAppTelenav.Views
                                     
                                 }
                             }
+                            foreach(AuctionBundle a in auctionsBundlesForCurrentSymbol)
+                            {
+                                int q = await App.LocalDataBase.SaveAuctionBundle(a);
+                            }
+                            ppl = await App.LocalDataBase.GetPeople();
+                            person = ppl[ppl.Count - 1] as Person;
+                            person.Amount += totalCost;
+                            int awaiter = await App.LocalDataBase.SavePerson(person);
+                            await DisplayAlert("", "Congratulations, you have just bought " + auctionBundle.Number + " auctions", "OK");
+                            /// foreach auction in a > saveAuctionBundle si la person se adauga cat se vinde din actiuni
                             ProfitLabel.IsVisible = true;
                         }
                     }

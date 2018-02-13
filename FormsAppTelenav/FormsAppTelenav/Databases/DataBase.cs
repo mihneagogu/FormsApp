@@ -76,6 +76,11 @@ namespace FormsAppTelenav.Databases
             }
         }
 
+        public async Task<int> SaveAuctionBundle(AuctionBundle auctionBundle)
+        {
+            return await connection.UpdateAsync(auctionBundle);
+        }
+
         public async Task<int> SaveAppSetting(AppSettings setting)
         {
             return await connection.UpdateAsync(setting);
