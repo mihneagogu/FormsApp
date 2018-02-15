@@ -17,7 +17,7 @@ namespace FormsAppTelenav.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainView : ContentPage 
     {
-        
+        private List<AuctionBundleForHistory> history;
         private MainViewBindingModel binding = new MainViewBindingModel();
         Person person = new Person("Mikeymike");
         public Person Person {
@@ -122,16 +122,29 @@ namespace FormsAppTelenav.Views
             List<AuctionBundleForHistory> bundles = await App.LocalDataBase.GetHistory();
             Person p = ppl[ppl.Count - 1];
             Currency curr = await App.LocalDataBase.GetCurrency(p.CurrencyID);
-            int q = 0;
+            if (bundles.Count != 0)
+            {
+                HistoryButton.IsEnabled = true;
+                history = await App.LocalDataBase.GetHistory();
+            }
             return 0;
                     
             
         }
 
-        private void ToHistory_Clicked(object sender, EventArgs e)
+        private async void ToHistory_Clicked(object sender, EventArgs e)
         {
-            HistoryView historyView = new HistoryView();
-            Navigation.PushAsync(historyView);
+            
+            if (history.Count != 0) {
+                HistoryView historyView = new HistoryView(history);
+                await Navigation.PushAsync(historyView);
+            }
+            else
+            {
+                await DisplayAlert("", "You have yet to buy auctions from a company", "OK");
+            }
+
+            
         }
 
         

@@ -3,10 +3,41 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FormsAppTelenav.Views.HistoryView">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="History view!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <ListView x:Name="historyListView" ItemsSource="{Binding Bundles}">
+            <ListView.Header>
+                <Grid Padding="7">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Text="Value" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" />
+                    <Label Text="Date" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" />
+                    <Label Text="Amount" Grid.Row="0" Grid.Column="2" HorizontalOptions="Center" />
+                    <Label Text="Company Symbol" Grid.Row="0" Grid.Column="3" HorizontalOptions="Center" />
+                            <Label Text="Action" Grid.Row="0" Grid.Column="4" HorizontalOptions="Center" />
+                </Grid>
+            </ListView.Header>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid Padding="7">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Text="{Binding OpenValueAtDateBought}" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" />
+                            <Label Text="{Binding DateBought}" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" FontSize="12"/>
+                            <Label Text="{Binding Number}" Grid.Row="0" Grid.Column="2" HorizontalOptions="Center" />
+                            <Label Text="{Binding Symbol}" Grid.Row="0" Grid.Column="3" HorizontalOptions="Center" />
+                            <Label Text="{Binding Type}" Grid.Row="0" Grid.Column="4" HorizontalOptions="Center"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </ContentPage.Content>
 </ContentPage>

@@ -54,7 +54,14 @@ namespace FormsAppTelenav.Databases
 
         public async Task<List<AuctionBundleForHistory>> GetHistory()
         {
-            return await connection.Table<AuctionBundleForHistory>().ToListAsync();
+            try
+            {
+                return await connection.Table<AuctionBundleForHistory>().ToListAsync();
+            }
+            catch(InvalidOperationException e)
+            {
+                return null;
+            }
         }
 
         public async Task<List<PersonToAuctionBundleConnection>> GetPersonToAuctionBundleConncetions()

@@ -13,8 +13,10 @@
                 Text="Buy and check auctions"
                 Clicked="ToAuctionHouse_Clicked"
                 />
-            <Button Text="Check your purchase history"
+            <Button x:Name="HistoryButton"
+                Text="Check your purchase history"
                     Clicked="ToHistory_Clicked"
+                    IsEnabled="False"
                     />
         </StackLayout>
     </ContentPage.Content>

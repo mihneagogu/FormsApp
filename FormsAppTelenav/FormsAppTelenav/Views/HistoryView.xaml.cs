@@ -1,5 +1,7 @@
-﻿using System;
+﻿using FormsAppTelenav.Models;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,9 +14,22 @@ namespace FormsAppTelenav.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HistoryView : ContentPage
     {
-        public HistoryView()
+        private ObservableCollection<AuctionBundleForHistory> history = new ObservableCollection<AuctionBundleForHistory>();
+        public HistoryView(List<AuctionBundleForHistory> bundles)
         {
+            foreach(AuctionBundleForHistory b in bundles)
+            {
+                history.Add(b);
+                
+            }
+            BindingContext = this;
             InitializeComponent();
+        }
+
+        public ObservableCollection<AuctionBundleForHistory> Bundles
+        {
+            set { history = value; }
+            get { return history; }
         }
     }
 }
