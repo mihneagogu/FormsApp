@@ -63,6 +63,7 @@ namespace FormsAppTelenav.Views
                     string KEY_BOUGHT = "BOUGHT";
                     auctionBundle.PersonID = ppl.Count;
                     int awaiter = await App.LocalDataBase.AddAuctionBundle(auctionBundle);
+
                     List<AuctionBundle> aBundles = await App.LocalDataBase.GetAuctionBundles();
                     person = ppl[ppl.Count - 1] as Person;
                     PersonToAuctionBundleConnection conn = new PersonToAuctionBundleConnection();
@@ -70,6 +71,7 @@ namespace FormsAppTelenav.Views
                     conn.AuctionBundleID = aBundles[aBundles.Count() - 1].Id;
                     awaiter = await App.LocalDataBase.AddPersonToAuctionBundleConnection(conn);
                     await DisplayAlert("", "Congratulations, you have just bought " + auctionBundle.Number + " auctions", "OK");
+
                     ppl = await App.LocalDataBase.GetPeople();
                     int q = 0;
                     double auxNumber = double.Parse(auctionBundle.Number, System.Globalization.CultureInfo.InvariantCulture);
@@ -131,7 +133,7 @@ namespace FormsAppTelenav.Views
                         else
                         {
                             string KEY_SOLD = "SOLD";
-                            AuctionBundle temporaryBundle = auctionBundle;
+                            AuctionBundle temporaryBundle = auctionBundle.Copy();
                             foreach(AuctionBundle a in auctionsBundlesForCurrentSymbol)
                             {
                                 double auxPersonNumber = double.Parse(a.Number, System.Globalization.CultureInfo.InvariantCulture);
@@ -155,7 +157,8 @@ namespace FormsAppTelenav.Views
                             }
                             ppl = await App.LocalDataBase.GetPeople();
                             person = ppl[ppl.Count - 1] as Person;
-                            person.Amount += totalCost;
+                            double auxNumber = double.Parse(auctionBundle.Number, System.Globalization.CultureInfo.InvariantCulture);
+                            person.Amount += auxNumber * auctionBundle.OpenValueAtDateBought;
                             int awaiter = await App.LocalDataBase.SavePerson(person);
                             AuctionBundleForHistory bundle = new AuctionBundleForHistory(auctionBundle.Symbol, auctionBundle.Name, auctionBundle.OpenValueAtDateBought, auctionBundle.CloseValueAtDateBought, auctionBundle.DateBought, numberToBuy, KEY_SOLD);
                             bundle.PersonID = person.Id;
