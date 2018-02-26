@@ -16,15 +16,16 @@ namespace FormsAppTelenav.Views
     public partial class BuyAuctionsView : ContentPage
     {
         private ToBuyAuction auctionToBuy;
-        private string key;
-        public BuyAuctionsView(ToBuyAuction auctionToBuy, string key)
+        private AuctionAction action;
+        public BuyAuctionsView(ToBuyAuction auctionToBuy, AuctionAction action)
         {
             InitializeComponent();
             this.auctionToBuy = auctionToBuy;
-            this.key = key;
-            BuyOrSellLabel.Text = "How many auctions do you want to " + key + "?";          
+            this.action = action;
+            BuyOrSellLabel.Text = "How many auctions do you want to " + action + "?";          
             BindingContext = this;
         }
+
 
         public string CompanyNameStatement
         {
@@ -49,7 +50,7 @@ namespace FormsAppTelenav.Views
         {
             string numberToBuy = auctionBundle.Number;
             List<Person> ppl = await App.LocalDataBase.GetPeople();
-            if (key.Equals("buy"))
+            if (action == AuctionAction.BOUGHT)
             {
                 Person person = ppl[ppl.Count - 1] as Person;
                 string auctionNumber = auctionBundle.Number;
@@ -60,15 +61,13 @@ namespace FormsAppTelenav.Views
                 }
                 else
                 {
-                    string KEY_BOUGHT = "BOUGHT";
                     auctionBundle.PersonID = ppl.Count;
                     int awaiter = await App.LocalDataBase.AddAuctionBundle(auctionBundle);
 
-                    List<AuctionBundle> aBundles = await App.LocalDataBase.GetAuctionBundles();
                     person = ppl[ppl.Count - 1] as Person;
                     PersonToAuctionBundleConnection conn = new PersonToAuctionBundleConnection();
                     conn.PersonID = person.Id;
-                    conn.AuctionBundleID = aBundles[aBundles.Count() - 1].Id;
+                    conn.AuctionBundleID = auctionBundle.Id;
                     awaiter = await App.LocalDataBase.AddPersonToAuctionBundleConnection(conn);
                     await DisplayAlert("", "Congratulations, you have just bought " + auctionBundle.Number + " auctions", "OK");
 
@@ -80,7 +79,7 @@ namespace FormsAppTelenav.Views
                     person = ppl[ppl.Count - 1] as Person;
                     person.Amount -= amountToPay;
                     awaiter = await App.LocalDataBase.SavePerson(person);
-                    AuctionBundleForHistory bundle = new AuctionBundleForHistory(auctionBundle.Symbol, auctionBundle.Name, auctionBundle.OpenValueAtDateBought, auctionBundle.CloseValueAtDateBought, auctionBundle.DateBought, auctionBundle.Number, KEY_BOUGHT);
+                    AuctionBundleForHistory bundle = new AuctionBundleForHistory(auctionBundle.Symbol, auctionBundle.Name, auctionBundle.OpenValueAtDateBought, auctionBundle.CloseValueAtDateBought, auctionBundle.DateBought, auctionBundle.Number, AuctionAction.BOUGHT);;
                     bundle.PersonID = person.Id;
                     awaiter = await App.LocalDataBase.AddAuctionBundleToHistory(bundle);
                     List<AuctionBundleForHistory> bundles = await App.LocalDataBase.GetHistory();
@@ -160,7 +159,7 @@ namespace FormsAppTelenav.Views
                             double auxNumber = double.Parse(auctionBundle.Number, System.Globalization.CultureInfo.InvariantCulture);
                             person.Amount += auxNumber * auctionBundle.OpenValueAtDateBought;
                             int awaiter = await App.LocalDataBase.SavePerson(person);
-                            AuctionBundleForHistory bundle = new AuctionBundleForHistory(auctionBundle.Symbol, auctionBundle.Name, auctionBundle.OpenValueAtDateBought, auctionBundle.CloseValueAtDateBought, auctionBundle.DateBought, numberToBuy, KEY_SOLD);
+                            AuctionBundleForHistory bundle = new AuctionBundleForHistory(auctionBundle.Symbol, auctionBundle.Name, auctionBundle.OpenValueAtDateBought, auctionBundle.CloseValueAtDateBought, auctionBundle.DateBought, numberToBuy, AuctionAction.SOLD);
                             bundle.PersonID = person.Id;
                             awaiter = await App.LocalDataBase.AddAuctionBundleToHistory(bundle);
                             await DisplayAlert("", "Congratulations, you have just sold " + numberToBuy + " auctions", "OK");

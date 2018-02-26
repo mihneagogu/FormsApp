@@ -38,7 +38,7 @@ namespace FormsAppTelenav.Views
 
         private void ToBuyAuctions_Clicked(object sender, EventArgs e)
         {
-            BuyAuctionsView buyAuctionsView = new BuyAuctionsView(new ToBuyAuction(symbol ,auctionName, stock[0].CloseValue, stock[0].Date), KEY_BUY);
+            BuyAuctionsView buyAuctionsView = new BuyAuctionsView(new ToBuyAuction(symbol ,auctionName, stock[0].CloseValue, stock[0].Date), AuctionAction.BOUGHT);
             Navigation.PushAsync(buyAuctionsView);
         }
 
@@ -58,7 +58,7 @@ namespace FormsAppTelenav.Views
 
         private void ToSellAuctions_Clicked(object sender, EventArgs e)
         {
-            BuyAuctionsView buyAuctionsView = new BuyAuctionsView(new ToBuyAuction(symbol, auctionName, stock[0].CloseValue, stock[0].Date), KEY_SELL);
+            BuyAuctionsView buyAuctionsView = new BuyAuctionsView(new ToBuyAuction(symbol, auctionName, stock[0].CloseValue, stock[0].Date), AuctionAction.SOLD);
             Navigation.PushAsync(buyAuctionsView);
         }
     }

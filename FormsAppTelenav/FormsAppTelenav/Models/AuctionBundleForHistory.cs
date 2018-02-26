@@ -7,9 +7,12 @@ using System.Threading.Tasks;
 
 namespace FormsAppTelenav.Models
 {
+
+    public enum AuctionAction { BOUGHT, SOLD };
+
     public class AuctionBundleForHistory
     {
-        public AuctionBundleForHistory(string symbol, string name, double openValueAtDateBought, double closeValueAtDateBought, string dateBought, string number, string type)
+        public AuctionBundleForHistory(string symbol, string name, double openValueAtDateBought, double closeValueAtDateBought, string dateBought, string number, AuctionAction action)
         {
             Symbol = symbol;
             Name = name;
@@ -17,7 +20,7 @@ namespace FormsAppTelenav.Models
             CloseValueAtDateBought = closeValueAtDateBought;
             DateBought = dateBought;
             Number = number;
-            Type = type;
+            Action = action;
 
         }
 
@@ -38,6 +41,6 @@ namespace FormsAppTelenav.Models
         public double CloseValueAtDateBought { get; set; }
         public string DateBought { get; set; }
         public string Number { get; set; }
-        public string Type { get; set; }
+        public AuctionAction Action { get; set; }
     }
 }

@@ -84,6 +84,9 @@
     <Compile Include="Models\StockSymbols.cs" />
     <Compile Include="Databases\ILocalFileHelper.cs" />
     <Compile Include="Models\Currency.cs" />
+    <Compile Include="Classes\AuctionActionStringConverter.cs" />
+    <Compile Include="Databases\Dealer.cs" />
+    <Compile Include="Classes\IMessageHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="App.xaml">

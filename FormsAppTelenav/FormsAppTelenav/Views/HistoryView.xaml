@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FormsAppTelenav.Views.HistoryView">
@@ -33,7 +33,7 @@
                             <Label Text="{Binding DateBought}" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" FontSize="12"/>
                             <Label Text="{Binding Number}" Grid.Row="0" Grid.Column="2" HorizontalOptions="Center" />
                             <Label Text="{Binding Symbol}" Grid.Row="0" Grid.Column="3" HorizontalOptions="Center" />
-                            <Label Text="{Binding Type}" Grid.Row="0" Grid.Column="4" HorizontalOptions="Center"/>
+                            <Label Text="{Binding Action, Converter={StaticResource auctionActionStringCnv}}}" Grid.Row="0" Grid.Column="4" HorizontalOptions="Center"/>
                         </Grid>
                     </ViewCell>
                 </DataTemplate>

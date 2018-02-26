@@ -9,12 +9,7 @@ namespace FormsAppTelenav.Models
 {
     public class AuctionBundle
     {
-        private string symbol;
-        private string name;
-        private double openValueAtDateBought;
-        private double closeValueAtDateBought;
-        private string dateBought;
-        private string number;
+     
         public AuctionBundle Copy(){
             return new AuctionBundle(Symbol, Name, OpenValueAtDateBought, CloseValueAtDateBought, DateBought, Number);
         }

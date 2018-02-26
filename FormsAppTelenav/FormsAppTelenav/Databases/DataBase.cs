@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 using FormsAppTelenav.Models;
 using System.Runtime.ExceptionServices;
 
-namespace FormsAppTelenav.Databases
+namespace FormsAppTelenav.Databases 
 {
-    public class DataBase
+    public class DataBase : IMessageHandler
     {
         private SQLiteAsyncConnection connection;
         private double[] currencyValues = { 1, 1.21336, 4.63716 };
@@ -131,21 +131,6 @@ namespace FormsAppTelenav.Databases
                     }
                }
             }
-            /*for (int i = 0; i < currencySymbols.Count(); i++)
-            {
-                var currency = await GetCurrency(currencySymbols[i]);
-                int q = 0;
-                if (currency == null){
-                    currency = new Currency();
-                    currency.Name = currencySymbols[i];
-                    currency.ExchangeRate = currencyValues[i];
-                    await AddCurrency(currency);
-                    App.Currencies.Add(currency);
-                    System.Diagnostics.Debug.WriteLine("Added curr " + currency.Name + " | " );
-                }
-                   
-
-            } */
             
         }
 
@@ -254,7 +239,9 @@ namespace FormsAppTelenav.Databases
             return connection.UpdateAsync(person);
         }
 
-
-
+        public void OnMessageReceived(MessageAction message, object payload)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

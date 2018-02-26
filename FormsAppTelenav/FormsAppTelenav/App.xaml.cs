@@ -11,10 +11,12 @@ namespace FormsAppTelenav
 {
     public partial class App : Application
     {
+        public static Dealer MiddleDealer { get; set; }
 
         public static DataBase LocalDataBase {
             get; set;
         }
+
 
         public static List<Currency> Currencies { get { return currencies; } set { currencies = value; } }
         private static List<Currency> currencies = new List<Currency>();
@@ -23,6 +25,7 @@ namespace FormsAppTelenav
             
             InitializeComponent();
             LocalDataBase = new DataBase(DependencyService.Get<ILocalFileHelper>().GetLocalFilePath("Person.db3"));
+            MiddleDealer = new Dealer();
 
 
             MainPage = new NavigationPage(new FormsAppTelenav.Views.MainView());
