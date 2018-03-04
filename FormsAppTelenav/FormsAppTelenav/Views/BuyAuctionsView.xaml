@@ -6,7 +6,7 @@
         <StackLayout>
             <Label Text="{Binding CompanyNameStatement}" />
             <Label x:Name="BuyOrSellLabel" Text="How many auctions do you want to buy?" />
-            <Entry x:Name="NumberEntry"/>
+            <Entry x:Name="NumberEntry" Keyboard="Numeric"/>
             <Label Text="{Binding PriceValueStatement}" />
             <Button Text="Confirm payment" Clicked="ConfirmedPayment_Clicked"/>
             <Label x:Name="ProfitLabel" IsVisible="False"/>

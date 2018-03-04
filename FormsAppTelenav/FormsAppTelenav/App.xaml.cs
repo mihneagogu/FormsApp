@@ -7,11 +7,12 @@ using FormsAppTelenav.Databases;
 using FormsAppTelenav.Models;
 using Xamarin.Forms;
 
+
 namespace FormsAppTelenav
 {
     public partial class App : Application
     {
-        public static Dealer MiddleDealer { get; set; }
+        public static FormsAppTelenav.Databases.Dealer MiddleDealer { get; set; }
 
         public static DataBase LocalDataBase {
             get; set;
