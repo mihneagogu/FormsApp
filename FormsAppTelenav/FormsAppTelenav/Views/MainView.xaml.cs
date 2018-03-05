@@ -21,7 +21,7 @@ namespace FormsAppTelenav.Views
         private MainViewBindingModel binding = new MainViewBindingModel();
         Person person = new Person("Mikeymike");
         public Person Person {
-            set; get;
+            set; get ;
         }
 
         protected override async void OnAppearing()
@@ -121,7 +121,7 @@ namespace FormsAppTelenav.Views
             List<PersonToAuctionBundleConnection> conns = await App.LocalDataBase.GetPersonToAuctionBundleConncetions();
             List<AuctionBundleForHistory> bundles = await App.LocalDataBase.GetHistory();
            
-            Currency curr = await App.LocalDataBase.GetCurrency(p.CurrencyID);
+            Currency curr = await App.LocalDataBase.GetCurrency(person.CurrencyID);
             if (bundles.Count != 0)
             {
                 HistoryButton.IsEnabled = true;
