@@ -110,7 +110,7 @@ namespace FormsAppTelenav.Views
                 }
 
             }
-            // 
+            // asdasd
            
           
             binding.MoneyStatement = "You have " + person.Amount + " currency";
