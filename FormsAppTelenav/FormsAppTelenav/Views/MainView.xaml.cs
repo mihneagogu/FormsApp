@@ -48,7 +48,7 @@ namespace FormsAppTelenav.Views
             TimeSpan span = timeNow.Subtract(constantTime);
             double minutes = span.TotalMinutes;
             double amount = 0;
-            amount += 0 * Math.Floor(minutes);
+            amount += 10 * Math.Floor(minutes);
             double currentAmount = person.Amount + amount;
             string builder = "You have " + currentAmount + " currency";
             binding.MoneyStatement = builder;
@@ -110,9 +110,9 @@ namespace FormsAppTelenav.Views
                 }
 
             }
+            // 
            
-            ppl = await App.LocalDataBase.GetPeople();
-            person = ppl[ppl.Count - 1] as Person;
+          
             binding.MoneyStatement = "You have " + person.Amount + " currency";
             settings = await App.LocalDataBase.GetAppSettings();
             List<AuctionBundle> aunctionBundles = await App.LocalDataBase.GetAuctionBundles();
@@ -120,7 +120,7 @@ namespace FormsAppTelenav.Views
             PersonToAuctionBundleConnection conn = new PersonToAuctionBundleConnection();
             List<PersonToAuctionBundleConnection> conns = await App.LocalDataBase.GetPersonToAuctionBundleConncetions();
             List<AuctionBundleForHistory> bundles = await App.LocalDataBase.GetHistory();
-            Person p = ppl[ppl.Count - 1];
+           
             Currency curr = await App.LocalDataBase.GetCurrency(p.CurrencyID);
             if (bundles.Count != 0)
             {
