@@ -18,8 +18,6 @@ namespace FormsAppTelenav.Views
         private ObservableCollection<Auction> stock = new ObservableCollection<Auction>();
         private AuctionsFromAPI auctions = new AuctionsFromAPI();
         private string auctionName;
-        private string KEY_BUY = "buy";
-        private string KEY_SELL = "sell";
         private string symbol;
         public AuctionView(string symbol, string auctionName)
         {

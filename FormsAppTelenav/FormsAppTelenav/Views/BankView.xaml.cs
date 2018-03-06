@@ -29,12 +29,5 @@ namespace FormsAppTelenav.Views
             CreditView creditView = new CreditView();
             Navigation.PushAsync(creditView);
         }
-
-        private async void MeddleWithDB(Person person)
-        {
-            
-            List<Person> ppl = await App.LocalDataBase.GetPeople();
-
-        } 
     }
 }

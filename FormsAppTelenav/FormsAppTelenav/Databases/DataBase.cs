@@ -41,9 +41,8 @@ namespace FormsAppTelenav.Databases
             connection.CreateTableAsync<PersonToAuctionBundleConnection>().Wait();
             connection.CreateTableAsync<AppSettings>().Wait();
             connection.CreateTableAsync<AuctionBundleForHistory>().Wait();
-            /*createPersonTable();
-            createCurrencyTable(); */
             CheckSymbols();
+            //App.MiddleDealer.RegisterMessage(MessageAction.AddedAuctionBundle, this);
 
         }
 
@@ -159,7 +158,10 @@ namespace FormsAppTelenav.Databases
 
         public async Task<int> AddAuctionBundle(AuctionBundle auctionBundle)
         {
-            return await connection.InsertAsync(auctionBundle);
+            await connection.InsertAsync(auctionBundle);
+            App.MiddleDealer.OnEvent(Databases.MessageAction.AddedAuctionBundle, auctionBundle);
+            return 0;
+
         }
 
         public async Task<List<AuctionBundle>> GetAuctionBundles()
@@ -221,16 +223,18 @@ namespace FormsAppTelenav.Databases
             return await connection.InsertAsync(person);
         }
 
-        public Task<List<Person>> GetPeople()
+        public async void GetPeople(List<Person> ppl)
         {
+            
             try
             {
-                return connection.Table<Person>().ToListAsync();
+                ppl = await connection.Table<Person>().ToListAsync();
+
             }
             catch (InvalidOperationException e)
             {
                 System.Diagnostics.Debug.WriteLine(e.Message);
-                return null;
+                ppl.Clear();
             }
         }
 

@@ -11,7 +11,10 @@ namespace FormsAppTelenav.Databases
 
     public class MessageHandler
     {
-
+        public MessageHandler(MessageAction type, Classes.IMessageHandler handler){
+            Type = type;
+            Handler = handler;
+        }
         public MessageAction Type { get; set; }
         public Classes.IMessageHandler Handler { get; set; }
 
@@ -28,11 +31,15 @@ namespace FormsAppTelenav.Databases
         }
 
         public void OnEvent(MessageAction message, object payload){
-            
+            foreach (var r in registeredHandlers){
+                if (r.Type == message){
+                    r.Handler.OnMessageReceived(r.Type, payload);
+                }
+            }
         }
 
-        public void RegisterMessage(MessageAction message){
-            
+        public void RegisterMessage(MessageAction message, Classes.IMessageHandler handler){
+            registeredHandlers.Add(new MessageHandler(message, handler));
         }
 
       

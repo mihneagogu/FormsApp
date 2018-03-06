@@ -19,21 +19,18 @@ namespace FormsAppTelenav.Views
     {
         private List<AuctionBundleForHistory> history;
         private MainViewBindingModel binding = new MainViewBindingModel();
-        Person person = new Person("Mikeymike");
-        public Person Person {
-            set; get ;
-        }
+
 
         protected override async void OnAppearing()
         {
-            await MeddleWithDB(person);
+            ///await MeddleWithDB();
         }
 
         public MainView()
         {
             InitializeComponent();
-            person.CurrencyID = 2;
-            person.Amount = 5000;
+            App.User.CurrencyID = 2;
+            App.User.Amount = 5000;
             
             //AuctionHouseCommand = new Command(() => Navigation.PushAsync(new AuctionHouseView()));
             BindingContext = binding;
@@ -74,16 +71,10 @@ namespace FormsAppTelenav.Views
             Navigation.PushAsync(auctionHouseView);
         }
 
-        private async Task<int> MeddleWithDB(Person person)
+        private async Task<int> MeddleWithDB()
         {
 
-            List<Person> ppl = await App.LocalDataBase.GetPeople();
-            if (ppl.Count == 0)
-            {
-                int awaiter = await App.LocalDataBase.AddPerson(person);
-            }
-            ppl = await App.LocalDataBase.GetPeople();
-            person = ppl[ppl.Count - 1] as Person;
+            Person person = App.User;
             binding.MoneyStatement = "You have " + person.Amount + " currency";
             List<AppSettings> settings = await App.LocalDataBase.GetAppSettings();
             if (settings.Count == 0)
