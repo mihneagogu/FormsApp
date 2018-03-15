@@ -223,13 +223,14 @@ namespace FormsAppTelenav.Databases
             return await connection.InsertAsync(person);
         }
 
-        public async void GetPeople(List<Person> ppl)
+        public void GetPeople(ref List<Person> ppl)
         {
             
             try
             {
-                ppl = await connection.Table<Person>().ToListAsync();
-
+                var task = connection.Table<Person>().ToListAsync();
+                Task.WaitAll(task);
+                ppl = task.Result;
             }
             catch (InvalidOperationException e)
             {

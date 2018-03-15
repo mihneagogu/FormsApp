@@ -49,15 +49,14 @@ namespace FormsAppTelenav
         public static Person GetPerson()
         {
             List<Person> ppl = new List<Person>();
-            LocalDataBase.GetPeople(ppl);
-
+            LocalDataBase.GetPeople(ref ppl);
             if (ppl.Count == 0)
             {
                 Person person = new Person("Mike");
                 person.Amount = 5000;
                 person.CurrencyID = 2;
 
-                LocalDataBase.AddPerson(person).Wait();
+                LocalDataBase.AddPerson(person);
                 return person;
             }
             else

@@ -23,14 +23,12 @@ namespace FormsAppTelenav.Views
 
         protected override async void OnAppearing()
         {
-            ///await MeddleWithDB();
+            await MeddleWithDB();
         }
 
         public MainView()
         {
             InitializeComponent();
-            App.User.CurrencyID = 2;
-            App.User.Amount = 5000;
             
             //AuctionHouseCommand = new Command(() => Navigation.PushAsync(new AuctionHouseView()));
             BindingContext = binding;
