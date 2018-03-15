@@ -42,6 +42,7 @@ namespace FormsAppTelenav
             InitializeComponent();
             LocalDataBase = new DataBase(DependencyService.Get<ILocalFileHelper>().GetLocalFilePath("Person.db3"));
             MiddleDealer = new Dealer();
+            MiddleDealer.RegisterMessage(MessageAction.AddedAuctionBundle, LocalDataBase);
 
             MainPage = new NavigationPage(new FormsAppTelenav.Views.MainView());
         }

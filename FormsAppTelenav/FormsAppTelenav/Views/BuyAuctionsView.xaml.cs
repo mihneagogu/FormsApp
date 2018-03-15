@@ -63,7 +63,7 @@ namespace FormsAppTelenav.Views
                     auctionBundle.PersonID = person.Id;
                     int awaiter = await App.LocalDataBase.AddAuctionBundle(auctionBundle);
 
-                    PersonToAuctionBundleConnection conn = new PersonToAuctionBundleConnection();
+                  /* PersonToAuctionBundleConnection conn = new PersonToAuctionBundleConnection();
                     conn.PersonID = person.Id;
                     conn.AuctionBundleID = auctionBundle.Id;
                     awaiter = await App.LocalDataBase.AddPersonToAuctionBundleConnection(conn);
@@ -77,7 +77,7 @@ namespace FormsAppTelenav.Views
                     AuctionBundleForHistory bundle = new AuctionBundleForHistory(auctionBundle.Symbol, auctionBundle.Name, auctionBundle.OpenValueAtDateBought, auctionBundle.CloseValueAtDateBought, auctionBundle.DateBought, auctionBundle.Number, AuctionAction.BOUGHT);;
                     bundle.PersonID = person.Id;
                     awaiter = await App.LocalDataBase.AddAuctionBundleToHistory(bundle);
-                    List<AuctionBundleForHistory> bundles = await App.LocalDataBase.GetHistory();
+                    List<AuctionBundleForHistory> bundles = await App.LocalDataBase.GetHistory(); */
                 }
             }
             else

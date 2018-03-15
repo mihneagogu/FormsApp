@@ -246,7 +246,28 @@ namespace FormsAppTelenav.Databases
 
         public void OnMessageReceived(MessageAction message, object payload)
         {
-            throw new NotImplementedException();
+            switch (message)
+            {
+                case MessageAction.AddedAuctionBundle:
+                    {
+                        PersonToAuctionBundleConnection conn = new PersonToAuctionBundleConnection();
+                        Person person = App.User;
+                        conn.PersonID = person.Id;
+                        var auctionBundle = payload as AuctionBundle;
+                        conn.AuctionBundleID = auctionBundle.Id;
+                        App.LocalDataBase.AddPersonToAuctionBundleConnection(conn);
+                       /// await DisplayAlert("", "Congratulations, you have just bought " + auctionBundle.Number + " auctions", "OK");
+                        double auxNumber = double.Parse(auctionBundle.Number, System.Globalization.CultureInfo.InvariantCulture);
+                        double amountToPay = auctionBundle.CloseValueAtDateBought * auxNumber;
+                        person.Amount -= amountToPay;
+
+                        App.LocalDataBase.SavePerson(person);
+                        AuctionBundleForHistory bundle = new AuctionBundleForHistory(auctionBundle.Symbol, auctionBundle.Name, auctionBundle.OpenValueAtDateBought, auctionBundle.CloseValueAtDateBought, auctionBundle.DateBought, auctionBundle.Number, AuctionAction.BOUGHT); ;
+                        bundle.PersonID = person.Id;
+                        App.LocalDataBase.AddAuctionBundleToHistory(bundle);
+                        break;
+                    }
+            }
         }
     }
 }
