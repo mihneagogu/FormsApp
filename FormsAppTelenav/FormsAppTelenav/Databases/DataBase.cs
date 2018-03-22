@@ -52,7 +52,7 @@ namespace FormsAppTelenav.Databases
 
         }
 
-        public async void SellAuctionBundle(AuctionBundle auctionBundle)
+        public async Task<int> SellAuctionBundle(AuctionBundle auctionBundle)
         {
             List<object> payload = new List<object>();
             payload.Add(auctionBundle);
@@ -60,7 +60,8 @@ namespace FormsAppTelenav.Databases
             foreach(AuctionBundle a in pBundles){
                 payload.Add(a);
             }
-            App.MiddleDealer.OnEvent(MessageAction.SellAuctionBundle, payload);
+            return App.MiddleDealer.OnEvent(MessageAction.SellAuctionBundle, payload);
+
         }
 
         public async Task<int> AddAuctionBundleToHistory(AuctionBundleForHistory auctionBundleForHistory)
@@ -181,8 +182,8 @@ namespace FormsAppTelenav.Databases
             List<object> payload = new List<object>();
             payload.Add(auctionBundle);
 
-            App.MiddleDealer.OnEvent(Databases.MessageAction.AddedAuctionBundle, payload);
-            return 0;
+            return App.MiddleDealer.OnEvent(Databases.MessageAction.AddedAuctionBundle, payload);
+
 
         }
 
@@ -271,7 +272,7 @@ namespace FormsAppTelenav.Databases
             return connection.UpdateAsync(person);
         }
 
-        public void OnMessageReceived(MessageAction message, List<object> payload)
+        public int OnMessageReceived(MessageAction message, List<object> payload)
         {
             switch (message)
             {
@@ -283,6 +284,7 @@ namespace FormsAppTelenav.Databases
                         var auctionBundle = payload[0] as AuctionBundle;
                         conn.AuctionBundleID = auctionBundle.Id;
                         App.LocalDataBase.AddPersonToAuctionBundleConnection(conn);
+
                         /// await DisplayAlert("", "Congratulations, you have just bought " + auctionBundle.Number + " auctions", "OK");
                         double auxNumber = double.Parse(auctionBundle.Number, System.Globalization.CultureInfo.InvariantCulture);
                         double amountToPay = auctionBundle.CloseValueAtDateBought * auxNumber;
@@ -292,7 +294,9 @@ namespace FormsAppTelenav.Databases
                         AuctionBundleForHistory bundle = new AuctionBundleForHistory(auctionBundle.Symbol, auctionBundle.Name, auctionBundle.OpenValueAtDateBought, auctionBundle.CloseValueAtDateBought, auctionBundle.DateBought, auctionBundle.Number, AuctionAction.BOUGHT); ;
                         bundle.PersonID = person.Id;
                         App.LocalDataBase.AddAuctionBundleToHistory(bundle);
+                        return 0;
                         break;
+
                     }
                 case MessageAction.SellAuctionBundle:
                     {
@@ -307,6 +311,7 @@ namespace FormsAppTelenav.Databases
                         }
                         if (personsAuctionBundles.Count == 0)
                         {
+                            return 1;
                             //await DisplayAlert("", "You have no auctions", "OK");
                         }
                         else
@@ -314,15 +319,16 @@ namespace FormsAppTelenav.Databases
                             List<AuctionBundle> auctionsBundlesForCurrentSymbol = new List<AuctionBundle>();
                             foreach (AuctionBundle a in personsAuctionBundles)
                             {
-                                if (a.Symbol == auctionBundle.Symbol /*&& a.Number != "0"*/)
+                                if (a.Symbol == auctionBundle.Symbol && a.Number != "0")
                                 {
                                     auctionsBundlesForCurrentSymbol.Add(a);
                                 }
                             }
                             if (auctionsBundlesForCurrentSymbol.Count() == 0)
                             {
+                                return 2;
                                 //await DisplayAlert("", "You have not bought auctions from " + auctionBundle.Name, "OK");
-                                System.Diagnostics.Debug.WriteLine("You have not bought auctions from " + auctionBundle.Name);
+                                System.Diagnostics.Debug.WriteLine("You have not bought auctions from " + auctionBundle.Name + "or have no more auctions");
                             }
                             else
                             {
@@ -341,6 +347,7 @@ namespace FormsAppTelenav.Databases
                                 double auctionNumber = double.Parse(auctionBundle.Number);
                                 if (auctionNumber > totalNumber)
                                 {
+                                    return 3;
                                     //await DisplayAlert("", "You do not have this many auctions in your portfolio", "OK");
                                     System.Diagnostics.Debug.WriteLine("You don't have enough actions");
                                 }
@@ -374,10 +381,10 @@ namespace FormsAppTelenav.Databases
                                     AuctionBundleForHistory bundle = new AuctionBundleForHistory(auctionBundle.Symbol, auctionBundle.Name, auctionBundle.OpenValueAtDateBought, auctionBundle.CloseValueAtDateBought, auctionBundle.DateBought, numberToBuy, AuctionAction.SOLD);
                                     bundle.PersonID = person.Id;
                                     /*awaiter = await*/ App.LocalDataBase.AddAuctionBundleToHistory(bundle);
+                                    return 0;
                                     //await DisplayAlert("", "Congratulations, you have just sold " + numberToBuy + " auctions", "OK");
                                     /// foreach auction in a > saveAuctionBundle si la person se adauga cat se vinde din actiuni
                                     //ProfitLabel.IsVisible = true;
-                                    int x = 0;
 
                                 }
 
@@ -386,6 +393,7 @@ namespace FormsAppTelenav.Databases
                         break;
                     }
             }
+            return 0;
         }
     }
 }

@@ -61,14 +61,39 @@ namespace FormsAppTelenav.Views
                 else
                 {
                     auctionBundle.PersonID = person.Id;
-                    int awaiter = await App.LocalDataBase.AddAuctionBundle(auctionBundle);
+                    int response = await App.LocalDataBase.AddAuctionBundle(auctionBundle);
+                    if (response == 0){
+                        await DisplayAlert("", "Congratulations, you have just bought " + auctionNumber + "auctions", "OK");
+                    }
 
 
                 }
             }
             else
             {
-                App.LocalDataBase.SellAuctionBundle(auctionBundle);
+                int response = await App.LocalDataBase.SellAuctionBundle(auctionBundle);
+                switch(response){
+                    case 0:
+                        {
+                            await DisplayAlert("", "Congratuations, you have just sold " + auctionBundle.Number, "OK");
+                            break;
+                        }
+                    case 1:
+                        {
+                            await DisplayAlert("", "You have no auctions", "OK");
+                            break; 
+                        }
+                    case 2:
+                        {
+                            await DisplayAlert("", "You have not bought auctions froms this company yet or have sold them all", "OK");
+                            break;
+                        }
+                    case 3:
+                        {
+                            await DisplayAlert("", "You do not have enough auctions", "OK");
+                            break;
+                        }
+                }
                 // idee pentru alerte: sa returneze MW o un int care sa zica ce eroare apare si in functie de ce eroare este sa apara alerta?!
 
                

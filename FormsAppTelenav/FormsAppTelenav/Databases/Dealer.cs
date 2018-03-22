@@ -31,12 +31,13 @@ namespace FormsAppTelenav.Databases
             
         }
 
-        public void OnEvent(MessageAction message, List<object> payload){
+        public int OnEvent(MessageAction message, List<object> payload){
             foreach (var r in registeredHandlers){
                 if (r.Type == message){
-                    r.Handler.OnMessageReceived(r.Type, payload);
+                   return r.Handler.OnMessageReceived(r.Type, payload);
                 }
             }
+            return -1;
         }
 
         public void RegisterMessage(MessageAction message, Classes.IMessageHandler handler){
