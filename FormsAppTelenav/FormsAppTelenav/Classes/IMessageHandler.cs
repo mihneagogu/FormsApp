@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace FormsAppTelenav.Classes
 {
     public interface IMessageHandler
     {
-        void OnMessageReceived(Databases.MessageAction message, object payload);
+        void OnMessageReceived(Databases.MessageAction message, List<object> payload);
     }
 }

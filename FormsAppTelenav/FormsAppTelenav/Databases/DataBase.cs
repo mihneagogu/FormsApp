@@ -16,6 +16,8 @@ namespace FormsAppTelenav.Databases
         private double[] currencyValues = { 1, 1.21336, 4.63716 };
         private string[] currencySymbols = { "EUR", "USD", "RON" };
 
+
+
         public SQLiteAsyncConnection Connection
         {
             get
@@ -50,9 +52,15 @@ namespace FormsAppTelenav.Databases
 
         }
 
-        public void SellAuctionBundle(AuctionBundle auctionBundle)
+        public async void SellAuctionBundle(AuctionBundle auctionBundle)
         {
-            App.MiddleDealer.OnEvent(MessageAction.SellAuctionBundle, auctionBundle);
+            List<object> payload = new List<object>();
+            payload.Add(auctionBundle);
+            List<AuctionBundle> pBundles = await GetAuctionBundlesForPerson(App.User);
+            foreach(AuctionBundle a in pBundles){
+                payload.Add(a);
+            }
+            App.MiddleDealer.OnEvent(MessageAction.SellAuctionBundle, payload);
         }
 
         public async Task<int> AddAuctionBundleToHistory(AuctionBundleForHistory auctionBundleForHistory)
@@ -170,7 +178,10 @@ namespace FormsAppTelenav.Databases
         public async Task<int> AddAuctionBundle(AuctionBundle auctionBundle)
         {
             await connection.InsertAsync(auctionBundle);
-            App.MiddleDealer.OnEvent(Databases.MessageAction.AddedAuctionBundle, auctionBundle);
+            List<object> payload = new List<object>();
+            payload.Add(auctionBundle);
+
+            App.MiddleDealer.OnEvent(Databases.MessageAction.AddedAuctionBundle, payload);
             return 0;
 
         }
@@ -260,7 +271,7 @@ namespace FormsAppTelenav.Databases
             return connection.UpdateAsync(person);
         }
 
-        public async void OnMessageReceived(MessageAction message, object payload)
+        public void OnMessageReceived(MessageAction message, List<object> payload)
         {
             switch (message)
             {
@@ -269,7 +280,7 @@ namespace FormsAppTelenav.Databases
                         PersonToAuctionBundleConnection conn = new PersonToAuctionBundleConnection();
                         Person person = App.User;
                         conn.PersonID = person.Id;
-                        var auctionBundle = payload as AuctionBundle;
+                        var auctionBundle = payload[0] as AuctionBundle;
                         conn.AuctionBundleID = auctionBundle.Id;
                         App.LocalDataBase.AddPersonToAuctionBundleConnection(conn);
                         /// await DisplayAlert("", "Congratulations, you have just bought " + auctionBundle.Number + " auctions", "OK");
@@ -286,11 +297,14 @@ namespace FormsAppTelenav.Databases
                 case MessageAction.SellAuctionBundle:
                     {
                         Person person = App.User;
-                        var auctionBundle = payload as AuctionBundle;
+                        var auctionBundle = payload[0] as AuctionBundle;
                         string symbol = auctionBundle.Symbol;
                         string numberToBuy = auctionBundle.Number;
 
-                        List<AuctionBundle> personsAuctionBundles = await GetAuctionBundlesForPerson(person);
+                        List<AuctionBundle> personsAuctionBundles = new List<AuctionBundle>();
+                        for (int i = 1; i < payload.Count; i++){
+                            personsAuctionBundles.Add(payload[i] as AuctionBundle);
+                        }
                         if (personsAuctionBundles.Count == 0)
                         {
                             //await DisplayAlert("", "You have no auctions", "OK");
@@ -352,18 +366,17 @@ namespace FormsAppTelenav.Databases
                                     }
                                     foreach (AuctionBundle a in auctionsBundlesForCurrentSymbol)
                                     {
-                                        int q = await App.LocalDataBase.SaveAuctionBundle(a);
+                                        /*int q = await */App.LocalDataBase.SaveAuctionBundle(a);
                                     }
                                     double auxNumber = double.Parse(auctionBundle.Number, System.Globalization.CultureInfo.InvariantCulture);
                                     person.Amount += auxNumber * auctionBundle.OpenValueAtDateBought;
-                                    int awaiter = await App.LocalDataBase.SavePerson(person);
+                                    /*int awaiter = await */ App.LocalDataBase.SavePerson(person);
                                     AuctionBundleForHistory bundle = new AuctionBundleForHistory(auctionBundle.Symbol, auctionBundle.Name, auctionBundle.OpenValueAtDateBought, auctionBundle.CloseValueAtDateBought, auctionBundle.DateBought, numberToBuy, AuctionAction.SOLD);
                                     bundle.PersonID = person.Id;
-                                    awaiter = await App.LocalDataBase.AddAuctionBundleToHistory(bundle);
+                                    /*awaiter = await*/ App.LocalDataBase.AddAuctionBundleToHistory(bundle);
                                     //await DisplayAlert("", "Congratulations, you have just sold " + numberToBuy + " auctions", "OK");
                                     /// foreach auction in a > saveAuctionBundle si la person se adauga cat se vinde din actiuni
                                     //ProfitLabel.IsVisible = true;
-                                    List<AuctionBundleForHistory> bundles = await App.LocalDataBase.GetHistory();
                                     int x = 0;
 
                                 }

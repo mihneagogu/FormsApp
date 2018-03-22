@@ -31,7 +31,7 @@ namespace FormsAppTelenav.Databases
             
         }
 
-        public void OnEvent(MessageAction message, object payload){
+        public void OnEvent(MessageAction message, List<object> payload){
             foreach (var r in registeredHandlers){
                 if (r.Type == message){
                     r.Handler.OnMessageReceived(r.Type, payload);
