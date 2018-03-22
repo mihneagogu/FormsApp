@@ -6,7 +6,8 @@ namespace FormsAppTelenav.Databases
 {
     public enum MessageAction
     {
-        AddedAuctionBundle
+        AddedAuctionBundle,
+        SellAuctionBundle
     }
 
     public class MessageHandler
