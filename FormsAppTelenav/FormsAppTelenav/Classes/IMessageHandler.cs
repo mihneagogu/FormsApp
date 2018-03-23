@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using FormsAppTelenav.Databases;
 
 namespace FormsAppTelenav.Classes
 {
     public interface IMessageHandler
     {
-        int OnMessageReceived(Databases.MessageAction message, List<object> payload);
+        DealerResponse OnMessageReceived(Databases.MessageAction message, List<object> payload);
     }
 }

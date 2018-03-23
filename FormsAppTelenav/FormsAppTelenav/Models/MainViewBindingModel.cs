@@ -11,7 +11,9 @@ namespace FormsAppTelenav.Models
     {
 
         private string KEY_MONEY_STATEMENT_CHANGED = "MoneyStatement";
-        private string moneyStatement = "";
+        private string builder = "You have x {0} money";
+        private string moneyStatement ="";
+
         public MainViewBindingModel(string statement)
         {
             MoneyStatement = statement;
@@ -26,7 +28,8 @@ namespace FormsAppTelenav.Models
         {
             set
             {
-                OnPropertyChanged(KEY_MONEY_STATEMENT_CHANGED, ref moneyStatement, value);
+                var newValue = String.Format(builder.ToString(), value).ToString();
+                OnPropertyChanged(KEY_MONEY_STATEMENT_CHANGED, ref moneyStatement, newValue);
             }
             get { return moneyStatement; }
         }

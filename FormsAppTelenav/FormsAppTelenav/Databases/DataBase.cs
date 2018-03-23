@@ -10,12 +10,20 @@ using System.Runtime.ExceptionServices;
 
 namespace FormsAppTelenav.Databases
 {
+
+    public enum DealerResponse {
+        NoAuctions,
+        NoAuctionsFromCompany,
+        NotEnoughAuctions,
+        Success,
+        Unreachable
+    }
+
     public class DataBase : IMessageHandler
     {
         private SQLiteAsyncConnection connection;
         private double[] currencyValues = { 1, 1.21336, 4.63716 };
         private string[] currencySymbols = { "EUR", "USD", "RON" };
-
 
 
         public SQLiteAsyncConnection Connection
@@ -52,7 +60,7 @@ namespace FormsAppTelenav.Databases
 
         }
 
-        public async Task<int> SellAuctionBundle(AuctionBundle auctionBundle)
+        public async Task<DealerResponse> SellAuctionBundle(AuctionBundle auctionBundle)
         {
             List<object> payload = new List<object>();
             payload.Add(auctionBundle);
@@ -176,7 +184,7 @@ namespace FormsAppTelenav.Databases
             return await connection.DeleteAsync(person);
         }
 
-        public async Task<int> AddAuctionBundle(AuctionBundle auctionBundle)
+        public async Task<DealerResponse> AddAuctionBundle(AuctionBundle auctionBundle)
         {
             await connection.InsertAsync(auctionBundle);
             List<object> payload = new List<object>();
@@ -272,10 +280,12 @@ namespace FormsAppTelenav.Databases
             return connection.UpdateAsync(person);
         }
 
-        public int OnMessageReceived(MessageAction message, List<object> payload)
+        public DealerResponse OnMessageReceived(MessageAction message, List<object> payload)
         {
+            DealerResponse response = DealerResponse.Unreachable;
             switch (message)
             {
+                
                 case MessageAction.AddedAuctionBundle:
                     {
                         PersonToAuctionBundleConnection conn = new PersonToAuctionBundleConnection();
@@ -294,7 +304,7 @@ namespace FormsAppTelenav.Databases
                         AuctionBundleForHistory bundle = new AuctionBundleForHistory(auctionBundle.Symbol, auctionBundle.Name, auctionBundle.OpenValueAtDateBought, auctionBundle.CloseValueAtDateBought, auctionBundle.DateBought, auctionBundle.Number, AuctionAction.BOUGHT); ;
                         bundle.PersonID = person.Id;
                         App.LocalDataBase.AddAuctionBundleToHistory(bundle);
-                        return 0;
+                        response =  DealerResponse.Success;
                         break;
 
                     }
@@ -311,7 +321,7 @@ namespace FormsAppTelenav.Databases
                         }
                         if (personsAuctionBundles.Count == 0)
                         {
-                            return 1;
+                            return DealerResponse.NoAuctions;
                             //await DisplayAlert("", "You have no auctions", "OK");
                         }
                         else
@@ -326,7 +336,7 @@ namespace FormsAppTelenav.Databases
                             }
                             if (auctionsBundlesForCurrentSymbol.Count() == 0)
                             {
-                                return 2;
+                                response = DealerResponse.NoAuctionsFromCompany;
                                 //await DisplayAlert("", "You have not bought auctions from " + auctionBundle.Name, "OK");
                                 System.Diagnostics.Debug.WriteLine("You have not bought auctions from " + auctionBundle.Name + "or have no more auctions");
                             }
@@ -347,7 +357,7 @@ namespace FormsAppTelenav.Databases
                                 double auctionNumber = double.Parse(auctionBundle.Number);
                                 if (auctionNumber > totalNumber)
                                 {
-                                    return 3;
+                                    response =  DealerResponse.NotEnoughAuctions;
                                     //await DisplayAlert("", "You do not have this many auctions in your portfolio", "OK");
                                     System.Diagnostics.Debug.WriteLine("You don't have enough actions");
                                 }
@@ -373,15 +383,15 @@ namespace FormsAppTelenav.Databases
                                     }
                                     foreach (AuctionBundle a in auctionsBundlesForCurrentSymbol)
                                     {
-                                        /*int q = await */App.LocalDataBase.SaveAuctionBundle(a);
+                                        App.LocalDataBase.SaveAuctionBundle(a);
                                     }
                                     double auxNumber = double.Parse(auctionBundle.Number, System.Globalization.CultureInfo.InvariantCulture);
                                     person.Amount += auxNumber * auctionBundle.OpenValueAtDateBought;
                                     /*int awaiter = await */ App.LocalDataBase.SavePerson(person);
                                     AuctionBundleForHistory bundle = new AuctionBundleForHistory(auctionBundle.Symbol, auctionBundle.Name, auctionBundle.OpenValueAtDateBought, auctionBundle.CloseValueAtDateBought, auctionBundle.DateBought, numberToBuy, AuctionAction.SOLD);
                                     bundle.PersonID = person.Id;
-                                    /*awaiter = await*/ App.LocalDataBase.AddAuctionBundleToHistory(bundle);
-                                    return 0;
+                                    App.LocalDataBase.AddAuctionBundleToHistory(bundle);
+                                    response =  DealerResponse.Success;
                                     //await DisplayAlert("", "Congratulations, you have just sold " + numberToBuy + " auctions", "OK");
                                     /// foreach auction in a > saveAuctionBundle si la person se adauga cat se vinde din actiuni
                                     //ProfitLabel.IsVisible = true;
@@ -392,8 +402,11 @@ namespace FormsAppTelenav.Databases
                         }
                         break;
                     }
+
             }
-            return 0;
+
+            return response;
+
         }
     }
 }

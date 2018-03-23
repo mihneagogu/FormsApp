@@ -31,13 +31,13 @@ namespace FormsAppTelenav.Databases
             
         }
 
-        public int OnEvent(MessageAction message, List<object> payload){
+        public DealerResponse OnEvent(MessageAction message, List<object> payload){
             foreach (var r in registeredHandlers){
                 if (r.Type == message){
                    return r.Handler.OnMessageReceived(r.Type, payload);
                 }
             }
-            return -1;
+            return DealerResponse.Unreachable;
         }
 
         public void RegisterMessage(MessageAction message, Classes.IMessageHandler handler){

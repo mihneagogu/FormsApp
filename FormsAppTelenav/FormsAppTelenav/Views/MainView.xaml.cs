@@ -23,13 +23,13 @@ namespace FormsAppTelenav.Views
 
         protected override async void OnAppearing()
         {
-            await MeddleWithDB();
+            //await MeddleWithDB();
         }
 
         public MainView()
         {
             InitializeComponent();
-            
+            MeddleWithDB();
             //AuctionHouseCommand = new Command(() => Navigation.PushAsync(new AuctionHouseView()));
             BindingContext = binding;
 
@@ -45,8 +45,7 @@ namespace FormsAppTelenav.Views
             double amount = 0;
             amount += 10 * Math.Floor(minutes);
             double currentAmount = person.Amount + amount;
-            string builder = "You have " + currentAmount + " currency";
-            binding.MoneyStatement = builder;
+
             return currentAmount;
             
             
@@ -69,11 +68,15 @@ namespace FormsAppTelenav.Views
             Navigation.PushAsync(auctionHouseView);
         }
 
+        private static bool isFirst = true;
         private async Task<int> MeddleWithDB()
         {
+            if (!isFirst)
+                return 0;
+
+            isFirst = false;
 
             Person person = App.User;
-            binding.MoneyStatement = "You have " + person.Amount + " currency";
             List<AppSettings> settings = await App.LocalDataBase.GetAppSettings();
             if (settings.Count == 0)
             {
@@ -95,14 +98,13 @@ namespace FormsAppTelenav.Views
                     person.Amount = currentAmount;
                     
                     awaiter = await App.LocalDataBase.SavePerson(person);
-                    string builder = "You have  " + currentAmount + " currency";
+                    binding.MoneyStatement = person.Amount.ToString();
                 }
 
+
             }
-            // asdasd
-           
           
-            binding.MoneyStatement = "You have " + person.Amount + " currency";
+
             settings = await App.LocalDataBase.GetAppSettings();
             List<AuctionBundle> aunctionBundles = await App.LocalDataBase.GetAuctionBundles();
             

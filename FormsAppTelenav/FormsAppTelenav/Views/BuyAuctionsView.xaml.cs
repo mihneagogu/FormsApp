@@ -15,6 +15,7 @@ namespace FormsAppTelenav.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class BuyAuctionsView : ContentPage
     {
+       
         private ToBuyAuction auctionToBuy;
         private AuctionAction action;
         public BuyAuctionsView(ToBuyAuction auctionToBuy, AuctionAction action)
@@ -61,9 +62,11 @@ namespace FormsAppTelenav.Views
                 else
                 {
                     auctionBundle.PersonID = person.Id;
-                    int response = await App.LocalDataBase.AddAuctionBundle(auctionBundle);
-                    if (response == 0){
+                    DealerResponse response = await App.LocalDataBase.AddAuctionBundle(auctionBundle);
+                    if (response == DealerResponse.Success){
                         await DisplayAlert("", "Congratulations, you have just bought " + auctionNumber + "auctions", "OK");
+
+                        await Navigation.PushAsync(new AuctionHouseView());
                     }
 
 
@@ -71,33 +74,35 @@ namespace FormsAppTelenav.Views
             }
             else
             {
-                int response = await App.LocalDataBase.SellAuctionBundle(auctionBundle);
+                DealerResponse response = await App.LocalDataBase.SellAuctionBundle(auctionBundle);
                 switch(response){
-                    case 0:
+                    case DealerResponse.Success:
                         {
                             await DisplayAlert("", "Congratuations, you have just sold " + auctionBundle.Number, "OK");
+                            await Navigation.PushAsync(new AuctionHouseView());
                             break;
                         }
-                    case 1:
+                    case DealerResponse.NoAuctions:
                         {
                             await DisplayAlert("", "You have no auctions", "OK");
                             break; 
                         }
-                    case 2:
+                    case DealerResponse.NoAuctionsFromCompany:
                         {
                             await DisplayAlert("", "You have not bought auctions froms this company yet or have sold them all", "OK");
                             break;
                         }
-                    case 3:
+                    case DealerResponse.NotEnoughAuctions:
                         {
                             await DisplayAlert("", "You do not have enough auctions", "OK");
                             break;
                         }
-                }
-                // idee pentru alerte: sa returneze MW o un int care sa zica ce eroare apare si in functie de ce eroare este sa apara alerta?!
 
-               
+                }
+
+
             }
+
         }
     }
 
