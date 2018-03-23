@@ -28,8 +28,8 @@ namespace FormsAppTelenav.Models
         {
             set
             {
-                var newValue = String.Format(builder.ToString(), value).ToString();
-                OnPropertyChanged(KEY_MONEY_STATEMENT_CHANGED, ref moneyStatement, newValue);
+                
+                OnPropertyChanged(KEY_MONEY_STATEMENT_CHANGED, ref moneyStatement, value);
             }
             get { return moneyStatement; }
         }

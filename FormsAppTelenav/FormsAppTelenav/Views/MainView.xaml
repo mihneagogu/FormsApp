@@ -4,7 +4,11 @@
              x:Class="FormsAppTelenav.Views.MainView">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="{Binding MoneyStatement, Mode=TwoWay}"  HorizontalOptions='Center'/>
+            <Label 
+                x:Name="MoneyEntry"
+                Text="{Binding MoneyStatement, Mode=TwoWay}"  
+                   IsVisible="False"
+                   HorizontalOptions='Center'/>
             <Button 
                 Text="Go to the bank"
                 Clicked="ToBank_Clicked"

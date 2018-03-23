@@ -23,13 +23,13 @@ namespace FormsAppTelenav.Views
 
         protected override async void OnAppearing()
         {
-            //await MeddleWithDB();
+            await MeddleWithDB();
         }
 
         public MainView()
         {
             InitializeComponent();
-            MeddleWithDB();
+            
             //AuctionHouseCommand = new Command(() => Navigation.PushAsync(new AuctionHouseView()));
             BindingContext = binding;
 
@@ -98,7 +98,8 @@ namespace FormsAppTelenav.Views
                     person.Amount = currentAmount;
                     
                     awaiter = await App.LocalDataBase.SavePerson(person);
-                    binding.MoneyStatement = person.Amount.ToString();
+                    binding.MoneyStatement = "You have " + person.Amount.ToString() + " currency";
+                    MoneyEntry.IsVisible = true;
                 }
 
 
