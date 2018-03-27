@@ -1,29 +1,28 @@
 ﻿using System;
 using System.Globalization;
-using FormsAppTelenav.Models;
 
 namespace FormsAppTelenav.Classes
 {
-    public class AuctionActionStringConverter : Xamarin.Forms.IValueConverter
+    public class MoneyStringConverter : Xamarin.Forms.IValueConverter
     {
-        public AuctionActionStringConverter()
-        {
+
+        public MoneyStringConverter(){
             
         }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null)
-            {
+            if (value == null){
                 return "";
             }
+            if ((value is double)){
+                double aux = (double) value;
 
-            if (value is AuctionAction)
-            {
-                AuctionAction v = (AuctionAction)value;
-                return v == AuctionAction.BOUGHT ? "BOUGHT":"SOLD";
+                    string v = "You have " + aux.ToString() + " currency";
+                    return v;
+               
             }
-            return value;        
+            return value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

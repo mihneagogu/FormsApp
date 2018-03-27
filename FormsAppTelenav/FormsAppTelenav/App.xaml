@@ -8,6 +8,8 @@
         <ResourceDictionary>
             <local:DoubleStringConverter x:Key="doubleStringCnv" />
             <local:AuctionActionStringConverter x:Key="auctionActionStringCnv" />
+            <local:MoneyStringConverter x:Key="moneyStringCnv" />
+
             
         
         </ResourceDictionary>

@@ -12,6 +12,21 @@ namespace FormsAppTelenav.Classes
         }
 
 
+        public bool OnPropertyChanged(string key, ref double orgValue, double newValue)
+        {
+
+            if ((orgValue == newValue) && (newValue!= 0))
+            {
+                return false;
+            }
+            orgValue = newValue;
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(key));
+            }
+            return true;
+        }
+
         public bool OnPropertyChanged(string key, ref Nullable<Double> orgValue, Nullable<Double> newValue)
         {
             

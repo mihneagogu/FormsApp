@@ -21,17 +21,21 @@ namespace FormsAppTelenav.Views
         private MainViewBindingModel binding = new MainViewBindingModel();
 
 
+
         protected override async void OnAppearing()
         {
-            await MeddleWithDB();
+            
         }
 
         public MainView()
         {
             InitializeComponent();
-            
+            Person person = App.User;
+            binding.MoneyStatement = person.Amount;
+            MeddleWithDB();
             //AuctionHouseCommand = new Command(() => Navigation.PushAsync(new AuctionHouseView()));
             BindingContext = binding;
+
 
         }
 
@@ -68,13 +72,9 @@ namespace FormsAppTelenav.Views
             Navigation.PushAsync(auctionHouseView);
         }
 
-        private static bool isFirst = true;
-        private async Task<int> MeddleWithDB()
-        {
-            if (!isFirst)
-                return 0;
 
-            isFirst = false;
+        private async void MeddleWithDB()
+        {
 
             Person person = App.User;
             List<AppSettings> settings = await App.LocalDataBase.GetAppSettings();
@@ -98,14 +98,16 @@ namespace FormsAppTelenav.Views
                     person.Amount = currentAmount;
                     
                     awaiter = await App.LocalDataBase.SavePerson(person);
-                    binding.MoneyStatement = "You have " + person.Amount.ToString() + " currency";
-                    MoneyEntry.IsVisible = true;
+                    binding.MoneyStatement = person.Amount;
+
                 }
+                binding.MoneyStatement = person.Amount;
+
 
 
             }
-          
 
+            binding.MoneyStatement = person.Amount;
             settings = await App.LocalDataBase.GetAppSettings();
             List<AuctionBundle> aunctionBundles = await App.LocalDataBase.GetAuctionBundles();
             
@@ -119,7 +121,6 @@ namespace FormsAppTelenav.Views
                 HistoryButton.IsEnabled = true;
                 history = await App.LocalDataBase.GetHistory();
             }
-            return 0;
                     
             
         }
