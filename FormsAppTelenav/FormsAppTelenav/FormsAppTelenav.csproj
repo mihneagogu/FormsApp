@@ -88,6 +88,7 @@
     <Compile Include="Databases\Dealer.cs" />
     <Compile Include="Classes\IMessageHandler.cs" />
     <Compile Include="Classes\MoneyStringConverter.cs" />
+    <Compile Include="Models\StationaryCredit.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="App.xaml">

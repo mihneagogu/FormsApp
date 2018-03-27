@@ -10,8 +10,8 @@
             <Entry x:Name="DurationEntry" Text="{Binding Duration, Mode=TwoWay, Converter={StaticResource doubleStringCnv}}" />
             <Label Text="Total interest in %" HorizontalOptions="Center" VerticalOptions="Center" />
             <Entry x:Name="InterestEntry" Text="{Binding Interest, Mode=TwoWay, Converter={StaticResource doubleStringCnv}}" />
-            <Button Text="Analyze credit" Clicked="ShowCreditButton_Clicked" />
-            <Label Text="{Binding AffordableCredit, Mode=TwoWay}" HorizontalOptions="Center"/>
+            <Button Text="Buy Credit" Clicked="ShowCreditButton_Clicked" />
+            <Label Text="{Binding AffordableCredit, Mode=OneWay}" HorizontalOptions="Center"/>
         </StackLayout>
         </ScrollView>
     </ContentPage.Content>

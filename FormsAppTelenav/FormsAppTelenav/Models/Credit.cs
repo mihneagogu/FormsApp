@@ -130,7 +130,7 @@ namespace FormsAppTelenav.Classes
 
 
         }
-        private void CheckAffordability()
+        private void  CheckAffordability()
         {
             if (IsAffordable())
             {

@@ -44,6 +44,7 @@ namespace FormsAppTelenav
             MiddleDealer = new Dealer();
             MiddleDealer.RegisterMessage(MessageAction.AddedAuctionBundle, LocalDataBase);
             MiddleDealer.RegisterMessage(MessageAction.SellAuctionBundle, LocalDataBase);
+            MiddleDealer.RegisterMessage(MessageAction.BuyCredit, LocalDataBase);
 
             MainPage = new NavigationPage(new FormsAppTelenav.Views.MainView());
         }

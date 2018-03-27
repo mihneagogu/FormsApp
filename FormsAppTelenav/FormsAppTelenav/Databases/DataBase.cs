@@ -55,6 +55,7 @@ namespace FormsAppTelenav.Databases
             connection.CreateTableAsync<PersonToAuctionBundleConnection>().Wait();
             connection.CreateTableAsync<AppSettings>().Wait();
             connection.CreateTableAsync<AuctionBundleForHistory>().Wait();
+            connection.CreateTableAsync<StationaryCredit>().Wait();
             CheckSymbols();
             //App.MiddleDealer.RegisterMessage(MessageAction.AddedAuctionBundle, this);
 
@@ -102,6 +103,22 @@ namespace FormsAppTelenav.Databases
         public async Task<int> AddAppSetting(AppSettings setting)
         {
             return await connection.InsertAsync(setting);
+        }
+
+        public async Task<int> AddCredit(StationaryCredit stationaryCredit){
+            await connection.InsertAsync(stationaryCredit);
+            /*List<object> payload = new List<object>();
+            payload.Add(stationaryCredit);
+            App.MiddleDealer.OnEvent(MessageAction.BuyCredit, payload); */
+            return 0;
+        }
+
+        public async Task<int> SaveCredit(StationaryCredit stationaryCredit){
+            return await connection.UpdateAsync(stationaryCredit);
+        }
+
+        public async Task<List<StationaryCredit>> GetCredits(){
+            return await connection.Table<StationaryCredit>().ToListAsync();
         }
 
         public Task<List<AppSettings>> GetAppSettings()
@@ -307,6 +324,9 @@ namespace FormsAppTelenav.Databases
                         response =  DealerResponse.Success;
                         break;
 
+                    }
+                case MessageAction.BuyCredit: {
+                        break;
                     }
                 case MessageAction.SellAuctionBundle:
                     {

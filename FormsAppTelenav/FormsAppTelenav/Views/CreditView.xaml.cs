@@ -1,4 +1,5 @@
 ﻿using FormsAppTelenav.Classes;
+using FormsAppTelenav.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,12 +24,17 @@ namespace FormsAppTelenav.Views
             
         }
 
-        private void ShowCreditButton_Clicked(object sender, EventArgs e)
+        private async void ShowCreditButton_Clicked(object sender, EventArgs e)
         {
             var creditListView = new CreditListView();
             creditListView.BindingContext = credit;
- 
-            Navigation.PushAsync(creditListView);
+            Models.StationaryCredit c1 = new Models.StationaryCredit();
+            c1.Interest = 10;
+            c1.Cost = 2000 + DateTime.Now.Second;
+            await App.LocalDataBase.AddCredit(c1);
+            //  ^ cod provizoriu de test
+            List<StationaryCredit> stationaryCredits = await App.LocalDataBase.GetCredits();
+            await Navigation.PushAsync(creditListView);
         }
 
               
