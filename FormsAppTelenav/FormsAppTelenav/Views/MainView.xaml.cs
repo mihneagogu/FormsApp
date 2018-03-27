@@ -31,10 +31,12 @@ namespace FormsAppTelenav.Views
         {
             InitializeComponent();
             Person person = App.User;
-            binding.MoneyStatement = person.Amount;
-            MeddleWithDB();
+
             //AuctionHouseCommand = new Command(() => Navigation.PushAsync(new AuctionHouseView()));
             BindingContext = binding;
+            binding.MoneyStatement = person.Amount;
+
+            MeddleWithDB();
 
 
         }

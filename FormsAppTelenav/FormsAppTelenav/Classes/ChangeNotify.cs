@@ -15,7 +15,7 @@ namespace FormsAppTelenav.Classes
         public bool OnPropertyChanged(string key, ref double orgValue, double newValue)
         {
 
-            if ((orgValue == newValue) && (newValue!= 0))
+            if (orgValue == newValue)
             {
                 return false;
             }

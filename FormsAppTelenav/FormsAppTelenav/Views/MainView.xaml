@@ -6,7 +6,7 @@
         <StackLayout>
             <Label 
                 x:Name="MoneyEntry"
-                Text="{Binding MoneyStatement, Mode=TwoWay, Converter={StaticResource moneyStringCnv}}"  
+                Text="{Binding MoneyStatement, Mode=OneWay, Converter={StaticResource moneyStringCnv}}"  
                 HorizontalOptions='Center'
                 IsVisible="true"
             />

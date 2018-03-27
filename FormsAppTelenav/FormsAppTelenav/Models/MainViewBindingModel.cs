@@ -27,10 +27,10 @@ namespace FormsAppTelenav.Models
         {
             set
             {
-                if (value != 0)
-                {
+                //if (value != 0)
+                //{
                     OnPropertyChanged(KEY_MONEY_STATEMENT_CHANGED, ref moneyStatement, value);
-                }
+            //    }
             }
             get { return moneyStatement; }
         }
