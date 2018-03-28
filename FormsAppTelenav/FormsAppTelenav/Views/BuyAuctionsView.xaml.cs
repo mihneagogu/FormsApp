@@ -64,7 +64,7 @@ namespace FormsAppTelenav.Views
                     auctionBundle.PersonID = person.Id;
                     DealerResponse response = await App.LocalDataBase.AddAuctionBundle(auctionBundle);
                     if (response == DealerResponse.Success){
-                        await DisplayAlert("", "Congratulations, you have just bought " + auctionNumber + "auctions", "OK");
+                        await DisplayAlert("", "Congratulations, you have just bought " + auctionNumber + " auctions", "OK");
 
                         await Navigation.PushAsync(new AuctionHouseView());
                     }

@@ -1,4 +1,5 @@
 ﻿using FormsAppTelenav.Classes;
+using FormsAppTelenav.Databases;
 using FormsAppTelenav.Models;
 using System;
 using System.Collections.Generic;
@@ -26,15 +27,39 @@ namespace FormsAppTelenav.Views
 
         private async void ShowCreditButton_Clicked(object sender, EventArgs e)
         {
-            var creditListView = new CreditListView();
-            creditListView.BindingContext = credit;
-            Models.StationaryCredit c1 = new Models.StationaryCredit();
-            c1.Interest = 10;
-            c1.Cost = 2000 + DateTime.Now.Second;
-            await App.LocalDataBase.AddCredit(c1);
-            //  ^ cod provizoriu de test
-            List<StationaryCredit> stationaryCredits = await App.LocalDataBase.GetCredits();
-            await Navigation.PushAsync(creditListView);
+            if (credit.Interest != null && credit.Duration != null && credit.Cost != null){
+                if (credit.IsAffordable()){
+                    
+                    var creditListView = new CreditListView();
+                    creditListView.BindingContext = credit;
+                    StationaryCredit stationaryCredit = new StationaryCredit();
+                    stationaryCredit.Interest = (double)credit.Interest;
+                    stationaryCredit.Duration = (double)credit.Duration;
+                    stationaryCredit.Cost = (double)credit.Cost;
+                    DealerResponse response = await App.LocalDataBase.AddCredit(stationaryCredit);
+                    if (response == DealerResponse.Success){
+                        await DisplayAlert("", "Operation Successful", "OK");
+                        await Navigation.PushAsync(creditListView);
+                    }
+                    else {
+                        await DisplayAlert("", "Something went wrong, we're sorry", "OK");
+                    }
+
+
+                }
+                else {
+                    await DisplayAlert("", "You cannot afford the credit", "OK");
+                }
+            }
+            else {
+                await DisplayAlert("", "Please fill in all the fields", "OK");
+            }
+
+
+
+            /*await App.LocalDataBase.AddCredit(c1);
+          
+            List<StationaryCredit> stationaryCredits = await App.LocalDataBase.GetCredits(); */
         }
 
               

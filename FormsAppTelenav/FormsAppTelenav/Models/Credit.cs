@@ -114,7 +114,7 @@ namespace FormsAppTelenav.Classes
 
         }
 
-        private bool IsAffordable()
+        public bool IsAffordable()
         {
 
             double totalInterest = (doubleCreditInterest.Value / 100) * doubleCreditCost.Value;

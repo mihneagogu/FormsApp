@@ -105,12 +105,12 @@ namespace FormsAppTelenav.Databases
             return await connection.InsertAsync(setting);
         }
 
-        public async Task<int> AddCredit(StationaryCredit stationaryCredit){
+        public async Task<DealerResponse> AddCredit(StationaryCredit stationaryCredit){
             await connection.InsertAsync(stationaryCredit);
-            /*List<object> payload = new List<object>();
+            List<object> payload = new List<object>();
             payload.Add(stationaryCredit);
-            App.MiddleDealer.OnEvent(MessageAction.BuyCredit, payload); */
-            return 0;
+            return App.MiddleDealer.OnEvent(MessageAction.BuyCredit, payload); 
+
         }
 
         public async Task<int> SaveCredit(StationaryCredit stationaryCredit){
@@ -326,6 +326,7 @@ namespace FormsAppTelenav.Databases
 
                     }
                 case MessageAction.BuyCredit: {
+                        response = DealerResponse.Success;
                         break;
                     }
                 case MessageAction.SellAuctionBundle:
