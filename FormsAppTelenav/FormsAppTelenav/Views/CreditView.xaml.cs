@@ -37,6 +37,8 @@ namespace FormsAppTelenav.Views
                     stationaryCredit.Duration = (double)credit.Duration;
                     stationaryCredit.Cost = (double)credit.Cost;
                     stationaryCredit.DateBought = DateTime.Now;
+                    stationaryCredit.MonthsRemaining = (double)credit.Duration;
+                    stationaryCredit.LatestPayment = DateTime.Now;
                     DealerResponse response = await App.LocalDataBase.AddCredit(stationaryCredit);
                     List<StationaryCredit> credits = await App.LocalDataBase.GetCredits();
                     if (response == DealerResponse.Success){

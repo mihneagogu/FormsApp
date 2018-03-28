@@ -118,7 +118,21 @@ namespace FormsAppTelenav.Databases
         }
 
         public async Task<List<StationaryCredit>> GetCredits(){
-            return await connection.Table<StationaryCredit>().ToListAsync();
+            List<StationaryCredit> sCredits = new List<StationaryCredit>();
+            try
+            {
+                
+                var task = connection.Table<StationaryCredit>().ToListAsync();
+                Task.WaitAll(task);
+                sCredits = task.Result;
+                return sCredits;
+            }
+            catch (InvalidOperationException e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message);
+                sCredits.Clear();
+                return sCredits;
+            }
         }
 
         public Task<List<AppSettings>> GetAppSettings()

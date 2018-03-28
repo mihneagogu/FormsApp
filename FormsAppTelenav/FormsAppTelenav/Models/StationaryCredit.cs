@@ -18,5 +18,7 @@ namespace FormsAppTelenav.Models
         public double Interest { set; get; }
         public double Duration { set; get; }
         public DateTime DateBought { set; get; }
+        public DateTime LatestPayment { set; get; }
+        public double MonthsRemaining { set; get; }
     }
 }
