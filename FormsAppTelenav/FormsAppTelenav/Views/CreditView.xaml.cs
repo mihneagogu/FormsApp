@@ -36,7 +36,9 @@ namespace FormsAppTelenav.Views
                     stationaryCredit.Interest = (double)credit.Interest;
                     stationaryCredit.Duration = (double)credit.Duration;
                     stationaryCredit.Cost = (double)credit.Cost;
+                    stationaryCredit.DateBought = DateTime.Now;
                     DealerResponse response = await App.LocalDataBase.AddCredit(stationaryCredit);
+                    List<StationaryCredit> credits = await App.LocalDataBase.GetCredits();
                     if (response == DealerResponse.Success){
                         await DisplayAlert("", "Operation Successful", "OK");
                         await Navigation.PushAsync(creditListView);

@@ -54,8 +54,38 @@ namespace FormsAppTelenav.Views
 
             return currentAmount;
             
+
+        }
+
+        private async Task<double> CalculateMoneyToGive(Person person, ContentPage page){
+            /// va trebui comparat timpul actual cu timpul ultimei plati: de adaugat lastpay la credit in baza de date, si pe baza diferentei acelea se vor face calculele
+            /// de asemenea va exista un nou camp pentru stationarycredit care va zice cate luni sunt ramase din plata
+            List<StationaryCredit> stationaryCredits = await App.LocalDataBase.GetCredits();
+            StationaryCredit credit = stationaryCredits[0];
+            DateTime timeNow = DateTime.Now.ToLocalTime();
+            TimeSpan span = timeNow.Subtract(credit.DateBought);
+            double minutes = span.TotalMinutes;
+            minutes = minutes / 20;
+            double duration = (double)credit.Duration;
+            minutes = Math.Floor(minutes);
+            await page.DisplayAlert("", minutes + " months have passed since you last paid your credit. You now have to pay for " + 
+                                    (double)(credit.Duration) + " - " + " " + minutes + " = " + ((double)credit.Duration - minutes) + "  more months", "OK");
+            if ((duration - minutes) > 0)
+            {
+                double currentMoney = person.Amount;
+                currentMoney -= ((double)credit.Cost / duration) * (minutes);
+                await DisplayAlert("", "You will have " + currentMoney + " money, before paying it you had " + person.Amount, "OK");
+                person.Amount = currentMoney;
+                credit.Duration -= minutes;
+                await App.LocalDataBase.SavePerson(person);
+                await App.LocalDataBase.SaveCredit(credit);
+            }
+            else {
+                await DisplayAlert("", "durata de cand nu ai mai platit e mai lunga decat durata creditului, de schimbat cod", "OK");
+            }
             
-            
+
+            return 0;
         }
 
         private void ToBank_Clicked(object sender, EventArgs e)
@@ -104,6 +134,11 @@ namespace FormsAppTelenav.Views
 
                 }
                 binding.MoneyStatement = person.Amount;
+                await CalculateMoneyToGive(person, this);
+        
+
+
+
 
 
 
@@ -123,6 +158,8 @@ namespace FormsAppTelenav.Views
                 HistoryButton.IsEnabled = true;
                 history = await App.LocalDataBase.GetHistory();
             }
+
+           
                     
             
         }
