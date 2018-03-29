@@ -61,6 +61,16 @@ namespace FormsAppTelenav.Databases
 
         }
 
+        public async Task<AuctionBundle> GetAuctionBundleForSymbol(string symbol, Person person){
+            List<AuctionBundle> personsBundles = await GetAuctionBundlesForPerson(person);
+            foreach (AuctionBundle a in personsBundles){
+                if (a.Symbol == symbol){
+                    return a;
+                }
+            }
+            return null;
+        }
+
         public async Task<DealerResponse> SellAuctionBundle(AuctionBundle auctionBundle)
         {
             List<object> payload = new List<object>();
@@ -357,7 +367,6 @@ namespace FormsAppTelenav.Databases
                         if (personsAuctionBundles.Count == 0)
                         {
                             return DealerResponse.NoAuctions;
-                            //await DisplayAlert("", "You have no auctions", "OK");
                         }
                         else
                         {
@@ -372,7 +381,6 @@ namespace FormsAppTelenav.Databases
                             if (auctionsBundlesForCurrentSymbol.Count() == 0)
                             {
                                 response = DealerResponse.NoAuctionsFromCompany;
-                                //await DisplayAlert("", "You have not bought auctions from " + auctionBundle.Name, "OK");
                                 System.Diagnostics.Debug.WriteLine("You have not bought auctions from " + auctionBundle.Name + "or have no more auctions");
                             }
                             else
@@ -387,13 +395,10 @@ namespace FormsAppTelenav.Databases
                                     totalNumber += auxNumber;
                                 }
                                 medianValue = totalCost / totalNumber;
-                                double profit = (auctionBundle.OpenValueAtDateBought - medianValue) * double.Parse(auctionBundle.Number, System.Globalization.CultureInfo.InvariantCulture);
-                                //ProfitLabel.Text = "You gain " + profit + " from transactioning " + auctionBundle.Number + " auctions from " + auctionBundle.Name;
                                 double auctionNumber = double.Parse(auctionBundle.Number);
                                 if (auctionNumber > totalNumber)
                                 {
                                     response =  DealerResponse.NotEnoughAuctions;
-                                    //await DisplayAlert("", "You do not have this many auctions in your portfolio", "OK");
                                     System.Diagnostics.Debug.WriteLine("You don't have enough actions");
                                 }
                                 else
@@ -427,8 +432,6 @@ namespace FormsAppTelenav.Databases
                                     bundle.PersonID = person.Id;
                                     App.LocalDataBase.AddAuctionBundleToHistory(bundle);
                                     response =  DealerResponse.Success;
-                                    //await DisplayAlert("", "Congratulations, you have just sold " + numberToBuy + " auctions", "OK");
-                                    /// foreach auction in a > saveAuctionBundle si la person se adauga cat se vinde din actiuni
                                     //ProfitLabel.IsVisible = true;
 
                                 }

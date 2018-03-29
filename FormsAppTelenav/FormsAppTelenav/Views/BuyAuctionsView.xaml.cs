@@ -47,12 +47,18 @@ namespace FormsAppTelenav.Views
 
         }
 
+        public string ProfitText { get; set; }
+
         private async void AddBundleToStockPortfolio(AuctionBundle auctionBundle)
         {
+            Person person = App.User;
+            AuctionBundle boughtBundle = await App.LocalDataBase.GetAuctionBundleForSymbol(auctionBundle.Symbol, person);
+            double profit = (auctionBundle.OpenValueAtDateBought - boughtBundle.CloseValueAtDateBought) * double.Parse(auctionBundle.Number, System.Globalization.CultureInfo.InvariantCulture);
+            ProfitLabel.Text = "You gain " + profit + " from transactioning " + auctionBundle.Number + " auctions from " + auctionBundle.Name;
+            ProfitLabel.IsVisible = true;
             string numberToBuy = auctionBundle.Number;
             if (action == AuctionAction.BOUGHT)
             {
-                Person person = App.User;
                 string auctionNumber = auctionBundle.Number;
                 double auxAuctionNumber = double.Parse(auctionNumber);
                 if (person.Amount < (auctionBundle.CloseValueAtDateBought * auxAuctionNumber))
@@ -79,7 +85,7 @@ namespace FormsAppTelenav.Views
                     case DealerResponse.Success:
                         {
                             await DisplayAlert("", "Congratuations, you have just sold " + auctionBundle.Number, "OK");
-                            await Navigation.PushAsync(new AuctionHouseView());
+                            //await Navigation.PushAsync(new AuctionHouseView());
                             break;
                         }
                     case DealerResponse.NoAuctions:

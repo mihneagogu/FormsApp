@@ -22,6 +22,7 @@ namespace FormsAppTelenav.Views
         public AuctionView(string symbol, string auctionName)
         {
             InitializeComponent();
+
             this.symbol = symbol;
             this.auctionName = auctionName;
             MakeAuctions();
@@ -49,8 +50,13 @@ namespace FormsAppTelenav.Views
             }
             else
             {
-                SellButton.IsEnabled = true;
+                Person person = App.User;
                 BuyButton.IsEnabled = true;
+                AuctionBundle boughtBundle = await App.LocalDataBase.GetAuctionBundleForSymbol(symbol, person);
+                if (boughtBundle != null){
+                    SellButton.IsEnabled = true;
+                }
+
             }
         }
 
