@@ -154,8 +154,7 @@ namespace FormsAppTelenav.Views
 
             binding.MoneyStatement = person.Amount;
             settings = await App.LocalDataBase.GetAppSettings();
-            List<AuctionBundle> aunctionBundles = await App.LocalDataBase.GetAuctionBundles();
-            
+
             PersonToAuctionBundleConnection conn = new PersonToAuctionBundleConnection();
             List<PersonToAuctionBundleConnection> conns = await App.LocalDataBase.GetPersonToAuctionBundleConncetions();
             List<AuctionBundleForHistory> bundles = await App.LocalDataBase.GetHistory();

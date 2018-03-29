@@ -89,6 +89,7 @@
     <Compile Include="Classes\IMessageHandler.cs" />
     <Compile Include="Classes\MoneyStringConverter.cs" />
     <Compile Include="Models\StationaryCredit.cs" />
+    <Compile Include="Models\AuctionBundleForDb.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="App.xaml">

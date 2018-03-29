@@ -52,10 +52,7 @@ namespace FormsAppTelenav.Views
         private async void AddBundleToStockPortfolio(AuctionBundle auctionBundle)
         {
             Person person = App.User;
-            AuctionBundle boughtBundle = await App.LocalDataBase.GetAuctionBundleForSymbol(auctionBundle.Symbol, person);
-            double profit = (auctionBundle.OpenValueAtDateBought - boughtBundle.CloseValueAtDateBought) * double.Parse(auctionBundle.Number, System.Globalization.CultureInfo.InvariantCulture);
-            ProfitLabel.Text = "You gain " + profit + " from transactioning " + auctionBundle.Number + " auctions from " + auctionBundle.Name;
-            ProfitLabel.IsVisible = true;
+
             string numberToBuy = auctionBundle.Number;
             if (action == AuctionAction.BOUGHT)
             {
@@ -80,6 +77,10 @@ namespace FormsAppTelenav.Views
             }
             else
             {
+                AuctionBundleForDb boughtBundle = await App.LocalDataBase.GetAuctionBundleForSymbol(auctionBundle.Symbol, person);
+                double profit = (auctionBundle.OpenValueAtDateBought - boughtBundle.MedianValue) * double.Parse(auctionBundle.Number, System.Globalization.CultureInfo.InvariantCulture);
+                ProfitLabel.Text = "You gain " + profit + " from transactioning " + auctionBundle.Number + " auctions from " + auctionBundle.Name;
+                ProfitLabel.IsVisible = true;
                 DealerResponse response = await App.LocalDataBase.SellAuctionBundle(auctionBundle);
                 switch(response){
                     case DealerResponse.Success:

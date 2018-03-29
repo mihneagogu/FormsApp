@@ -52,7 +52,7 @@ namespace FormsAppTelenav.Views
             {
                 Person person = App.User;
                 BuyButton.IsEnabled = true;
-                AuctionBundle boughtBundle = await App.LocalDataBase.GetAuctionBundleForSymbol(symbol, person);
+                AuctionBundleForDb boughtBundle = await App.LocalDataBase.GetAuctionBundleForSymbol(symbol, person);
                 if (boughtBundle != null){
                     SellButton.IsEnabled = true;
                 }
