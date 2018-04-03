@@ -77,13 +77,21 @@ namespace FormsAppTelenav.Databases
 
         public async Task<DealerResponse> SellAuctionBundle(AuctionBundle auctionBundle)
         {
+            DealerResponse response = new DealerResponse();
             List<object> payload = new List<object>();
             payload.Add(auctionBundle);
-            List<AuctionBundleForDb> pBundles = await GetAuctionBundlesForPerson(App.User);
-            foreach(AuctionBundleForDb a in pBundles){
-                payload.Add(a);
+            AuctionBundleForDb bundleForSymbol = await GetAuctionBundleForSymbol(auctionBundle.Symbol, App.User);
+            if (bundleForSymbol != null)
+            {
+                payload.Add(bundleForSymbol);
+                response = App.MiddleDealer.OnEvent(Databases.MessageAction.SellAuctionBundle, payload);
             }
-            return App.MiddleDealer.OnEvent(MessageAction.SellAuctionBundle, payload);
+            else
+            {
+                return DealerResponse.NoAuctionsFromCompany;
+            }
+
+            return response;
 
         }
 
@@ -231,31 +239,37 @@ namespace FormsAppTelenav.Databases
 
         public async Task<DealerResponse> AddAuctionBundle(AuctionBundle auctionBundle)
         {
+            DealerResponse response = new DealerResponse();
+            List<object> payload = new List<object>();
+            payload.Add(auctionBundle);
             double numberToBuy = double.Parse(auctionBundle.Number, System.Globalization.CultureInfo.InvariantCulture);
             List<AuctionBundleForDb> list = await GetAuctionBundles();
             AuctionBundleForDb bundleForSymbol = await GetAuctionBundleForSymbol(auctionBundle.Symbol, App.User);
             if (bundleForSymbol == null){
+                
                 AuctionBundleForDb dbBundle = new AuctionBundleForDb();
                 dbBundle.Number = double.Parse(auctionBundle.Number, System.Globalization.CultureInfo.InvariantCulture);
                 dbBundle.MedianValue = auctionBundle.CloseValueAtDateBought;
                 dbBundle.Symbol = auctionBundle.Symbol;
                 dbBundle.Name = auctionBundle.Name;
                 dbBundle.PersonID = App.User.Id;
-                await connection.InsertAsync(dbBundle);
+                response = App.MiddleDealer.OnEvent(Databases.MessageAction.AddedAuctionBundle, payload);
+                if (response == DealerResponse.Success)
+                {
+                    await connection.InsertAsync(dbBundle);
+                }
             }
             else {
-                bundleForSymbol.MedianValue = ((bundleForSymbol.MedianValue * bundleForSymbol.Number) + (numberToBuy * auctionBundle.CloseValueAtDateBought)) / (double.Parse(auctionBundle.Number, System.Globalization.CultureInfo.InvariantCulture) + bundleForSymbol.Number);
-                bundleForSymbol.Number += double.Parse(auctionBundle.Number, System.Globalization.CultureInfo.InvariantCulture);
-                await SaveAuctionBundle(bundleForSymbol);
-
+                payload.Add(bundleForSymbol);
+                response = App.MiddleDealer.OnEvent(Databases.MessageAction.AddedAuctionBundle, payload);
 
 
             }
 
-            List<object> payload = new List<object>();
-            payload.Add(auctionBundle);
 
-            return App.MiddleDealer.OnEvent(Databases.MessageAction.AddedAuctionBundle, payload);
+
+
+            return response;
 
 
         }
@@ -348,29 +362,43 @@ namespace FormsAppTelenav.Databases
 
         public DealerResponse OnMessageReceived(MessageAction message, List<object> payload)
         {
+            Person person = App.User;
             DealerResponse response = DealerResponse.Unreachable;
-            /*switch (message)
+            switch (message)
             {
                 
                 case MessageAction.AddedAuctionBundle:
                     {
-                        PersonToAuctionBundleConnection conn = new PersonToAuctionBundleConnection();
-                        Person person = App.User;
-                        conn.PersonID = person.Id;
+                       
+                        person = App.User;
+                       
                         var auctionBundle = payload[0] as AuctionBundle;
-                        conn.AuctionBundleID = auctionBundle.Id;
-                        App.LocalDataBase.AddPersonToAuctionBundleConnection(conn);
-
-                        /// await DisplayAlert("", "Congratulations, you have just bought " + auctionBundle.Number + " auctions", "OK");
-                        double auxNumber = double.Parse(auctionBundle.Number, System.Globalization.CultureInfo.InvariantCulture);
-                        double amountToPay = auctionBundle.CloseValueAtDateBought * auxNumber;
-                        person.Amount -= amountToPay;
-
-                        App.LocalDataBase.SavePerson(person);
-                        AuctionBundleForHistory bundle = new AuctionBundleForHistory(auctionBundle.Symbol, auctionBundle.Name, auctionBundle.OpenValueAtDateBought, auctionBundle.CloseValueAtDateBought, auctionBundle.DateBought, auctionBundle.Number, AuctionAction.BOUGHT); ;
-                        bundle.PersonID = person.Id;
-                        App.LocalDataBase.AddAuctionBundleToHistory(bundle);
-                        response =  DealerResponse.Success;
+                        double numberToBuy = double.Parse(auctionBundle.Number, System.Globalization.CultureInfo.InvariantCulture);
+                        if (payload.Count == 1)
+                        {
+                            double auxNumber = double.Parse(auctionBundle.Number, System.Globalization.CultureInfo.InvariantCulture);
+                            double amountToPay = auctionBundle.CloseValueAtDateBought * auxNumber;
+                            person.Amount -= amountToPay;
+                            
+                            AuctionBundleForHistory bundle = new AuctionBundleForHistory(auctionBundle.Symbol, auctionBundle.Name, auctionBundle.OpenValueAtDateBought, auctionBundle.CloseValueAtDateBought, auctionBundle.DateBought, auctionBundle.Number, AuctionAction.BOUGHT); ;
+                            bundle.PersonID = person.Id;
+                            App.LocalDataBase.AddAuctionBundleToHistory(bundle);
+                            App.LocalDataBase.SavePerson(person);
+                            response = DealerResponse.Success;
+                        }
+                        else
+                        {
+                            AuctionBundleForDb bundleForSymbol = payload[1] as AuctionBundleForDb;
+                            bundleForSymbol.MedianValue = ((bundleForSymbol.MedianValue * bundleForSymbol.Number) + (numberToBuy * auctionBundle.CloseValueAtDateBought)) / (double.Parse(auctionBundle.Number, System.Globalization.CultureInfo.InvariantCulture) + bundleForSymbol.Number);
+                            bundleForSymbol.Number += double.Parse(auctionBundle.Number, System.Globalization.CultureInfo.InvariantCulture);
+                            AuctionBundleForHistory bundle = new AuctionBundleForHistory(auctionBundle.Symbol, auctionBundle.Name, auctionBundle.OpenValueAtDateBought, auctionBundle.CloseValueAtDateBought, auctionBundle.DateBought, auctionBundle.Number, AuctionAction.BOUGHT); ;
+                            bundle.PersonID = person.Id;
+                            person.Amount -= numberToBuy * auctionBundle.CloseValueAtDateBought;
+                            App.LocalDataBase.SavePerson(person);
+                            App.LocalDataBase.AddAuctionBundleToHistory(bundle);
+                            SaveAuctionBundle(bundleForSymbol);
+                            response = DealerResponse.Success;
+                        }
                         break;
 
                     }
@@ -380,92 +408,31 @@ namespace FormsAppTelenav.Databases
                     }
                 case MessageAction.SellAuctionBundle:
                     {
-                        Person person = App.User;
-                        var auctionBundle = payload[0] as AuctionBundle;
-                        string symbol = auctionBundle.Symbol;
-                        string numberToBuy = auctionBundle.Number;
-
-                        List<AuctionBundle> personsAuctionBundles = new List<AuctionBundle>();
-                        for (int i = 1; i < payload.Count; i++){
-                            personsAuctionBundles.Add(payload[i] as AuctionBundle);
-                        }
-                        if (personsAuctionBundles.Count == 0)
+                        AuctionBundle auctionBundle = payload[0] as AuctionBundle;
+                        AuctionBundleForDb bundleForSymbol = payload[1] as AuctionBundleForDb;
+                        double numberToSell = double.Parse(auctionBundle.Number, System.Globalization.CultureInfo.InvariantCulture);
+                        if ((bundleForSymbol.Number - numberToSell) >= 0)
                         {
-                            return DealerResponse.NoAuctions;
+                            bundleForSymbol.Number -= numberToSell;
+                            App.LocalDataBase.SaveAuctionBundle(bundleForSymbol);
+                            person.Amount += numberToSell * auctionBundle.CloseValueAtDateBought;
+                            AuctionBundleForHistory bundle = new AuctionBundleForHistory(auctionBundle.Symbol, auctionBundle.Name, auctionBundle.OpenValueAtDateBought, auctionBundle.CloseValueAtDateBought, auctionBundle.DateBought, auctionBundle.Number, AuctionAction.SOLD); ;
+                            bundle.PersonID = person.Id;
+                            App.LocalDataBase.AddAuctionBundleToHistory(bundle);
+                            App.LocalDataBase.SavePerson(person);
+                            App.LocalDataBase.SaveAuctionBundle(bundleForSymbol);
+                            response = DealerResponse.Success;
                         }
                         else
                         {
-                            List<AuctionBundle> auctionsBundlesForCurrentSymbol = new List<AuctionBundle>();
-                            foreach (AuctionBundle a in personsAuctionBundles)
-                            {
-                                if (a.Symbol == auctionBundle.Symbol && a.Number != "0")
-                                {
-                                    auctionsBundlesForCurrentSymbol.Add(a);
-                                }
-                            }
-                            if (auctionsBundlesForCurrentSymbol.Count() == 0)
-                            {
-                                response = DealerResponse.NoAuctionsFromCompany;
-                                System.Diagnostics.Debug.WriteLine("You have not bought auctions from " + auctionBundle.Name + "or have no more auctions");
-                            }
-                            else
-                            {
-                                double medianValue;
-                                double totalCost = 0;
-                                double totalNumber = 0;
-                                foreach (AuctionBundle a in auctionsBundlesForCurrentSymbol)
-                                {
-                                    double auxNumber = double.Parse(a.Number, System.Globalization.CultureInfo.InvariantCulture);
-                                    totalCost += auxNumber * a.OpenValueAtDateBought;
-                                    totalNumber += auxNumber;
-                                }
-                                medianValue = totalCost / totalNumber;
-                                double auctionNumber = double.Parse(auctionBundle.Number);
-                                if (auctionNumber > totalNumber)
-                                {
-                                    response =  DealerResponse.NotEnoughAuctions;
-                                    System.Diagnostics.Debug.WriteLine("You don't have enough actions");
-                                }
-                                else
-                                {
-                                    AuctionBundle temporaryBundle = auctionBundle.Copy();
-                                    foreach (AuctionBundle a in auctionsBundlesForCurrentSymbol)
-                                    {
-                                        double auxPersonNumber = double.Parse(a.Number, System.Globalization.CultureInfo.InvariantCulture);
-                                        double auxToBuyNumber = double.Parse(temporaryBundle.Number, System.Globalization.CultureInfo.InvariantCulture);
-                                        if ((auxPersonNumber - auxToBuyNumber) < 0)
-                                        {
-                                            a.Number = "0";
-                                            auxToBuyNumber -= auxPersonNumber;
-                                            temporaryBundle.Number = auxToBuyNumber.ToString();
-                                        }
-                                        else
-                                        {
-                                            a.Number = (auxPersonNumber - auxToBuyNumber).ToString();
-                                            temporaryBundle.Number = "0";
-
-                                        }
-                                    }
-                                    foreach (AuctionBundle a in auctionsBundlesForCurrentSymbol)
-                                    {
-                                        App.LocalDataBase.SaveAuctionBundle(a);
-                                    }
-                                    double auxNumber = double.Parse(auctionBundle.Number, System.Globalization.CultureInfo.InvariantCulture);
-                                    person.Amount += auxNumber * auctionBundle.OpenValueAtDateBought;
-                                    App.LocalDataBase.SavePerson(person);
-                                    AuctionBundleForHistory bundle = new AuctionBundleForHistory(auctionBundle.Symbol, auctionBundle.Name, auctionBundle.OpenValueAtDateBought, auctionBundle.CloseValueAtDateBought, auctionBundle.DateBought, numberToBuy, AuctionAction.SOLD);
-                                    bundle.PersonID = person.Id;
-                                    App.LocalDataBase.AddAuctionBundleToHistory(bundle);
-                                    response =  DealerResponse.Success;
-
-                                }
-
-                            }
+                            return DealerResponse.NotEnoughAuctions;
                         }
+                            
+                        
                         break;
                     }
-
-            } */
+                     
+            } 
 
             return response;
 
