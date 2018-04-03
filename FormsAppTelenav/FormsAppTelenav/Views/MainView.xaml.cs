@@ -18,7 +18,7 @@ namespace FormsAppTelenav.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainView : ContentPage 
     {
-        private List<AuctionBundleForHistory> history;
+        
         private MainViewBindingModel binding = new MainViewBindingModel();
 
 
@@ -143,13 +143,7 @@ namespace FormsAppTelenav.Views
                 }
                 binding.MoneyStatement = person.Amount;
                 await CalculateMoneyToGive(person, this);
-        
-
-
-
-
-
-
+       
             }
 
             binding.MoneyStatement = person.Amount;
@@ -158,12 +152,16 @@ namespace FormsAppTelenav.Views
             PersonToAuctionBundleConnection conn = new PersonToAuctionBundleConnection();
             List<PersonToAuctionBundleConnection> conns = await App.LocalDataBase.GetPersonToAuctionBundleConncetions();
             List<AuctionBundleForHistory> bundles = await App.LocalDataBase.GetHistory();
+            List<StationaryCredit> credits = await App.LocalDataBase.GetCredits();
            
             Currency curr = await App.LocalDataBase.GetCurrency(person.CurrencyID);
             if (bundles.Count != 0)
             {
                 HistoryButton.IsEnabled = true;
-                history = await App.LocalDataBase.GetHistory();
+            }
+            if (credits.Count != 0)
+            {
+                CreditListButton.IsEnabled = true;
             }
 
            
@@ -173,7 +171,7 @@ namespace FormsAppTelenav.Views
 
         private async void ToHistory_Clicked(object sender, EventArgs e)
         {
-            
+            List<AuctionBundleForHistory> history = await App.LocalDataBase.GetHistory();
             if (history.Count != 0) {
                 HistoryView historyView = new HistoryView(history);
                 await Navigation.PushAsync(historyView);
@@ -186,7 +184,16 @@ namespace FormsAppTelenav.Views
             
         }
 
-        
+        private async void ToCreditList_Clicked(object sender, EventArgs e)
+        {
+            List<StationaryCredit> credits = await App.LocalDataBase.GetCredits();
+            CreditsFromMainView view = new CreditsFromMainView(credits);
+            await Navigation.PushAsync(view);
+
+
+        }
+
+
 
 
         /* public ICommand AuctionHouseCommand

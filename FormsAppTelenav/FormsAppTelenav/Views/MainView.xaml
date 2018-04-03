@@ -23,6 +23,11 @@
                     Clicked="ToHistory_Clicked"
                     IsEnabled="False"
                     />
+            <Button x:Name="CreditListButton" 
+                    Text="Check your credits"
+                    Clicked="ToCreditList_Clicked"
+                    IsEnabled="False"
+                    />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
