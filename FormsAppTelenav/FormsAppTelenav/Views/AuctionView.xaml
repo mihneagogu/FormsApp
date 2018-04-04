@@ -22,14 +22,15 @@
             </ListView.ItemTemplate>
         </ListView>
             <Label x:Name ="PriceLabel" 
-                   Text="Price difference label" />
+                   Text="Price difference label" 
+                   HorizontalOptions="Center"/>
             <Button x:Name="BuyButton" Text="Buy auctions" 
                 Clicked="ToBuyAuctions_Clicked" IsEnabled="False"/>
             <Button x:Name="SellButton"
                 Text="Sell auctions"
                     
                     Clicked="ToSellAuctions_Clicked" IsEnabled="False"/>
-            <Label Text="CHART HERE" />
+            <Label Text="CHART HERE" HorizontalOptions="Center" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

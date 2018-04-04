@@ -68,12 +68,12 @@ namespace FormsAppTelenav.Views
                 DateTime timeNow = DateTime.Now.ToLocalTime();
                 TimeSpan span = timeNow.Subtract(credit.LatestPayment);
                 double monthsSinceLastPayment = span.TotalMinutes;
-                monthsSinceLastPayment = monthsSinceLastPayment / 100;
+                monthsSinceLastPayment = monthsSinceLastPayment / 10;
                 double mRemaining = (double)credit.MonthsRemaining;
                 monthsSinceLastPayment = Math.Floor(monthsSinceLastPayment);
                 await page.DisplayAlert("", monthsSinceLastPayment + " months have passed since you last paid your credit. You now have to pay for " +
                                         (double)(credit.MonthsRemaining) + " - " + " " + monthsSinceLastPayment + " = " + ((double)credit.MonthsRemaining - monthsSinceLastPayment) + "  more months", "OK");
-                if ((mRemaining - monthsSinceLastPayment) >= 0)
+                if ((mRemaining - monthsSinceLastPayment) >= 0 && (monthsSinceLastPayment >= 1))
                 {
                     double currentMoney = person.Amount;
                     currentMoney -= ((double)credit.Cost / (double)credit.Duration) * (monthsSinceLastPayment);

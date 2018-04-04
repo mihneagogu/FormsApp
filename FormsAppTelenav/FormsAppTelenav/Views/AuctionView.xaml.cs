@@ -44,9 +44,11 @@ namespace FormsAppTelenav.Views
 
         private void ToBuyAuctions_Clicked(object sender, EventArgs e)
         {
-            BuyAuctionsView buyAuctionsView = new BuyAuctionsView(new ToBuyAuction(symbol ,auctionName, stock[0].CloseValue, stock[0].Date), AuctionAction.BOUGHT);
+            BuyAuctionsView buyAuctionsView = new BuyAuctionsView(new ToBuyAuction(symbol ,auctionName, inverseStock[0].CloseValue, inverseStock[0].Date), AuctionAction.BOUGHT);
             Navigation.PushAsync(buyAuctionsView);
         }
+
+        public string Profit { get; set; }
 
         private async void MakeAuctions()
         {
@@ -65,6 +67,9 @@ namespace FormsAppTelenav.Views
                 bindingBundle.Symbol = symbol;
                 bindingBundle.CloseValueAtDateBought = stock[0].CloseValue;
                 singularyStock.Add(bindingBundle);
+                double profit = (inverseStock[0].CloseValue - inverseStock[inverseStock.Count - 1].CloseValue)/inverseStock[inverseStock.Count - 1].CloseValue;
+                profit /= 100;
+                PriceLabel.Text = string.Format("{0:0.000000} %", profit);
                 Person person = App.User;
                 BuyButton.IsEnabled = true;
                 AuctionBundleForDb boughtBundle = await App.LocalDataBase.GetAuctionBundleForSymbol(symbol, person);
@@ -77,7 +82,7 @@ namespace FormsAppTelenav.Views
 
         private void ToSellAuctions_Clicked(object sender, EventArgs e)
         {
-            BuyAuctionsView buyAuctionsView = new BuyAuctionsView(new ToBuyAuction(symbol, auctionName, stock[0].CloseValue, stock[0].Date), AuctionAction.SOLD);
+            BuyAuctionsView buyAuctionsView = new BuyAuctionsView(new ToBuyAuction(symbol, auctionName, inverseStock[0].CloseValue, inverseStock[0].Date), AuctionAction.SOLD);
             Navigation.PushAsync(buyAuctionsView);
         }
     }
