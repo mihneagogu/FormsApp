@@ -16,6 +16,7 @@ namespace FormsAppTelenav.Views
     public partial class AuctionView : ContentPage
     {
         private ObservableCollection<Auction> stock = new ObservableCollection<Auction>();
+        private ObservableCollection<Auction> inverseStock = new ObservableCollection<Auction>();
         private AuctionsFromAPI auctions = new AuctionsFromAPI();
         private string auctionName;
         private string symbol;
@@ -29,6 +30,8 @@ namespace FormsAppTelenav.Views
             BindingContext = this;
             
         }
+
+        public ObservableCollection<Auction> InverseStock { set { inverseStock = value; } get { return inverseStock; } }
 
         public ObservableCollection<Auction> Stock { 
             set { stock = value; }
@@ -50,6 +53,10 @@ namespace FormsAppTelenav.Views
             }
             else
             {
+                for (int i = stock.Count - 1; i >= 0; i--)
+                {
+                    inverseStock.Add(stock[i]);
+                }
                 Person person = App.User;
                 BuyButton.IsEnabled = true;
                 AuctionBundleForDb boughtBundle = await App.LocalDataBase.GetAuctionBundleForSymbol(symbol, person);

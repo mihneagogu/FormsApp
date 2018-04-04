@@ -4,7 +4,7 @@
              x:Class="FormsAppTelenav.Views.AuctionView">
     <ContentPage.Content>
         <StackLayout>
-        <ListView x:Name="auctionListView" ItemsSource="{Binding Stock}">
+        <ListView x:Name="auctionListView" ItemsSource="{Binding InverseStock}">
             <ListView.Header>
                 <Grid Padding="7">
                     <Grid.ColumnDefinitions>
