@@ -4,38 +4,32 @@
              x:Class="FormsAppTelenav.Views.AuctionView">
     <ContentPage.Content>
         <StackLayout>
-        <ListView x:Name="auctionListView" ItemsSource="{Binding InverseStock}">
-            <ListView.Header>
-                <Grid Padding="7">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*" />
-                    </Grid.ColumnDefinitions>
-                    <Label Text="Date" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" />
-                    <Label Text="Open" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" />
-                    <Label Text="Close" Grid.Row="0" Grid.Column="2" HorizontalOptions="Center"/>
-                </Grid>
-            </ListView.Header>
+            <ListView x:Name="auctionListView" ItemsSource="{Binding SingularyStock}">
+
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
                         <Grid Padding="7">
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*" />
                                 <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
-                            <Label Text="{Binding Date}" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" />
-                            <Label Text="{Binding OpenValue}" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" />
-                            <Label Text="{Binding CloseValue}" Grid.Row="0" Grid.Column="2" HorizontalOptions="Center" />
-                        </Grid>
+                                </Grid.ColumnDefinitions>
+                            <Label Text="{Binding Symbol}" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" />
+                            <Label Text="{Binding CloseValueAtDateBought}" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" />
+                            </Grid>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button x:Name="BuyButton" Text="Buy auctions" 
+            <Label x:Name ="PriceLabel" 
+                   Text="Price difference label" />
+            <Button x:Name="BuyButton" Text="Buy auctions" 
                 Clicked="ToBuyAuctions_Clicked" IsEnabled="False"/>
             <Button x:Name="SellButton"
                 Text="Sell auctions"
                     
                     Clicked="ToSellAuctions_Clicked" IsEnabled="False"/>
+            <Label Text="CHART HERE" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
