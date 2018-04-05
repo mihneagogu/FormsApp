@@ -4,12 +4,10 @@
              x:Class="FormsAppTelenav.Views.AuctionView">
     <ContentPage.Content>
         <StackLayout>
-            <ListView x:Name="auctionListView" ItemsSource="{Binding SingularyStock}">
+            
 
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <Grid Padding="7">
+
+                        <Grid Padding="7" x:Name="AuctiomGrid">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="3*" />
                                 <ColumnDefinition Width="1*" />
@@ -17,10 +15,7 @@
                             <Label Text="{Binding Symbol}" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" />
                             <Label Text="{Binding CloseValueAtDateBought}" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" />
                             </Grid>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                    
             <Label x:Name ="PriceLabel" 
                    Text="Price difference label" 
                    HorizontalOptions="Center"/>
