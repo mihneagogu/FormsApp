@@ -1,5 +1,8 @@
 ﻿using FormsAppTelenav.Classes;
 using System;
+using SkiaSharp;
+using Microcharts;
+using MEntry = Microcharts.Entry;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,17 +21,20 @@ namespace FormsAppTelenav.Views
         private ObservableCollection<Auction> stock = new ObservableCollection<Auction>();
         private ObservableCollection<Auction> inverseStock = new ObservableCollection<Auction>();
         private ObservableCollection<AuctionBundle> singularyStock = new ObservableCollection<AuctionBundle>();
- 
+
+        private List<MEntry> entries = new List<MEntry>();
+
         private AuctionsFromAPI auctions = new AuctionsFromAPI();
         private string auctionName;
         private string symbol;
         public AuctionView(string symbol, string auctionName)
         {
             InitializeComponent();
-
+            
             this.symbol = symbol;
             this.auctionName = auctionName;
             MakeAuctions();
+            
             BindingContext = this;
 
         }
@@ -40,6 +46,12 @@ namespace FormsAppTelenav.Views
         public ObservableCollection<Auction> Stock { 
             set { stock = value; }
             get { return stock; }
+        }
+
+        private void ToSellAuctions_Clicked(object sender, EventArgs e)
+        {
+            BuyAuctionsView buyAuctionsView = new BuyAuctionsView(new ToBuyAuction(symbol, auctionName, inverseStock[0].CloseValue, inverseStock[0].Date), AuctionAction.SOLD);
+            Navigation.PushAsync(buyAuctionsView);
         }
 
         private void ToBuyAuctions_Clicked(object sender, EventArgs e)
@@ -63,30 +75,37 @@ namespace FormsAppTelenav.Views
                 {
                     inverseStock.Add(stock[i]);
                 }
+                foreach (Auction s in inverseStock)
+                {
+                    MEntry mEntry = new MEntry(float.Parse(s.CloseValue.ToString()));
+                    mEntry.Label = s.Date.ToString();
+                    mEntry.ValueLabel = s.CloseValue.ToString();
+                    mEntry.Color = SKColor.Parse("00BFFF");
+                    entries.Add(mEntry);
+                }
+                AuctionChart.Chart = new LineChart() { Entries = entries };
+
                 AuctionBundle bindingBundle = new AuctionBundle();
                 bindingBundle.Symbol = symbol;
                 bindingBundle.CloseValueAtDateBought = stock[0].CloseValue;
                 singularyStock.Add(bindingBundle);
                 AuctiomGrid.BindingContext = SingularyStock[0];
-                double profit = (inverseStock[0].CloseValue - inverseStock[inverseStock.Count - 1].CloseValue)/inverseStock[inverseStock.Count - 1].CloseValue;
+                double profit = (inverseStock[0].CloseValue - inverseStock[inverseStock.Count - 1].CloseValue) / inverseStock[inverseStock.Count - 1].CloseValue;
                 profit /= 100;
                 PriceLabel.Text = string.Format("{0:0.000000} %", profit);
                 Person person = App.User;
                 BuyButton.IsEnabled = true;
                 AuctionBundleForDb boughtBundle = await App.LocalDataBase.GetAuctionBundleForSymbol(symbol, person);
-                if (boughtBundle != null && boughtBundle.Number != 0){
+                if (boughtBundle != null && boughtBundle.Number != 0)
+                {
                     SellButton.IsEnabled = true;
                 }
+            }
 
             }
         }
 
-        private void ToSellAuctions_Clicked(object sender, EventArgs e)
-        {
-            BuyAuctionsView buyAuctionsView = new BuyAuctionsView(new ToBuyAuction(symbol, auctionName, inverseStock[0].CloseValue, inverseStock[0].Date), AuctionAction.SOLD);
-            Navigation.PushAsync(buyAuctionsView);
-        }
+        
     }
 
 
-}

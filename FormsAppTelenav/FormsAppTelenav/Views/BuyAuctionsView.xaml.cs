@@ -19,27 +19,13 @@ namespace FormsAppTelenav.Views
     public partial class BuyAuctionsView : ContentPage
     {
 
-        private List<MEntry> entries = new List<MEntry>
-        {
-            new MEntry(200)
-            {
-                Label = "January",
-                Color = SKColor.Parse("#00e600"),
-                ValueLabel = "200"
-            },
-            new MEntry(400)
-            {
-                Label = "February",
-                Color = SKColor.Parse("#00ffff"),
-                ValueLabel = "400"
-            }
-        };
+       
         private ToBuyAuction auctionToBuy;
         private AuctionAction action;
         public BuyAuctionsView(ToBuyAuction auctionToBuy, AuctionAction action)
         {
             InitializeComponent();
-            AuctionChart.Chart = new RadialGaugeChart() { Entries = entries };
+           
             this.auctionToBuy = auctionToBuy;
             this.action = action;
             BuyOrSellLabel.Text = "How many auctions do you want to " + action + "?";

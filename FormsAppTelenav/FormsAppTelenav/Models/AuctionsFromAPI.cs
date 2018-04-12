@@ -20,7 +20,7 @@ namespace FormsAppTelenav.Classes
         public async Task<bool> GetAuction(string symbol, ObservableCollection<Auction> stock)
         {
             string dateNowStr = DateTime.Now.ToString("yyyy-MM-dd");
-            string aWeekAgo = DateTime.Now.AddDays(-21).ToString("yyyy-MM-dd");
+            string aWeekAgo = DateTime.Now.AddDays(-28).ToString("yyyy-MM-dd");
             string symbolAuctionURL = String.Format(auctionURL, symbol, aWeekAgo, dateNowStr);
             HttpResponseMessage response = await client.GetAsync(symbolAuctionURL);
             if (response.IsSuccessStatusCode)

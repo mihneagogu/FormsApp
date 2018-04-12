@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:forms="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
              x:Class="FormsAppTelenav.Views.AuctionView">
     <ContentPage.Content>
         <StackLayout>
-            
-
-
-                        <Grid Padding="7" x:Name="AuctiomGrid">
+            <Grid Padding="7" x:Name="AuctiomGrid">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="3*" />
                                 <ColumnDefinition Width="1*" />
@@ -15,7 +13,7 @@
                             <Label Text="{Binding Symbol}" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" />
                             <Label Text="{Binding CloseValueAtDateBought}" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" />
                             </Grid>
-                    
+         
             <Label x:Name ="PriceLabel" 
                    Text="Price difference label" 
                    HorizontalOptions="Center"/>
@@ -26,6 +24,7 @@
                     
                     Clicked="ToSellAuctions_Clicked" IsEnabled="False"/>
             <Label Text="CHART HERE" HorizontalOptions="Center" />
+            <forms:ChartView x:Name="AuctionChart" HeightRequest="150" BackgroundColor="#FFFFFF" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
