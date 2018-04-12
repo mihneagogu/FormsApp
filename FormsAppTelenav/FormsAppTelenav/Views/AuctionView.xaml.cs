@@ -23,6 +23,8 @@ namespace FormsAppTelenav.Views
         private ObservableCollection<AuctionBundle> singularyStock = new ObservableCollection<AuctionBundle>();
 
         private List<MEntry> entries = new List<MEntry>();
+        
+
 
         private AuctionsFromAPI auctions = new AuctionsFromAPI();
         private string auctionName;
@@ -36,6 +38,18 @@ namespace FormsAppTelenav.Views
             MakeAuctions();
             
             BindingContext = this;
+
+        }
+
+        private string GetRandomColor()
+        {
+            Random random = new Random();
+            Color color = Color.FromRgb(random.Next(256), random.Next(256), random.Next(256));
+            int r = (int)(color.R * 255);
+            int g = (int)(color.G * 255);
+            int b = (int)(color.B * 255);
+            string hex = "#" + r.ToString("x2") + g.ToString("x2") + b.ToString("x2");
+            return hex;
 
         }
 
@@ -75,12 +89,13 @@ namespace FormsAppTelenav.Views
                 {
                     inverseStock.Add(stock[i]);
                 }
-                foreach (Auction s in inverseStock)
+                foreach (Auction s in stock)
                 {
+                    Random random = new Random();
                     MEntry mEntry = new MEntry(float.Parse(s.CloseValue.ToString()));
                     mEntry.Label = s.Date.ToString();
                     mEntry.ValueLabel = s.CloseValue.ToString();
-                    mEntry.Color = SKColor.Parse("00BFFF");
+                    mEntry.Color = SKColor.Parse(GetRandomColor());
                     entries.Add(mEntry);
                 }
                 AuctionChart.Chart = new LineChart() { Entries = entries };

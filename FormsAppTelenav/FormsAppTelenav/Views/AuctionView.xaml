@@ -24,7 +24,7 @@
                     
                     Clicked="ToSellAuctions_Clicked" IsEnabled="False"/>
             <Label Text="CHART HERE" HorizontalOptions="Center" />
-            <forms:ChartView x:Name="AuctionChart" HeightRequest="150" BackgroundColor="#FFFFFF" />
+            <forms:ChartView x:Name="AuctionChart" HeightRequest="250" WidthRequest="150" BackgroundColor="#FFFFFF" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
