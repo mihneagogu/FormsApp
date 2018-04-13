@@ -91,6 +91,7 @@ namespace FormsAppTelenav.Views
                 }
                 foreach (Auction s in stock)
                 {
+                    
                     Random random = new Random();
                     MEntry mEntry = new MEntry(float.Parse(s.CloseValue.ToString()));
                     mEntry.Label = s.Date.ToString();
@@ -98,7 +99,11 @@ namespace FormsAppTelenav.Views
                     mEntry.Color = SKColor.Parse(GetRandomColor());
                     entries.Add(mEntry);
                 }
+
+              
+
                 AuctionChart.Chart = new LineChart() { Entries = entries };
+                AuctionChart.Chart.LabelTextSize = 45;
 
                 AuctionBundle bindingBundle = new AuctionBundle();
                 bindingBundle.Symbol = symbol;

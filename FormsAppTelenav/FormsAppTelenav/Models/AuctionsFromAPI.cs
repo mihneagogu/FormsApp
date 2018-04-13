@@ -9,7 +9,7 @@ namespace FormsAppTelenav.Classes
     public class AuctionsFromAPI
     {
         private HttpClient client = new HttpClient();
-        private string auctionURL = "https://www.quandl.com/api/v1/datasets/WIKI/{0}.csv?sort_order=asc&trim_start={1}&trim_end={2}";
+        private string auctionURL = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol={0}&apikey=AAUAQ28HQ7C9Y6T4&datatype=csv";
 
         private ObservableCollection<Auction> stock = new ObservableCollection<Auction>();
         public AuctionsFromAPI()
@@ -19,9 +19,7 @@ namespace FormsAppTelenav.Classes
 
         public async Task<bool> GetAuction(string symbol, ObservableCollection<Auction> stock)
         {
-            string dateNowStr = DateTime.Now.ToString("yyyy-MM-dd");
-            string aWeekAgo = DateTime.Now.AddDays(-28).ToString("yyyy-MM-dd");
-            string symbolAuctionURL = String.Format(auctionURL, symbol, aWeekAgo, dateNowStr);
+            string symbolAuctionURL = String.Format(auctionURL, symbol);
             HttpResponseMessage response = await client.GetAsync(symbolAuctionURL);
             if (response.IsSuccessStatusCode)
             {
