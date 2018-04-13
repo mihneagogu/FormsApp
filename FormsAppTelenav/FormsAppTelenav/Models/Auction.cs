@@ -11,6 +11,10 @@ namespace FormsAppTelenav.Classes
         private string date;
         private double openValue, highValue, lowValue, closeValue, volume, exDividend, splitRatio, adjOpen, adjHigh, adjLow, adjClose, adjVolume;
 
+        public Auction(){
+            
+        }
+
         public Auction(string date, double openValue, double highValue, double lowValue, double closeValue, double volume,
             double exDividend, double splitRatio, double adjOpen, double adjHigh, double adjLow, double adjClose, double adjVolume)
         {

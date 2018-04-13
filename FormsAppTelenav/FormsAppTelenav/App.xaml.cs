@@ -18,6 +18,8 @@ namespace FormsAppTelenav
         public static DataBase LocalDataBase {
             get; set;
         }
+
+
         // Daca se schimba person, sa se trimite la middleware mesaj ca sa schime si User din App.xaml.cs ?
         public static Person User 
         { 
