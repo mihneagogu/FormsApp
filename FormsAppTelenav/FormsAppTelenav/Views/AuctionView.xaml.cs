@@ -64,20 +64,21 @@ namespace FormsAppTelenav.Views
 
         private void ToSellAuctions_Clicked(object sender, EventArgs e)
         {
-            BuyAuctionsView buyAuctionsView = new BuyAuctionsView(new ToBuyAuction(symbol, auctionName, inverseStock[0].CloseValue, inverseStock[0].Date), AuctionAction.SOLD);
+            BuyAuctionsView buyAuctionsView = new BuyAuctionsView(new ToBuyAuction(symbol, auctionName, stock[0].CloseValue, stock[0].Date), AuctionAction.SOLD);
             Navigation.PushAsync(buyAuctionsView);
         }
 
         private void ToBuyAuctions_Clicked(object sender, EventArgs e)
         {
-            BuyAuctionsView buyAuctionsView = new BuyAuctionsView(new ToBuyAuction(symbol ,auctionName, inverseStock[0].CloseValue, inverseStock[0].Date), AuctionAction.BOUGHT);
+            BuyAuctionsView buyAuctionsView = new BuyAuctionsView(new ToBuyAuction(symbol ,auctionName, stock[0].CloseValue, stock[0].Date), AuctionAction.BOUGHT);
             Navigation.PushAsync(buyAuctionsView);
         }
 
         public string Profit { get; set; }
-
+        private int counter = 0;
         private async void MakeAuctions()
         {
+           
             bool gotResponse = await auctions.GetAuction(symbol, stock);
             if (!gotResponse)
             {
@@ -89,21 +90,23 @@ namespace FormsAppTelenav.Views
                 {
                     inverseStock.Add(stock[i]);
                 }
-                foreach (Auction s in stock)
+                for (int i = 6; i >= 0; i--)
                 {
+                    Auction s = stock[i];
+                        Random random = new Random();
+                        MEntry mEntry = new MEntry(float.Parse(s.CloseValue.ToString()));
+                        mEntry.Label = s.Date.ToString();
+                        mEntry.ValueLabel = s.CloseValue.ToString();
+                        mEntry.Color = SKColor.Parse(GetRandomColor());
+                        entries.Add(mEntry);
+                        counter++;
                     
-                    Random random = new Random();
-                    MEntry mEntry = new MEntry(float.Parse(s.CloseValue.ToString()));
-                    mEntry.Label = s.Date.ToString();
-                    mEntry.ValueLabel = s.CloseValue.ToString();
-                    mEntry.Color = SKColor.Parse(GetRandomColor());
-                    entries.Add(mEntry);
                 }
 
               
 
                 AuctionChart.Chart = new LineChart() { Entries = entries };
-                AuctionChart.Chart.LabelTextSize = 45;
+                AuctionChart.Chart.LabelTextSize = 25;
 
                 AuctionBundle bindingBundle = new AuctionBundle();
                 bindingBundle.Symbol = symbol;

@@ -31,7 +31,7 @@ namespace FormsAppTelenav.Views
         public AuctionHouseView()
         {
             InitializeComponent();
-            //NavigationPage.SetHasBackButton(this, false);
+            NavigationPage.SetHasBackButton(this, false);
             BindingContext = sSymbols;
         }
     }

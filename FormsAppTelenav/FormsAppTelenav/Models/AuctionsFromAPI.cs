@@ -8,6 +8,7 @@ namespace FormsAppTelenav.Classes
 {
     public class AuctionsFromAPI
     {
+        
         private HttpClient client = new HttpClient();
         private string auctionURL = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol={0}&apikey=AAUAQ28HQ7C9Y6T4&datatype=csv";
 
@@ -28,12 +29,13 @@ namespace FormsAppTelenav.Classes
 
                 string[] firstSplitStats = stringResponse.Split(new string[] { "\r\n" }, StringSplitOptions.None);
                 char[] delimiter = { ',' };
-                for (int i = 1; i < firstSplitStats.Length; i++){
+                
+                for (int i = 1; i < firstSplitStats.Length - 1; i++){
                     string[] stats = firstSplitStats[i].Split(delimiter);
                     AddStock(stats, stock);
                 }
                
-                int x = 0;
+                
                 return true;
             }
             else
@@ -60,6 +62,7 @@ namespace FormsAppTelenav.Classes
             a.Date = date;
             a.CloseValue = close;
             stock.Add(a);
+            
 
         }
 
