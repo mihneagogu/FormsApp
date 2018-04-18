@@ -64,12 +64,17 @@ namespace FormsAppTelenav.Databases
 
         public async Task<DealerResponse> ChangeAppTime(DateTime lastTime){
             DealerResponse response = new DealerResponse();
-            List<AppSettings> settings = await GetAppSettings();
-            AppSettings setting = settings[0];
-            List<object> payload = new List<object>();
-            payload.Add(lastTime);
-            payload.Add(setting);
-            response = App.MiddleDealer.OnEvent(MessageAction.ChangeAppTime, payload);
+            List<AppSettings> s = await GetAppSettings();
+            AppSettings setting = s[0];
+            DateTime currentTime = DateTime.Now;
+            TimeSpan span = currentTime.Subtract(lastTime);
+            double minutespan = span.TotalMinutes;
+            minutespan *= App.Multiplier;
+            DateTime t = DateTime.Parse(setting.LastLogin).AddMinutes(minutespan);
+            setting.LastRealLogin = DateTime.Now.ToString();
+            setting.LastLogin = t.ToString();
+            await SaveAppSetting(setting);
+            response = DealerResponse.Success;
             return response;
         }
 
@@ -371,6 +376,8 @@ namespace FormsAppTelenav.Databases
             return connection.UpdateAsync(person);
         }
 
+       
+
         public DealerResponse OnMessageReceived(MessageAction message, List<object> payload)
         {
             Person person = App.User;
@@ -414,22 +421,6 @@ namespace FormsAppTelenav.Databases
 
                     }
                 case MessageAction.BuyCredit: {
-                        response = DealerResponse.Success;
-                        break;
-                    }
-                case MessageAction.ChangeAppTime : {
-                        DateTime lastTime = (DateTime)payload[0];
-                        AppSettings setting = (AppSettings)payload[1];
-                        DateTime timeNow = DateTime.Now.ToLocalTime();
-                        TimeSpan span = timeNow.Subtract(lastTime);
-                        double realMinutes = span.TotalMinutes;
-
-                        double appTimePassed = realMinutes * App.Multiplier;
-                        Math.Floor(appTimePassed);
-                        DateTime newTime = lastTime.AddMinutes(appTimePassed);
-                        setting.LastLogin = newTime.ToString();
-                        SaveAppSetting(setting);
-                        int x = 0;
                         response = DealerResponse.Success;
                         break;
                     }

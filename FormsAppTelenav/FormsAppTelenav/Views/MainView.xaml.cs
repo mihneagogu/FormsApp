@@ -21,7 +21,10 @@ namespace FormsAppTelenav.Views
         
         private MainViewBindingModel binding = new MainViewBindingModel();
 
-
+        public string DeleteLastLetter(string str)
+        {
+            return str.Substring(0, str.Length - 1);
+        }
 
         protected override async void OnAppearing()
         {
@@ -126,13 +129,14 @@ namespace FormsAppTelenav.Views
                 currentSetting.CurrentPerson = person.Id;
                 DateTime currentTime = DateTime.Now.ToLocalTime();
                 currentSetting.FirstLogin = currentTime.ToString();
+                currentSetting.LastRealLogin = currentTime.ToString();
                 currentSetting.LastLogin = currentTime.ToString();
                 int awaiter = await App.LocalDataBase.AddAppSetting(currentSetting);
             }
             else
             {
                 AppSettings setting = settings[settings.Count - 1] as AppSettings;
-                DateTime timeLastLogin = DateTime.Parse(setting.LastLogin);
+                DateTime timeLastLogin = DateTime.Parse(setting.LastRealLogin);
                 DealerResponse response = await App.LocalDataBase.ChangeAppTime(timeLastLogin);
                 List<AppSettings> s = await App.LocalDataBase.GetAppSettings();
 
@@ -142,14 +146,13 @@ namespace FormsAppTelenav.Views
                 }
 
                 DateTime currentTime = DateTime.Now.ToLocalTime();
-                double currentAmount = CalculateMoneyToEarn(Convert.ToDateTime(setting.LastLogin), person);
+                double currentAmount = CalculateMoneyToEarn(Convert.ToDateTime(/*DeleteLastLetter(*/setting.LastRealLogin)/*)*/, person);
+               
                 if (currentAmount != person.Amount)
                 {
-                    setting.LastLogin = currentTime.ToString();
-                    int awaiter = await App.LocalDataBase.SaveAppSetting(setting);
                     person.Amount = currentAmount;
                     
-                    awaiter = await App.LocalDataBase.SavePerson(person);
+                    int awaiter = await App.LocalDataBase.SavePerson(person);
                     binding.MoneyStatement = person.Amount;
 
                 }

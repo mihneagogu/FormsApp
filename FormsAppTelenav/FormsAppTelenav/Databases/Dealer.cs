@@ -9,7 +9,7 @@ namespace FormsAppTelenav.Databases
         AddedAuctionBundle,
         SellAuctionBundle,
         BuyCredit,
-        ChangeAppTime
+        
     }
 
     public class MessageHandler
