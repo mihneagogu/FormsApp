@@ -62,6 +62,17 @@ namespace FormsAppTelenav.Databases
 
         }
 
+        public async Task<DealerResponse> ChangeAppTime(DateTime lastTime){
+            DealerResponse response = new DealerResponse();
+            List<AppSettings> settings = await GetAppSettings();
+            AppSettings setting = settings[0];
+            List<object> payload = new List<object>();
+            payload.Add(lastTime);
+            payload.Add(setting);
+            response = App.MiddleDealer.OnEvent(MessageAction.ChangeAppTime, payload);
+            return response;
+        }
+
         public async Task<AuctionBundleForDb> GetAuctionBundleForSymbol(string symbol, Person person){
             List<AuctionBundleForDb> personsBundles = await GetAuctionBundlesForPerson(person);
             if (personsBundles.Count == 0){
@@ -403,6 +414,22 @@ namespace FormsAppTelenav.Databases
 
                     }
                 case MessageAction.BuyCredit: {
+                        response = DealerResponse.Success;
+                        break;
+                    }
+                case MessageAction.ChangeAppTime : {
+                        DateTime lastTime = (DateTime)payload[0];
+                        AppSettings setting = (AppSettings)payload[1];
+                        DateTime timeNow = DateTime.Now.ToLocalTime();
+                        TimeSpan span = timeNow.Subtract(lastTime);
+                        double realMinutes = span.TotalMinutes;
+
+                        double appTimePassed = realMinutes * App.Multiplier;
+                        Math.Floor(appTimePassed);
+                        DateTime newTime = lastTime.AddMinutes(appTimePassed);
+                        setting.LastLogin = newTime.ToString();
+                        SaveAppSetting(setting);
+                        int x = 0;
                         response = DealerResponse.Success;
                         break;
                     }

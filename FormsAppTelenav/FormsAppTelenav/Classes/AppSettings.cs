@@ -15,6 +15,7 @@ namespace FormsAppTelenav.Classes
         }
         [PrimaryKey, AutoIncrement]
         public int ID { get; set; }
+        public string FirstLogin { get; set; }
         public string LastLogin { get; set; }
         public int CurrentPerson { get; set; }
     }

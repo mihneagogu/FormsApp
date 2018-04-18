@@ -6,6 +6,6 @@ namespace FormsAppTelenav.Classes
 {
     public interface IMessageHandler
     {
-        DealerResponse OnMessageReceived(Databases.MessageAction message, List<object> payload);
+         DealerResponse OnMessageReceived(Databases.MessageAction message, List<object> payload);
     }
 }

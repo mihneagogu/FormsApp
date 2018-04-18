@@ -51,6 +51,7 @@ namespace FormsAppTelenav.Views
             double minutes = span.TotalMinutes;
             double amount = 0;
             amount += 10 * Math.Floor(minutes);
+
             double currentAmount = person.Amount + amount;
 
             return currentAmount;
@@ -68,7 +69,7 @@ namespace FormsAppTelenav.Views
                 DateTime timeNow = DateTime.Now.ToLocalTime();
                 TimeSpan span = timeNow.Subtract(credit.LatestPayment);
                 double monthsSinceLastPayment = span.TotalMinutes;
-                monthsSinceLastPayment = monthsSinceLastPayment / 10;
+                monthsSinceLastPayment = monthsSinceLastPayment / 2;
                 double mRemaining = (double)credit.MonthsRemaining;
                 monthsSinceLastPayment = Math.Floor(monthsSinceLastPayment);
                 await page.DisplayAlert("", monthsSinceLastPayment + " months have passed since you last paid your credit. You now have to pay for " +
@@ -76,7 +77,8 @@ namespace FormsAppTelenav.Views
                 if ((mRemaining - monthsSinceLastPayment) >= 0 && (monthsSinceLastPayment >= 1))
                 {
                     double currentMoney = person.Amount;
-                    currentMoney -= ((double)credit.Cost / (double)credit.Duration) * (monthsSinceLastPayment);
+                    double totalInterest = (credit.Interest * credit.Cost) / 100;
+                    currentMoney -= (((double)credit.Cost + totalInterest)/ (double)credit.Duration) * (monthsSinceLastPayment);
                     await DisplayAlert("", "You will have " + currentMoney + " money, before paying it you had " + person.Amount, "OK");
                     person.Amount = currentMoney;
                     credit.MonthsRemaining -= monthsSinceLastPayment;
@@ -123,12 +125,22 @@ namespace FormsAppTelenav.Views
                 AppSettings currentSetting = new AppSettings();
                 currentSetting.CurrentPerson = person.Id;
                 DateTime currentTime = DateTime.Now.ToLocalTime();
+                currentSetting.FirstLogin = currentTime.ToString();
                 currentSetting.LastLogin = currentTime.ToString();
                 int awaiter = await App.LocalDataBase.AddAppSetting(currentSetting);
             }
             else
             {
                 AppSettings setting = settings[settings.Count - 1] as AppSettings;
+                DateTime timeLastLogin = DateTime.Parse(setting.LastLogin);
+                DealerResponse response = await App.LocalDataBase.ChangeAppTime(timeLastLogin);
+                List<AppSettings> s = await App.LocalDataBase.GetAppSettings();
+
+
+                if (response == DealerResponse.Success){
+                    await DisplayAlert("", "Successfyully updated time!" + s[0].LastLogin.ToString(), "OK");
+                }
+
                 DateTime currentTime = DateTime.Now.ToLocalTime();
                 double currentAmount = CalculateMoneyToEarn(Convert.ToDateTime(setting.LastLogin), person);
                 if (currentAmount != person.Amount)

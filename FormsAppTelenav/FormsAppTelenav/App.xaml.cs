@@ -19,6 +19,12 @@ namespace FormsAppTelenav
             get; set;
         }
 
+        /// Divider = cate minute din realitate inseamna 1 luna a aplicatiei
+
+        public const double Divider = 2;
+        // Multiplier = 1 minut din realitate este egal cu 100 de minute ale aplicatiei
+        public const double Multiplier = 100;
+
 
         // Daca se schimba person, sa se trimite la middleware mesaj ca sa schime si User din App.xaml.cs ?
         public static Person User 
@@ -47,6 +53,7 @@ namespace FormsAppTelenav
             MiddleDealer.RegisterMessage(MessageAction.AddedAuctionBundle, LocalDataBase);
             MiddleDealer.RegisterMessage(MessageAction.SellAuctionBundle, LocalDataBase);
             MiddleDealer.RegisterMessage(MessageAction.BuyCredit, LocalDataBase);
+            MiddleDealer.RegisterMessage(MessageAction.ChangeAppTime, LocalDataBase);
 
             MainPage = new NavigationPage(new FormsAppTelenav.Views.MainView());
         }
