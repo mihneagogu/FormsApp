@@ -28,6 +28,10 @@
                     Clicked="ToCreditList_Clicked"
                     IsEnabled="False"
                     />
+            <Button x:Name="JobsButton"
+                    Text="Find jobs"
+                    Clicked="ToJobsView_Clicked"
+                  />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

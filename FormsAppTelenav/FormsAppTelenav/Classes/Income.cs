@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,14 +16,28 @@ namespace FormsAppTelenav.Classes
         private double frequency;
         // daca vine periodic: frequency = la cate luni vine
 
+        public Income()
+        {
+
+        }
+
         public Income(string name, double absoluteValue, bool periodical, string category, double frequency)
         {
-            this.name = name;
-            this.absoluteValue = absoluteValue;
-            this.periodical = periodical;
-            this.category = category;
-            this.frequency = frequency;
+            Name = name;
+            AbsoluteValue = absoluteValue;
+            Periodical = periodical;
+            Category = category;
+            Frequency = frequency;
         }
+
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public double AbsoluteValue { get; set; }
+        public bool Periodical { get; set; }
+        public string Category { get; set; }
+        public double Frequency { get; set; }
+
 
     }
 

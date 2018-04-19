@@ -57,6 +57,7 @@ namespace FormsAppTelenav.Databases
             connection.CreateTableAsync<AppSettings>().Wait();
             connection.CreateTableAsync<AuctionBundleForHistory>().Wait();
             connection.CreateTableAsync<StationaryCredit>().Wait();
+            connection.CreateTableAsync<Income>().Wait();
             CheckSymbols();
             //App.MiddleDealer.RegisterMessage(MessageAction.AddedAuctionBundle, this);
 
@@ -227,6 +228,29 @@ namespace FormsAppTelenav.Databases
                 }
             }
 
+        }
+
+        public async Task<List<Income>> GetIncomes()
+        {
+            try
+            {
+                return await connection.Table<Income>().ToListAsync();
+            }
+            catch (InvalidOperationException e)
+            {
+                
+                return null;
+            }
+        }
+
+        public async Task<int> AddIncome(Income income)
+        {
+            return await connection.InsertAsync(income);
+        }
+
+        public async Task<int> SaveIncome(Income income)
+        {
+            return await connection.UpdateAsync(income);
         }
 
         public async Task<List<AuctionBundleForDb>> GetAuctionBundlesForPerson(Person person)

@@ -123,6 +123,9 @@ namespace FormsAppTelenav.Views
 
             Person person = App.User;
             List<AppSettings> settings = await App.LocalDataBase.GetAppSettings();
+            Income income = new Income(DateTime.Now.ToString(), 233, true, "Mancare", 3);
+            await App.LocalDataBase.AddIncome(income);
+            List<Income> incomes = await App.LocalDataBase.GetIncomes();
             if (settings.Count == 0)
             {
                 AppSettings currentSetting = new AppSettings();
@@ -206,6 +209,12 @@ namespace FormsAppTelenav.Views
             await Navigation.PushAsync(view);
 
 
+        }
+
+        private void ToJobsView_Clicked(object sender, EventArgs e)
+        {
+            JobsView view = new JobsView();
+            Navigation.PushAsync(view);
         }
 
 
