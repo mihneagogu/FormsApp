@@ -38,6 +38,7 @@ namespace FormsAppTelenav.Classes
         public int Times { get; set; }
         public int TimesLeft { get; set; }
         public string Category { get; set; }
+        public string ContractTime { get; set; }
         // frequency = la fiecare cate minute sa se faca plata
         public double Frequency { get; set; }
         public string LastRealPayment { get; set; }

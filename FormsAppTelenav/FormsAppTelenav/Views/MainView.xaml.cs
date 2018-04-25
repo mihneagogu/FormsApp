@@ -145,6 +145,7 @@ namespace FormsAppTelenav.Views
                 income.LastRealPayment = DateTime.Now.ToString();
                 income.LastAppPayment = setting.LastLogin;
                 income.Times = DateTime.Now.Hour;
+                income.ContractTime = setting.LastLogin; 
                 income.TimesLeft = int.Parse((income.Times.ToString()));
                 await App.LocalDataBase.AddIncome(income); 
                 List<Income> incomes = await App.LocalDataBase.GetIncomes();

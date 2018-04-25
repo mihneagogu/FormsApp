@@ -34,6 +34,7 @@ namespace FormsAppTelenav.Views
             income.Category = "Sasd";
             income.Periodical = true;
             income.LastRealPayment = DateTime.Now.ToString();
+            income.ContractTime = income.LastRealPayment.ToString();
             income.Times = 5;
             income.TimesLeft = income.Times;
             await App.LocalDataBase.AddIncome(income);
