@@ -4,9 +4,16 @@
              x:Class="FormsAppTelenav.Views.JobsView">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome Jobs"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Label x:Name="IncomeLabel" />
+            <Label Text="Name" />
+            <Entry x:Name="NameEntry"/>
+            <Label Text="AbsValue" />
+            <Entry x:Name="AbsoluteValueEntry" />
+            <Label Text="Frequency" />
+            <Entry x:Name="FrequencyEntry"/>
+            <Button Text="Add Income" Clicked="CreateIncome_Clicked"/>
+
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

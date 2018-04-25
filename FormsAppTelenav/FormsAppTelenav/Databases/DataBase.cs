@@ -16,7 +16,8 @@ namespace FormsAppTelenav.Databases
         NoAuctionsFromCompany,
         NotEnoughAuctions,
         Success,
-        Unreachable
+        Unreachable,
+        NothingToDo
     }
 
     public class DataBase : IMessageHandler
@@ -60,6 +61,18 @@ namespace FormsAppTelenav.Databases
             connection.CreateTableAsync<Income>().Wait();
             CheckSymbols();
             //App.MiddleDealer.RegisterMessage(MessageAction.AddedAuctionBundle, this);
+
+        }
+
+        public async Task<DealerResponse> ManageIncomes(List<object> payload)
+        {
+            if (payload.Count != 0)
+            {
+                AppSettings setting = (await GetAppSettings())[0];
+                payload.Add(setting);
+                return App.MiddleDealer.OnEvent(MessageAction.ManageIncomes, payload);
+            }
+            return DealerResponse.NothingToDo;
 
         }
 
@@ -314,6 +327,13 @@ namespace FormsAppTelenav.Databases
 
         }
 
+        public async Task<string> GetAppTime(DateTime lastTime)
+        {
+            await ChangeAppTime(lastTime);
+            List<AppSettings> settings = await GetAppSettings();
+            return settings[0].LastLogin;
+
+        }
 
         public async Task<List<AuctionBundleForDb>> GetAuctionBundles()
         {
@@ -443,6 +463,39 @@ namespace FormsAppTelenav.Databases
                         }
                         break;
 
+                    }
+                case MessageAction.ManageIncomes:
+                    {
+                        List<Income> incomes = new List<Income>();
+                        for (int i = 0; i < payload.Count - 1; i++)
+                        {
+                            incomes.Add((Income)payload[i]);
+                        }
+                        AppSettings setting = payload[payload.Count - 1] as AppSettings;
+                        foreach(Income i in incomes)
+                        {
+                            if (i.TimesLeft > 0 && i.LastRealPayment != null)
+                            {
+                                DateTime lastRealLogin = DateTime.Parse(setting.LastRealLogin);
+                                TimeSpan span = lastRealLogin.Subtract(DateTime.Parse(i.LastRealPayment));
+                                double appMinutes = span.TotalMinutes * App.Multiplier;
+
+                                if (appMinutes > i.Frequency)
+                                {
+                                    // se sustrage/se adauga la persoana cat trebuie sa plateasca
+
+                                    //
+                                    double timesToSubtract = appMinutes / i.Frequency;
+                                    i.TimesLeft -= int.Parse(Math.Floor(timesToSubtract).ToString());
+                                    i.LastAppPayment = setting.LastLogin;
+                                    i.LastRealPayment = setting.LastRealLogin;
+                                    SaveIncome(i);
+                                }
+
+                            }
+                        }
+
+                        return DealerResponse.Success;
                     }
                 case MessageAction.BuyCredit: {
                         response = DealerResponse.Success;

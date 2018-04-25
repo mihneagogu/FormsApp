@@ -120,12 +120,11 @@ namespace FormsAppTelenav.Views
 
         private async void MeddleWithDB()
         {
-
+            /// de trimis request la middledealer sa verifica income-urile cand porneste aplicatia
+            
             Person person = App.User;
             List<AppSettings> settings = await App.LocalDataBase.GetAppSettings();
-            Income income = new Income(DateTime.Now.ToString(), 233, true, "Mancare", 3);
-            await App.LocalDataBase.AddIncome(income);
-            List<Income> incomes = await App.LocalDataBase.GetIncomes();
+            
             if (settings.Count == 0)
             {
                 AppSettings currentSetting = new AppSettings();
@@ -141,6 +140,23 @@ namespace FormsAppTelenav.Views
                 AppSettings setting = settings[settings.Count - 1] as AppSettings;
                 DateTime timeLastLogin = DateTime.Parse(setting.LastRealLogin);
                 DealerResponse response = await App.LocalDataBase.ChangeAppTime(timeLastLogin);
+                Income income = new Income(DateTime.Now.ToString(), 233, true, "Mancare", 3); 
+                setting = (await App.LocalDataBase.GetAppSettings())[0];
+                income.LastRealPayment = DateTime.Now.ToString();
+                income.LastAppPayment = setting.LastLogin;
+                income.Times = DateTime.Now.Hour;
+                income.TimesLeft = int.Parse((income.Times.ToString()));
+                await App.LocalDataBase.AddIncome(income); 
+                List<Income> incomes = await App.LocalDataBase.GetIncomes();
+                if (incomes.Count > 0)
+                {
+                    List<object> payload = new List<object>();
+                    foreach (Income i in incomes)
+                    {
+                        payload.Add(i);
+                    }
+                    await App.LocalDataBase.ManageIncomes(payload);
+                }
                 List<AppSettings> s = await App.LocalDataBase.GetAppSettings();
 
 

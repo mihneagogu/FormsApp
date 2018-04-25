@@ -35,8 +35,14 @@ namespace FormsAppTelenav.Classes
         public string Name { get; set; }
         public double AbsoluteValue { get; set; }
         public bool Periodical { get; set; }
+        public int Times { get; set; }
+        public int TimesLeft { get; set; }
         public string Category { get; set; }
+        // frequency = la fiecare cate minute sa se faca plata
         public double Frequency { get; set; }
+        public string LastRealPayment { get; set; }
+        public string LastAppPayment { get; set; }
+        
 
 
     }
