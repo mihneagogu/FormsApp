@@ -9,7 +9,8 @@ namespace FormsAppTelenav.Databases
         AddedAuctionBundle,
         SellAuctionBundle,
         BuyCredit,
-        ManageIncomes
+        ManageIncomes,
+        GetAllDepositedMoney
     }
 
     public class MessageHandler

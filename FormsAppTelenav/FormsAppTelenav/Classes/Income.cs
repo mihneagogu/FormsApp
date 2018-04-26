@@ -51,7 +51,7 @@ namespace FormsAppTelenav.Classes
         public int TimesLeft { get; set; }
         public IncomeCategory Category { get; set; }
         public string ContractTime { get; set; }
-        // frequency = la fiecare cate minute sa se faca plata
+        // frequency = la fiecare cate minute sa se faca plata || * in viitor: la fiecare cate zile sa se faca plata, dar pentru motive de testing momentan este pentru minute
         public double Frequency { get; set; }
         public string LastRealPayment { get; set; }
         public string LastAppPayment { get; set; }

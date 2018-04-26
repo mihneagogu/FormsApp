@@ -54,5 +54,11 @@ namespace FormsAppTelenav.Views
             income.DepositInterest = double.Parse(InterestEntry.Text, App.DoubleCultureInfo);
             await App.LocalDataBase.AddIncome(income);
         }
+
+        private  void ToDepositListView_Clicked(object sender, EventArgs e)
+        {
+            DepositListView view = new DepositListView();
+            Navigation.PushAsync(view);
+        }
     }
 }

@@ -76,6 +76,22 @@ namespace FormsAppTelenav.Databases
 
         }
 
+        public async Task<DealerResponse> GetAllDepositedMoney()
+        {
+            List<Income> incomes = await GetIncomes();
+            List<object> payload = new List<object>();
+            foreach (Income i in incomes)
+            {
+                payload.Add(i);
+            }
+            return App.MiddleDealer.OnEvent(MessageAction.GetAllDepositedMoney, payload);
+        }
+
+        public async Task<int> DeleteIncome(Income income)
+        {
+            return await connection.DeleteAsync(income);
+        }
+
         public async Task<DealerResponse> ChangeAppTime(DateTime lastTime){
             DealerResponse response = new DealerResponse();
             List<AppSettings> s = await GetAppSettings();
@@ -464,6 +480,21 @@ namespace FormsAppTelenav.Databases
                         break;
 
                     }
+                case MessageAction.GetAllDepositedMoney:
+                    {
+                        person = App.User;
+                        List<Income> incomes = new List<Income>();
+                        foreach (object o in payload)
+                        {
+                            incomes.Add((Income)o);
+                        }
+                        foreach (Income i in incomes)
+                        {
+                            person.Amount += i.AbsoluteValue + i.OverTimeAddition;
+                        }
+                        return DealerResponse.Success;
+                        break;
+                    }
                 case MessageAction.ManageIncomes:
                     {
                         List<Income> incomes = new List<Income>();
@@ -526,6 +557,7 @@ namespace FormsAppTelenav.Databases
                         }
 
                         return DealerResponse.Success;
+                        break;
                     }
                 case MessageAction.BuyCredit: {
                         response = DealerResponse.Success;

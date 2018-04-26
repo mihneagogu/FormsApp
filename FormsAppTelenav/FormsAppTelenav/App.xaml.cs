@@ -55,6 +55,7 @@ namespace FormsAppTelenav
             MiddleDealer.RegisterMessage(MessageAction.SellAuctionBundle, LocalDataBase);
             MiddleDealer.RegisterMessage(MessageAction.BuyCredit, LocalDataBase);
             MiddleDealer.RegisterMessage(MessageAction.ManageIncomes, LocalDataBase);
+            MiddleDealer.RegisterMessage(MessageAction.GetAllDepositedMoney, LocalDataBase);
 
             MainPage = new NavigationPage(new FormsAppTelenav.Views.MainView());
         }

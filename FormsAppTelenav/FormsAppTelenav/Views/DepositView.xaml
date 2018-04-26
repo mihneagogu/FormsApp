@@ -11,7 +11,8 @@
             <Label Text="Dobanda" />
             <Entry x:Name="InterestEntry" />
             
-            <Button x:Name="CreateDepositButton" Clicked="MakeDefaultDeposit_Clicked" />
+            <Button Text="Make deposit" x:Name="CreateDepositButton" Clicked="MakeDefaultDeposit_Clicked" />
+            <Button Text="See your deposits" x:Name="ShowDepositListButton" Clicked="ToDepositListView_Clicked" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
