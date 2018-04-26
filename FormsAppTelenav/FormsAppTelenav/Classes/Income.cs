@@ -7,6 +7,14 @@ using System.Threading.Tasks;
 
 namespace FormsAppTelenav.Classes
 {
+
+    public enum IncomeCategory
+    {
+        DefaultDeposit,
+        DefaultInterest,
+        Random
+    }
+
     public class Income
     {
         private string name;
@@ -14,14 +22,16 @@ namespace FormsAppTelenav.Classes
         private bool periodical;
         private string category;
         private double frequency;
-        // daca vine periodic: frequency = la cate luni vine
 
+        
+        // daca vine periodic: frequency = la cate luni vine
+        // daca Times == -1 atunci este pe perioada nedefinita
         public Income()
         {
 
         }
 
-        public Income(string name, double absoluteValue, bool periodical, string category, double frequency)
+        public Income(string name, double absoluteValue, bool periodical, IncomeCategory category, double frequency)
         {
             Name = name;
             AbsoluteValue = absoluteValue;
@@ -36,13 +46,18 @@ namespace FormsAppTelenav.Classes
         public double AbsoluteValue { get; set; }
         public bool Periodical { get; set; }
         public int Times { get; set; }
+        public string LastSupposedPayment { get; set; }
+        public string LastRealSupposedPayment { get; set; }
         public int TimesLeft { get; set; }
-        public string Category { get; set; }
+        public IncomeCategory Category { get; set; }
         public string ContractTime { get; set; }
         // frequency = la fiecare cate minute sa se faca plata
         public double Frequency { get; set; }
         public string LastRealPayment { get; set; }
         public string LastAppPayment { get; set; }
+        public double OverTimeAddition { get; set; }
+        public double DepositInterest { get; set; }
+
         
 
 

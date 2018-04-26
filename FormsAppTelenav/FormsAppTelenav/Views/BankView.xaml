@@ -8,6 +8,8 @@
             <Label Text="{Binding MoneyStatement}" HorizontalOptions="Center"/>
             <Button Text="Buy a credit"
                     Clicked="ToCreditView_Clicked"/>
+            <Button Text="Despoits"
+                    Clicked="ToDepositView_Clicked" />
             <Label Text="{Binding ExpensesToPay}" HorizontalOptions="Center"/>
             <Label Text="{Binding MonthlyIncomeStatement}" HorizontalOptions="Center"/>
         </StackLayout>

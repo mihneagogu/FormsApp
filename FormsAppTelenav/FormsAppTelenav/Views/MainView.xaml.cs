@@ -140,14 +140,8 @@ namespace FormsAppTelenav.Views
                 AppSettings setting = settings[settings.Count - 1] as AppSettings;
                 DateTime timeLastLogin = DateTime.Parse(setting.LastRealLogin);
                 DealerResponse response = await App.LocalDataBase.ChangeAppTime(timeLastLogin);
-                Income income = new Income(DateTime.Now.ToString(), 233, true, "Mancare", 3); 
                 setting = (await App.LocalDataBase.GetAppSettings())[0];
-                income.LastRealPayment = DateTime.Now.ToString();
-                income.LastAppPayment = setting.LastLogin;
-                income.Times = DateTime.Now.Hour;
-                income.ContractTime = setting.LastLogin; 
-                income.TimesLeft = int.Parse((income.Times.ToString()));
-                await App.LocalDataBase.AddIncome(income); 
+              
                 List<Income> incomes = await App.LocalDataBase.GetIncomes();
                 if (incomes.Count > 0)
                 {
@@ -159,7 +153,7 @@ namespace FormsAppTelenav.Views
                     await App.LocalDataBase.ManageIncomes(payload);
                 }
                 List<AppSettings> s = await App.LocalDataBase.GetAppSettings();
-
+                incomes = await App.LocalDataBase.GetIncomes();
 
                 if (response == DealerResponse.Success){
                     await DisplayAlert("", "Successfyully updated time!" + s[0].LastLogin.ToString(), "OK");

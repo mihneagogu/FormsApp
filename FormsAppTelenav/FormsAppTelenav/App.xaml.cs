@@ -20,7 +20,7 @@ namespace FormsAppTelenav
         }
 
         /// Divider = cate minute din realitate inseamna 1 luna a aplicatiei
-
+        public static System.Globalization.CultureInfo DoubleCultureInfo { get { return System.Globalization.CultureInfo.InvariantCulture; } }
         public const double Divider = 2;
         // Multiplier = 1 minut din realitate este egal cu 100 de minute ale aplicatiei
         public const double Multiplier = 100;

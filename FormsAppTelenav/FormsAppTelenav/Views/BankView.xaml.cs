@@ -29,5 +29,11 @@ namespace FormsAppTelenav.Views
             CreditView creditView = new CreditView();
             Navigation.PushAsync(creditView);
         }
+
+        private void ToDepositView_Clicked(object sender, EventArgs e)
+        {
+            DepositView depositView = new DepositView();
+            Navigation.PushAsync(depositView);
+        }
     }
 }

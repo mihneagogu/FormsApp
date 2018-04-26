@@ -18,6 +18,7 @@ namespace FormsAppTelenav.Views
             InitializeComponent();
             MeddleWithIncomes();
         }
+        // pentru jobs doar trebuie facut un view si cu o lista, logica pentru orice income exista
 
         public async void MeddleWithIncomes()
         {
@@ -27,17 +28,24 @@ namespace FormsAppTelenav.Views
 
         private async void CreateIncome_Clicked(object sender, EventArgs e)
         {
+            AppSettings setting = (await App.LocalDataBase.GetAppSettings())[0];
             Income income = new Income();
             income.Name = NameEntry.Text;
             income.Frequency = double.Parse(FrequencyEntry.Text);
             income.AbsoluteValue = double.Parse(AbsoluteValueEntry.Text);
-            income.Category = "Sasd";
+            income.Category = IncomeCategory.Random;
             income.Periodical = true;
-            income.LastRealPayment = DateTime.Now.ToString();
+            income.LastRealPayment = setting.LastRealLogin;
+            income.LastAppPayment = setting.LastLogin;
             income.ContractTime = income.LastRealPayment.ToString();
             income.Times = 5;
+            income.LastRealSupposedPayment = setting.LastRealLogin;
+            income.LastSupposedPayment = setting.LastLogin;
             income.TimesLeft = income.Times;
+            income.LastRealSupposedPayment = setting.LastRealLogin;
+            income.LastSupposedPayment = setting.LastLogin;
             await App.LocalDataBase.AddIncome(income);
+           
             List<Income> incomes = await App.LocalDataBase.GetIncomes();
             int x = 0;
 

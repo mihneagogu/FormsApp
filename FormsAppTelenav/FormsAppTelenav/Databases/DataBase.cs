@@ -474,24 +474,54 @@ namespace FormsAppTelenav.Databases
                         AppSettings setting = payload[payload.Count - 1] as AppSettings;
                         foreach(Income i in incomes)
                         {
-                            if (i.TimesLeft > 0 && i.LastRealPayment != null)
+                            if (i.Times != -1)
                             {
-                                DateTime lastRealLogin = DateTime.Parse(setting.LastRealLogin);
-                                TimeSpan span = lastRealLogin.Subtract(DateTime.Parse(i.LastRealPayment));
-                                double appMinutes = span.TotalMinutes * App.Multiplier;
-
-                                if (appMinutes > i.Frequency)
+                                if (i.TimesLeft > 0 && i.LastRealPayment != null)
                                 {
-                                    // se sustrage/se adauga la persoana cat trebuie sa plateasca
+                                    DateTime lastRealLogin = DateTime.Parse(setting.LastRealLogin);
+                                    TimeSpan span = lastRealLogin.Subtract(DateTime.Parse(i.LastRealSupposedPayment));
+                                    double appMinutes = span.TotalMinutes * App.Multiplier;
 
-                                    //
-                                    double timesToSubtract = appMinutes / i.Frequency;
-                                    i.TimesLeft -= int.Parse(Math.Floor(timesToSubtract).ToString());
-                                    i.LastAppPayment = setting.LastLogin;
-                                    i.LastRealPayment = setting.LastRealLogin;
-                                    SaveIncome(i);
+                                    if (appMinutes > i.Frequency)
+                                    {
+                                        // se sustrage/se adauga la persoana cat trebuie sa plateasca
+
+                                        //
+                                        double timesToSubtract = appMinutes / i.Frequency;
+                                        timesToSubtract = Math.Floor(timesToSubtract);
+                                        i.TimesLeft -= int.Parse(Math.Floor(timesToSubtract).ToString());
+                                        i.LastSupposedPayment = (DateTime.Parse(i.LastSupposedPayment).AddMinutes(timesToSubtract * i.Frequency)).ToString();
+                                        i.LastRealSupposedPayment = (DateTime.Parse(i.LastRealSupposedPayment).AddMinutes((timesToSubtract * i.Frequency) / App.Multiplier)).ToString();
+                                        i.LastAppPayment = setting.LastLogin;
+                                        i.LastRealPayment = setting.LastRealLogin;
+                                        SaveIncome(i);
+                                    }
+
                                 }
-
+                            }
+                            else
+                            {
+                                switch (i.Category)
+                                {
+                                    case IncomeCategory.DefaultDeposit:
+                                        {
+                                            DateTime lastRealLogin = DateTime.Parse(setting.LastRealLogin);
+                                            TimeSpan span = lastRealLogin.Subtract(DateTime.Parse(i.LastRealSupposedPayment));
+                                            double appMinutes = span.TotalMinutes * App.Multiplier;
+                                            if (appMinutes > i.Frequency)
+                                            {
+                                                double timesToSubtract = appMinutes / i.Frequency;
+                                                timesToSubtract = Math.Floor(timesToSubtract);
+                                                i.OverTimeAddition += Math.Floor(timesToSubtract) * ((i.DepositInterest / 100) * i.AbsoluteValue);
+                                                i.LastSupposedPayment = (DateTime.Parse(i.LastSupposedPayment).AddMinutes(timesToSubtract * i.Frequency)).ToString();
+                                                i.LastRealSupposedPayment = (DateTime.Parse(i.LastRealSupposedPayment).AddMinutes((timesToSubtract * i.Frequency)/App.Multiplier)).ToString();
+                                                i.LastAppPayment = setting.LastLogin;
+                                                i.LastRealPayment = setting.LastRealLogin;
+                                                SaveIncome(i);
+                                            }
+                                            break;
+                                        }
+                                }
                             }
                         }
 
