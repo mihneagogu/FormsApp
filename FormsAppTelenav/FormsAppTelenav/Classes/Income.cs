@@ -11,7 +11,7 @@ namespace FormsAppTelenav.Classes
     public enum IncomeCategory
     {
         DefaultDeposit,
-        DefaultInterest,
+        CompoundDeposit,
         Random
     }
 

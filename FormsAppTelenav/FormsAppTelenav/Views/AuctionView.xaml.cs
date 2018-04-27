@@ -23,8 +23,8 @@ namespace FormsAppTelenav.Views
         private ObservableCollection<AuctionBundle> singularyStock = new ObservableCollection<AuctionBundle>();
 
         private List<MEntry> entries = new List<MEntry>();
-        
 
+        string lastColor;
 
         private AuctionsFromAPI auctions = new AuctionsFromAPI();
         private string auctionName;
@@ -44,7 +44,7 @@ namespace FormsAppTelenav.Views
         private string GetRandomColor()
         {
             Random random = new Random();
-            Color color = Color.FromRgb(random.Next(256), random.Next(256), random.Next(256));
+            Color color = Color.FromRgb(random.NextDouble(), random.NextDouble(), random.NextDouble());
             int r = (int)(color.R * 255);
             int g = (int)(color.G * 255);
             int b = (int)(color.B * 255);
@@ -97,15 +97,24 @@ namespace FormsAppTelenav.Views
                         MEntry mEntry = new MEntry(float.Parse(s.CloseValue.ToString()));
                         mEntry.Label = s.Date.ToString();
                         mEntry.ValueLabel = s.CloseValue.ToString();
-                        mEntry.Color = SKColor.Parse(GetRandomColor());
+                        string c = GetRandomColor();
+                        while (c == lastColor){
+                            c = GetRandomColor();
+                        }
+                        lastColor = c;
+                        mEntry.Color = SKColor.Parse(c);
                         entries.Add(mEntry);
                         counter++;
                     
                 }
 
-              
 
-                AuctionChart.Chart = new LineChart() { Entries = entries };
+                DonutChart chart = new DonutChart() { Entries = entries };
+                chart.HoleRadius = (float)0.25;
+                AuctionChart.Chart = chart;
+
+               // AuctionChart.Chart.MaxValue = float.Parse(entries[0].Value.ToString(), App.DoubleCultureInfo);
+               // AuctionChart.Chart.MinValue = float.Parse(entries[5].Value.ToString(), App.DoubleCultureInfo);
                 AuctionChart.Chart.LabelTextSize = 25;
 
                 AuctionBundle bindingBundle = new AuctionBundle();
