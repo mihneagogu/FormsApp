@@ -82,7 +82,10 @@ namespace FormsAppTelenav.Databases
             List<object> payload = new List<object>();
             foreach (Income i in incomes)
             {
-                payload.Add(i);
+                if (i.Times == -1)
+                {
+                    payload.Add(i);
+                }
             }
             return App.MiddleDealer.OnEvent(MessageAction.GetAllDepositedMoney, payload);
         }
@@ -491,7 +494,9 @@ namespace FormsAppTelenav.Databases
                         foreach (Income i in incomes)
                         {
                             person.Amount += i.AbsoluteValue + i.OverTimeAddition;
+                            DeleteIncome(i);
                         }
+
                         return DealerResponse.Success;
                         break;
                     }

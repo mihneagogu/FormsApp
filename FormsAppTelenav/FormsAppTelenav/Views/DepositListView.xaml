@@ -1,10 +1,49 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FormsAppTelenav.Views.DepositListView">
     <ContentPage.Content>
         <StackLayout>
+             <ListView x:Name="depositList" CachingStrategy="RecycleElement"  >
+            <ListView.Header>
+                <Grid Padding="7">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="0.5*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                            
+
+                    </Grid.ColumnDefinitions>
+                    <Label Text="Deposited Amount" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" />
+                    <Label Text="Interest" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" />
+                    <Label Text="Profit" Grid.Row="0" Grid.Column="2" HorizontalOptions="Center" />
+                    <Label Text="Period" Grid.Row="0" Grid.Column="3" HorizontalOptions="Center" />
+
+                </Grid>
+            </ListView.Header>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid Padding="7">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="0.5*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Text="{Binding AbsoluteValue}" Grid.Row="0" Grid.Column="0" VerticalOptions="Center" FontSize="13"/>
+                            <Label Text="{Binding DepositInterest}" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            <Label Text="{Binding OverTimeAddition}" Grid.Row="0" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" />
+                            <Label Text="{Binding Frequency}" Grid.Row="0" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" />
+                           
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
             <Button Text="Get all your deposited money" Clicked="GetAllDepositedMoney_Clicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
+
