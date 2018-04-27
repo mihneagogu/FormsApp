@@ -115,6 +115,7 @@
     <BundleResource Include="Resources\Icon-Small%402x.png" />
     <BundleResource Include="Resources\Icon-Small%403x.png" />
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
+    <BundleResource Include="Resources\monkey.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microcharts.Forms, Version=1.0.6429.41035, Culture=neutral, processorArchitecture=MSIL">

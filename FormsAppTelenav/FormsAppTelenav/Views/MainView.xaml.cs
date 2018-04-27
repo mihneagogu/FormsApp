@@ -12,6 +12,7 @@ using System.Windows.Input;
 using SQLite;
 using FormsAppTelenav.Databases;
 using FormsAppTelenav.Models;
+//using Android.Graphics;
 
 namespace FormsAppTelenav.Views
 {
@@ -121,7 +122,7 @@ namespace FormsAppTelenav.Views
         private async void MeddleWithDB()
         {
             /// de trimis request la middledealer sa verifica income-urile cand porneste aplicatia
-            
+            await MonkeyImage.RotateTo(200, 2000);
             Person person = App.User;
             List<AppSettings> settings = await App.LocalDataBase.GetAppSettings();
             

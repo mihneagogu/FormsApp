@@ -109,13 +109,13 @@ namespace FormsAppTelenav.Views
                 }
 
 
-                DonutChart chart = new DonutChart() { Entries = entries };
-                chart.HoleRadius = (float)0.25;
+                LineChart chart = new LineChart() { Entries = entries };
+                chart.MaxValue = float.Parse(entries[0].Value.ToString(), App.DoubleCultureInfo);
+                chart.MinValue = float.Parse(entries[5].Value.ToString(), App.DoubleCultureInfo);
+                chart.LabelTextSize = 25;
                 AuctionChart.Chart = chart;
 
-               // AuctionChart.Chart.MaxValue = float.Parse(entries[0].Value.ToString(), App.DoubleCultureInfo);
-               // AuctionChart.Chart.MinValue = float.Parse(entries[5].Value.ToString(), App.DoubleCultureInfo);
-                AuctionChart.Chart.LabelTextSize = 25;
+
 
                 AuctionBundle bindingBundle = new AuctionBundle();
                 bindingBundle.Symbol = symbol;

@@ -32,6 +32,7 @@
                     Text="Find jobs"
                     Clicked="ToJobsView_Clicked"
                   />
+            <Image x:Name="MonkeyImage" Source="monkey.png" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
