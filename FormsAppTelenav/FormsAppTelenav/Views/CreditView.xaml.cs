@@ -29,16 +29,19 @@ namespace FormsAppTelenav.Views
         {
             if (credit.Interest != null && credit.Duration != null && credit.Cost != null){
                 if (credit.IsAffordable()){
-                    
+                    AppSettings setting = (await App.LocalDataBase.GetAppSettings())[0];
+                    await App.LocalDataBase.ChangeAppTime(DateTime.Parse(setting.LastRealLogin));
+                    setting = (await App.LocalDataBase.GetAppSettings())[0];
                     var creditListView = new CreditListView();
                     creditListView.BindingContext = credit;
                     StationaryCredit stationaryCredit = new StationaryCredit();
                     stationaryCredit.Interest = (double)credit.Interest;
                     stationaryCredit.Duration = (double)credit.Duration;
                     stationaryCredit.Cost = (double)credit.Cost;
-                    stationaryCredit.DateBought = DateTime.Now;
+                    stationaryCredit.DateBought = DateTime.Parse(setting.LastRealLogin);
                     stationaryCredit.MonthsRemaining = (double)credit.Duration;
-                    stationaryCredit.LatestPayment = DateTime.Now;
+                    stationaryCredit.LatestPayment = DateTime.Parse(setting.LastLogin);
+                    stationaryCredit.AppDateBought = DateTime.Parse(setting.LastLogin);
                     DealerResponse response = await App.LocalDataBase.AddCredit(stationaryCredit);
                     List<StationaryCredit> credits = await App.LocalDataBase.GetCredits();
                     if (response == DealerResponse.Success){

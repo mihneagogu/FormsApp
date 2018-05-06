@@ -12,7 +12,9 @@ namespace FormsAppTelenav.Classes
     {
         DefaultDeposit,
         CompoundDeposit,
-        Random
+        Random,
+        Credit,
+        Job
     }
 
     public class Income

@@ -172,7 +172,7 @@ namespace FormsAppTelenav.Views
 
                 }
                 binding.MoneyStatement = person.Amount;
-                await CalculateMoneyToGive(person, this);
+                //await CalculateMoneyToGive(person, this);
        
             }
 

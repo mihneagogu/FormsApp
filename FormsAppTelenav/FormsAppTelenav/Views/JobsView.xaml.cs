@@ -29,6 +29,8 @@ namespace FormsAppTelenav.Views
         private async void CreateIncome_Clicked(object sender, EventArgs e)
         {
             AppSettings setting = (await App.LocalDataBase.GetAppSettings())[0];
+            await App.LocalDataBase.ChangeAppTime(DateTime.Parse(setting.LastRealLogin));
+            setting = (await App.LocalDataBase.GetAppSettings())[0];
             Income income = new Income();
             income.Name = NameEntry.Text;
             income.Frequency = double.Parse(FrequencyEntry.Text);

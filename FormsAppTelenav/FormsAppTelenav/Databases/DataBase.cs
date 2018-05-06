@@ -68,7 +68,10 @@ namespace FormsAppTelenav.Databases
         {
             if (payload.Count != 0)
             {
+                
                 AppSettings setting = (await GetAppSettings())[0];
+                await ChangeAppTime(DateTime.Parse(setting.LastRealLogin));
+                setting = (await GetAppSettings())[0];
                 payload.Add(setting);
                 return App.MiddleDealer.OnEvent(MessageAction.ManageIncomes, payload);
             }
@@ -523,6 +526,10 @@ namespace FormsAppTelenav.Databases
                                         // se sustrage/se adauga la persoana cat trebuie sa plateasca
 
                                         //
+                                     /*   if (i.LastSupposedPayment.Equals(i.LastRealSupposedPayment))
+                                        {
+                                            i.LastSupposedPayment = setting.LastLogin;
+                                        } */
                                         double timesToSubtract = appMinutes / i.Frequency;
                                         timesToSubtract = Math.Floor(timesToSubtract);
                                         i.TimesLeft -= int.Parse(Math.Floor(timesToSubtract).ToString());
@@ -565,9 +572,24 @@ namespace FormsAppTelenav.Databases
                         break;
                     }
                 case MessageAction.BuyCredit: {
+                        StationaryCredit credit = payload[0] as StationaryCredit;
+                        Income income = new Income();
+                        income.Category = IncomeCategory.Credit;
+                        income.AbsoluteValue = (-1)*(credit.Cost * (100 + credit.Interest)) / 100;
+                        income.Periodical = true;
+                        income.Frequency = 30;
+                        // contracttime, lastpayment, lastrealpayment, lastsupppayment, lastrealsupppayment
+                        income.Times = (int)credit.Duration;
+                        income.TimesLeft = (int)(income.Times);
+                        income.ContractTime = credit.DateBought.ToString();
+                        income.LastRealPayment = credit.DateBought.ToString();
+                        income.LastAppPayment = credit.AppDateBought.ToString();
+                        income.LastRealSupposedPayment = credit.DateBought.ToString();
+                        income.LastSupposedPayment = credit.AppDateBought.ToString();
+                        AddIncome(income);
                         response = DealerResponse.Success;
                         break;
-                    }
+                }
                 case MessageAction.SellAuctionBundle:
                     {
                         AuctionBundle auctionBundle = payload[0] as AuctionBundle;
