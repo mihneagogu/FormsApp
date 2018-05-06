@@ -4,16 +4,36 @@
              x:Class="FormsAppTelenav.Views.JobsView">
     <ContentPage.Content>
         <StackLayout>
-            <Label x:Name="IncomeLabel" />
-            <Label Text="Name" />
-            <Entry x:Name="NameEntry"/>
-            <Label Text="AbsValue" />
-            <Entry x:Name="AbsoluteValueEntry" />
-            <Label Text="Frequency" />
-            <Entry x:Name="FrequencyEntry"/>
-            <Button Text="Add Income" Clicked="CreateIncome_Clicked"/>
+            <ListView x:Name="jobListView" CachingStrategy="RecycleElement" ItemSelected="jobListView_ItemSelected">
+                <ListView.Header>
+                    <Grid Padding="7">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*" />
+                            <ColumnDefinition Width="1*" />
 
+                        </Grid.ColumnDefinitions>
+                        <Label Text="Name" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" />
+                        <Label Text="Sallary" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" />
 
+                    </Grid>
+                </ListView.Header>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="7">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*" />
+                                    <ColumnDefinition Width="1*" />
+                                </Grid.ColumnDefinitions>
+                                <Label Text="{Binding Name}" Grid.Row="0" Grid.Column="0" VerticalOptions="Center" FontSize="13"/>
+                                <Label Text="{Binding AbsoluteValue}" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center"/>
+
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Text="Quit job" Clicked="QuitJobs_Clicked" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

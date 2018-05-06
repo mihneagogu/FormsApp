@@ -46,7 +46,7 @@ namespace FormsAppTelenav.Views
                     List<StationaryCredit> credits = await App.LocalDataBase.GetCredits();
                     if (response == DealerResponse.Success){
                         await DisplayAlert("", "Operation Successful", "OK");
-                        await Navigation.PushAsync(creditListView);
+                        await Navigation.PushAsync(new MainView());
                     }
                     else {
                         await DisplayAlert("", "Something went wrong, we're sorry", "OK");

@@ -63,44 +63,7 @@ namespace FormsAppTelenav.Views
 
         }
 
-        private async Task<double> CalculateMoneyToGive(Person person, ContentPage page){
-            /// va trebui comparat timpul actual cu timpul ultimei plati: de adaugat lastpay la credit in baza de date, si pe baza diferentei acelea se vor face calculele
-            /// de asemenea va exista un nou camp pentru stationarycredit care va zice cate luni sunt ramase din plata
-            List<StationaryCredit> stationaryCredits = await App.LocalDataBase.GetCredits();
-            if (stationaryCredits.Count != 0)
-            {
-                StationaryCredit credit = stationaryCredits[0];
-                DateTime timeNow = DateTime.Now.ToLocalTime();
-                TimeSpan span = timeNow.Subtract(credit.LatestPayment);
-                double monthsSinceLastPayment = span.TotalMinutes;
-                monthsSinceLastPayment = monthsSinceLastPayment / 2;
-                double mRemaining = (double)credit.MonthsRemaining;
-                monthsSinceLastPayment = Math.Floor(monthsSinceLastPayment);
-                await page.DisplayAlert("", monthsSinceLastPayment + " months have passed since you last paid your credit. You now have to pay for " +
-                                        (double)(credit.MonthsRemaining) + " - " + " " + monthsSinceLastPayment + " = " + ((double)credit.MonthsRemaining - monthsSinceLastPayment) + "  more months", "OK");
-                if ((mRemaining - monthsSinceLastPayment) >= 0 && (monthsSinceLastPayment >= 1))
-                {
-                    double currentMoney = person.Amount;
-                    double totalInterest = (credit.Interest * credit.Cost) / 100;
-                    currentMoney -= (((double)credit.Cost + totalInterest)/ (double)credit.Duration) * (monthsSinceLastPayment);
-                    await DisplayAlert("", "You will have " + currentMoney + " money, before paying it you had " + person.Amount, "OK");
-                    person.Amount = currentMoney;
-                    credit.MonthsRemaining -= monthsSinceLastPayment;
-                    credit.LatestPayment = DateTime.Now;
-                    await App.LocalDataBase.SavePerson(person);
-                    await App.LocalDataBase.SaveCredit(credit);
-
-                }
-                else
-                {
-                    await DisplayAlert("", "durata de cand nu ai mai platit e mai lunga decat durata creditului, de schimbat cod", "OK");
-                }
-
-
-                return 0;
-            }
-            return 0;
-        }
+       
 
         private void ToBank_Clicked(object sender, EventArgs e)
         {

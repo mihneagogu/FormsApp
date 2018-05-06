@@ -1,6 +1,7 @@
 ﻿using FormsAppTelenav.Classes;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,44 +14,87 @@ namespace FormsAppTelenav.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class JobsView : ContentPage
     {
+        private ObservableCollection<Income> jobs = new ObservableCollection<Income>();
+        
+
+        public ObservableCollection<Income> Jobs
+        {
+            get { return jobs; }
+            set { jobs = value; }
+        }
         public JobsView()
         {
+            BindingContext = this;
             InitializeComponent();
+            jobListView.ItemsSource = Jobs;
+            
+           
+            
+            
             MeddleWithIncomes();
         }
         // pentru jobs doar trebuie facut un view si cu o lista, logica pentru orice income exista
 
         public async void MeddleWithIncomes()
         {
-            List<Income> incomes = await App.LocalDataBase.GetIncomes();
-
-        }
-
-        private async void CreateIncome_Clicked(object sender, EventArgs e)
-        {
             AppSettings setting = (await App.LocalDataBase.GetAppSettings())[0];
             await App.LocalDataBase.ChangeAppTime(DateTime.Parse(setting.LastRealLogin));
             setting = (await App.LocalDataBase.GetAppSettings())[0];
-            Income income = new Income();
-            income.Name = NameEntry.Text;
-            income.Frequency = double.Parse(FrequencyEntry.Text);
-            income.AbsoluteValue = double.Parse(AbsoluteValueEntry.Text);
-            income.Category = IncomeCategory.Random;
-            income.Periodical = true;
-            income.LastRealPayment = setting.LastRealLogin;
-            income.LastAppPayment = setting.LastLogin;
-            income.ContractTime = income.LastRealPayment.ToString();
-            income.Times = 5;
-            income.LastRealSupposedPayment = setting.LastRealLogin;
-            income.LastSupposedPayment = setting.LastLogin;
-            income.TimesLeft = income.Times;
-            income.LastRealSupposedPayment = setting.LastRealLogin;
-            income.LastSupposedPayment = setting.LastLogin;
-            await App.LocalDataBase.AddIncome(income);
-           
-            List<Income> incomes = await App.LocalDataBase.GetIncomes();
-            int x = 0;
+            Income gardner = new Income("Gardner", 2000, true, IncomeCategory.Job, 30);
+            gardner.Times = -1;
+            gardner.LastRealPayment = setting.LastRealLogin;
+            gardner.LastAppPayment = setting.LastLogin;
+            gardner.ContractTime = gardner.LastRealPayment.ToString();
+            
+            gardner.LastRealSupposedPayment = setting.LastRealLogin;
+            gardner.LastSupposedPayment = setting.LastLogin;
+            gardner.LastRealSupposedPayment = setting.LastRealLogin;
+            gardner.LastSupposedPayment = setting.LastLogin;
+            Jobs.Add(gardner);
 
+            Income programmer = new Income("Senior programmer", 9000, true, IncomeCategory.Job, 30);
+            gardner.Times = -1;
+            gardner.LastRealPayment = setting.LastRealLogin;
+            gardner.LastAppPayment = setting.LastLogin;
+            gardner.ContractTime = gardner.LastRealPayment.ToString();
+            
+            gardner.LastRealSupposedPayment = setting.LastRealLogin;
+            gardner.LastSupposedPayment = setting.LastLogin;
+            gardner.LastRealSupposedPayment = setting.LastRealLogin;
+            gardner.LastSupposedPayment = setting.LastLogin;
+            Jobs.Add(programmer); 
+
+        }
+
+       
+
+        private void QuitJobs_Clicked(object sender, EventArgs e)
+        {
+
+        }
+
+        private async void jobListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            Income income = e.SelectedItem as Income;
+            int jobcount = 0;
+            List<Income> incomes = await App.LocalDataBase.GetIncomes();
+            foreach(Income i in incomes)
+            {
+                if (i.Category == IncomeCategory.Job)
+                {
+                    jobcount++;
+                }
+            }
+            if (jobcount >= 1)
+            {
+                await DisplayAlert("", "You've already got a job, quit it before you get another one", "OK");
+            }
+            else
+            {
+                await App.LocalDataBase.AddIncome(income);
+            }
+            incomes = await App.LocalDataBase.GetIncomes();
+            int x = 0;
         }
     }
 }

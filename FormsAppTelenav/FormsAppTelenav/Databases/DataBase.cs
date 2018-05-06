@@ -564,6 +564,23 @@ namespace FormsAppTelenav.Databases
                                             }
                                             break;
                                         }
+                                    case IncomeCategory.Job:
+                                        {
+                                            DateTime lastRealLogin = DateTime.Parse(setting.LastRealLogin);
+                                            TimeSpan span = lastRealLogin.Subtract(DateTime.Parse(i.LastRealSupposedPayment));
+                                            double appMinutes = span.TotalMinutes * App.Multiplier;
+                                            if (appMinutes > i.Frequency)
+                                            {
+                                                double timesToSubtract = appMinutes / i.Frequency;
+                                                timesToSubtract = Math.Floor(timesToSubtract);
+ 
+                                                i.LastSupposedPayment = (DateTime.Parse(i.LastSupposedPayment).AddMinutes(timesToSubtract * i.Frequency)).ToString();
+                                                i.LastRealSupposedPayment = (DateTime.Parse(i.LastRealSupposedPayment).AddMinutes((timesToSubtract * i.Frequency) / App.Multiplier)).ToString();
+                                                i.LastAppPayment = setting.LastLogin;
+                                                i.LastRealPayment = setting.LastRealLogin;
+                                            }
+                                            break;
+                                        }
                                 }
                             }
                         }
