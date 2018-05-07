@@ -96,7 +96,10 @@ namespace FormsAppTelenav.Views
             }
             if (jobcount >= 1)
             {
-                await DisplayAlert("", "You've already got a job, quit it before you get another one", "OK");
+                if (e.SelectedItem != null)
+                {
+                    await DisplayAlert("", "You've already got a job, quit it before you get another one", "OK");
+                }
             }
             else
             {
