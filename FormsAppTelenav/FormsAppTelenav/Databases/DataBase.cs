@@ -524,7 +524,7 @@ namespace FormsAppTelenav.Databases
                                     if (appMinutes > i.Frequency)
                                     {
                                         // se sustrage/se adauga la persoana cat trebuie sa plateasca
-
+                                        
                                         //
                                      /*   if (i.LastSupposedPayment.Equals(i.LastRealSupposedPayment))
                                         {
@@ -538,6 +538,7 @@ namespace FormsAppTelenav.Databases
                                         i.LastAppPayment = setting.LastLogin;
                                         i.LastRealPayment = setting.LastRealLogin;
                                         SaveIncome(i);
+                                        person.Amount += (i.AbsoluteValue * timesToSubtract); 
                                     }
 
                                 }
@@ -592,7 +593,7 @@ namespace FormsAppTelenav.Databases
                         StationaryCredit credit = payload[0] as StationaryCredit;
                         Income income = new Income();
                         income.Category = IncomeCategory.Credit;
-                        income.AbsoluteValue = (-1)*(credit.Cost * (100 + credit.Interest)) / 100;
+                        income.AbsoluteValue = (-1)*(((credit.Cost * (100 + credit.Interest)) / 100)/credit.Duration);
                         income.Periodical = true;
                         income.Frequency = 30;
                         // contracttime, lastpayment, lastrealpayment, lastsupppayment, lastrealsupppayment

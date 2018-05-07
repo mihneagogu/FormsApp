@@ -68,9 +68,18 @@ namespace FormsAppTelenav.Views
 
        
 
-        private void QuitJobs_Clicked(object sender, EventArgs e)
+        private async void QuitJobs_Clicked(object sender, EventArgs e)
         {
+            List<Income> incomes = await App.LocalDataBase.GetIncomes();
+            foreach(Income i in incomes)
+            {
+                if (i.Category == IncomeCategory.Job)
+                {
 
+                    await App.LocalDataBase.DeleteIncome(i);
+                    await DisplayAlert("", "You have just quit your job as a " + i.Name , "OK");
+                }
+            }
         }
 
         private async void jobListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -92,9 +101,11 @@ namespace FormsAppTelenav.Views
             else
             {
                 await App.LocalDataBase.AddIncome(income);
+                await DisplayAlert("","You are now a " + income.Name, "OK");
             }
             incomes = await App.LocalDataBase.GetIncomes();
             int x = 0;
+            ((ListView)sender).SelectedItem = null;
         }
     }
 }
