@@ -192,7 +192,23 @@ namespace FormsAppTelenav.Views
             Navigation.PushAsync(view);
         }
 
+        private async void MakeIncomeChart()
+        {
+            List<Income> incomes = await App.LocalDataBase.GetIncomes();
+            AppSettings setting = (await App.LocalDataBase.GetAppSettings())[0];
+            await App.LocalDataBase.ChangeAppTime(DateTime.Parse(setting.LastRealLogin));
+            setting = (await App.LocalDataBase.GetAppSettings())[0];
+            foreach (Income i in incomes)
+            {
+                double currentAppMonth = (DateTime.Parse(setting.LastLogin)).Month;
+                double futureMonth = (DateTime.Parse(i.LastSupposedPayment).AddDays(i.Frequency)).Month;
+                if (futureMonth == currentAppMonth)
+                {
+                    // se adauga la lista de entries si se creeaza dupa chartul
+                }
+            }
 
+        }
 
 
         /* public ICommand AuctionHouseCommand
