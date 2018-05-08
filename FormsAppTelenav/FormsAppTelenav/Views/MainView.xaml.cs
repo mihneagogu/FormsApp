@@ -19,8 +19,33 @@ namespace FormsAppTelenav.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainView : ContentPage 
     {
-        
+        void JobsMonkey_Tapped(object sender, System.EventArgs e)
+        {
+            DisplayAlert("", "Jobs", "OK");
+        }
+        void CreditsMonkey_Tapped(object sender, System.EventArgs e)
+        {
+            DisplayAlert("", "Credits", "OK");
+        }
+
+        void HistoryMonkey_Tapped(object sender, System.EventArgs e)
+        {
+            DisplayAlert("", "Purchase History", "OK");
+        }
+        void BankMonkey_Tapped(object sender, System.EventArgs e)
+        {
+            DisplayAlert("", "Bank", "OK");
+        }
+
+        void AuctionHouseMonkey_Tapped(object sender, System.EventArgs e)
+        {
+            DisplayAlert("", "AuctionHouse", "OK");
+        }
+
+
         private MainViewBindingModel binding = new MainViewBindingModel();
+
+         
 
         public string DeleteLastLetter(string str)
         {
@@ -29,7 +54,11 @@ namespace FormsAppTelenav.Views
 
         protected override async void OnAppearing()
         {
-            
+          //  var x = RotateCharacter(MonkeyImage, System.Threading.CancellationToken.None, 0);
+
+            //var Y = RotateCharacter(MonkeyImage2, System.Threading.CancellationToken.None, 50);
+
+
         }
 
         public MainView()
@@ -81,11 +110,22 @@ namespace FormsAppTelenav.Views
             Navigation.PushAsync(auctionHouseView);
         }
 
+        private async Task RotateCharacter(VisualElement element, System.Threading.CancellationToken token, int sleepTime){
+            await Task.Delay(sleepTime);
+            while (!token.IsCancellationRequested){
+                await element.RotateTo(5, 25, Easing.Linear);
+                await element.RotateTo(0, 0);
+                await element.RotateTo(-5, 25, Easing.Linear);
+                await element.RotateTo(0, 0);
+            }
+        }
 
         private async void MeddleWithDB()
         {
             /// de trimis request la middledealer sa verifica income-urile cand porneste aplicatia
-            await MonkeyImage.RotateTo(200, 2000);
+
+
+
             Person person = App.User;
             List<AppSettings> settings = await App.LocalDataBase.GetAppSettings();
             
@@ -150,11 +190,11 @@ namespace FormsAppTelenav.Views
             Currency curr = await App.LocalDataBase.GetCurrency(person.CurrencyID);
             if (bundles.Count != 0)
             {
-                HistoryButton.IsEnabled = true;
+                //HistoryButton.IsEnabled = true;
             }
             if (credits.Count != 0)
             {
-                CreditListButton.IsEnabled = true;
+                //CreditListButton.IsEnabled = true;
             }
 
            
