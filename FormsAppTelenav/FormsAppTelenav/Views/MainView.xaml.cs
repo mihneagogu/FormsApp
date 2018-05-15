@@ -54,9 +54,13 @@ namespace FormsAppTelenav.Views
 
         protected override async void OnAppearing()
         {
-          //  var x = RotateCharacter(MonkeyImage, System.Threading.CancellationToken.None, 0);
+            var x = RotateCharacter(bankMonkey, System.Threading.CancellationToken.None, 0);
 
-            //var Y = RotateCharacter(MonkeyImage2, System.Threading.CancellationToken.None, 50);
+            var Y = RotateCharacter(auctionHouseMonkey, System.Threading.CancellationToken.None, 4);
+            var z = RotateCharacter(historyMonkey, System.Threading.CancellationToken.None, 8);
+            var a = RotateCharacter(creditsMonkey, System.Threading.CancellationToken.None, 12);
+            var b = RotateCharacter(jobsMonkey, System.Threading.CancellationToken.None, 17);
+
 
 
         }
