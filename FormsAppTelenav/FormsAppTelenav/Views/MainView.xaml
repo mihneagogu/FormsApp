@@ -33,32 +33,32 @@
                     Text="Find jobs"
                     Clicked="ToJobsView_Clicked"
                   /> -->
-           
-            <Image Source="monkey.png" x:Name="bankMonkey" AbsoluteLayout.LayoutBounds="0.2,0.1,0.1,0.1" BackgroundColor="Blue" AbsoluteLayout.LayoutFlags="All">
+
+            <Image Source="bank_icon.png" x:Name="bankMonkey" AbsoluteLayout.LayoutBounds="0.263,0.73,0.14,0.14"  AbsoluteLayout.LayoutFlags="All">
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Tapped="BankMonkey_Tapped" />
                 </Image.GestureRecognizers>
             </Image>
-            <Image Source="monkey.png" x:Name="auctionHouseMonkey" AbsoluteLayout.LayoutBounds="0.7,0.25,0.1,0.1" BackgroundColor="Fuchsia" AbsoluteLayout.LayoutFlags="All">
+            <Image Source="auction_icon.png" x:Name="auctionHouseMonkey" AbsoluteLayout.LayoutBounds="0.2,0.4,0.12,0.12"  AbsoluteLayout.LayoutFlags="All">
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Tapped="AuctionHouseMonkey_Tapped" />
                 </Image.GestureRecognizers>
             </Image>
-            <Image Source="monkey.png" x:Name="historyMonkey" AbsoluteLayout.LayoutBounds="0.8,0.4,0.2,0.2" BackgroundColor="Gray" AbsoluteLayout.LayoutFlags="All">
+            <Image Source="history_icon.png" x:Name="historyMonkey" AbsoluteLayout.LayoutBounds="0.48,0.36,0.13,0.13"  AbsoluteLayout.LayoutFlags="All">
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Tapped="HistoryMonkey_Tapped" />
                 </Image.GestureRecognizers>
             </Image>
-            <Image Source="monkey.png" x:Name="creditsMonkey" AbsoluteLayout.LayoutBounds="0.1,0.55,0.2,0.2" BackgroundColor="Green" AbsoluteLayout.LayoutFlags="All">
+            <Image Source="credit_card_icon.png" x:Name="creditsMonkey" AbsoluteLayout.LayoutBounds="0.72,0.5,0.145,0.145"  AbsoluteLayout.LayoutFlags="All">
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Tapped="CreditsMonkey_Tapped" />
                 </Image.GestureRecognizers>
-            </Image>
-            <Image Source="monkey.png" x:Name="jobsMonkey" AbsoluteLayout.LayoutBounds="0.3,0.7,0.2,0.2" BackgroundColor="Lime" AbsoluteLayout.LayoutFlags="All" >
+            </Image> 
+            <Image Source="jobs_icon.png" x:Name="jobsMonkey" AbsoluteLayout.LayoutBounds="0.83,0.85,0.135,0.135"  AbsoluteLayout.LayoutFlags="All" >
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Tapped="JobsMonkey_Tapped"/>
                 </Image.GestureRecognizers>
-            </Image>
+            </Image> 
             
         </AbsoluteLayout>
     </ContentPage.Content>
