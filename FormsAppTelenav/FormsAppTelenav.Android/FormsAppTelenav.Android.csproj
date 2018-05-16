@@ -187,6 +187,11 @@
     <AndroidResource Include="Resources\drawable-xxhdpi\icon.png" />
     <AndroidResource Include="Resources\drawable\monkey.png" />
     <AndroidResource Include="Resources\drawable\photopath.jpg" />
+    <AndroidResource Include="Resources\drawable\background.jpg" />
+    <AndroidResource Include="Resources\drawable\bank_background.jpg" />
+    <AndroidResource Include="Resources\drawable\credit_icon.png" />
+    <AndroidResource Include="Resources\drawable\deposit_icon.png" />
+    <AndroidResource Include="Resources\drawable\hand_credit_icon.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml" />

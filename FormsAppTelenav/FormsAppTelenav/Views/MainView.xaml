@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FormsAppTelenav.Views.MainView"
-             BackgroundImage="photopath.jpg">
+             BackgroundImage="background.jpg">
     <ContentPage.Content>
         <AbsoluteLayout Padding="0,0,0,0">
       <!--      <Label 
@@ -34,27 +34,27 @@
                     Clicked="ToJobsView_Clicked"
                   /> -->
 
-            <Image Source="bank_icon.png" x:Name="bankMonkey" AbsoluteLayout.LayoutBounds="0.263,0.73,0.14,0.14"  AbsoluteLayout.LayoutFlags="All">
+            <Image Source="bank_icon.png" x:Name="bankMonkey" AbsoluteLayout.LayoutBounds="0.263,0.73,0.16,0.16"  AbsoluteLayout.LayoutFlags="All">
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Tapped="BankMonkey_Tapped" />
                 </Image.GestureRecognizers>
             </Image>
-            <Image Source="auction_icon.png" x:Name="auctionHouseMonkey" AbsoluteLayout.LayoutBounds="0.2,0.4,0.12,0.12"  AbsoluteLayout.LayoutFlags="All">
+            <Image Source="auction_icon.png" x:Name="auctionHouseMonkey" AbsoluteLayout.LayoutBounds="0.23,0.4,0.14,0.14"  AbsoluteLayout.LayoutFlags="All">
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Tapped="AuctionHouseMonkey_Tapped" />
                 </Image.GestureRecognizers>
             </Image>
-            <Image Source="history_icon.png" x:Name="historyMonkey" AbsoluteLayout.LayoutBounds="0.48,0.36,0.13,0.13"  AbsoluteLayout.LayoutFlags="All">
+            <Image Source="history_icon.png" x:Name="historyMonkey" AbsoluteLayout.LayoutBounds="0.48,0.36,0.15,0.15"  AbsoluteLayout.LayoutFlags="All">
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Tapped="HistoryMonkey_Tapped" />
                 </Image.GestureRecognizers>
             </Image>
-            <Image Source="credit_card_icon.png" x:Name="creditsMonkey" AbsoluteLayout.LayoutBounds="0.72,0.5,0.145,0.145"  AbsoluteLayout.LayoutFlags="All">
+            <Image Source="credit_icon.png" x:Name="creditsMonkey" AbsoluteLayout.LayoutBounds="0.72,0.5,0.165,0.165"  AbsoluteLayout.LayoutFlags="All">
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Tapped="CreditsMonkey_Tapped" />
                 </Image.GestureRecognizers>
             </Image> 
-            <Image Source="jobs_icon.png" x:Name="jobsMonkey" AbsoluteLayout.LayoutBounds="0.83,0.85,0.135,0.135"  AbsoluteLayout.LayoutFlags="All" >
+            <Image Source="jobs_icon.png" x:Name="jobsMonkey" AbsoluteLayout.LayoutBounds="0.83,0.85,0.15,0.15"  AbsoluteLayout.LayoutFlags="All" >
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Tapped="JobsMonkey_Tapped"/>
                 </Image.GestureRecognizers>

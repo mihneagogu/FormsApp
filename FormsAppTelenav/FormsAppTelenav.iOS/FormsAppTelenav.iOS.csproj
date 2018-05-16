@@ -117,6 +117,11 @@
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
     <BundleResource Include="Resources\monkey.png" />
     <BundleResource Include="Resources\photopath.jpg" />
+    <BundleResource Include="Resources\background.jpg" />
+    <BundleResource Include="Resources\bank_background.jpg" />
+    <BundleResource Include="Resources\credit_icon.png" />
+    <BundleResource Include="Resources\deposit_icon.png" />
+    <BundleResource Include="Resources\hand_credit_icon.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microcharts.Forms, Version=1.0.6429.41035, Culture=neutral, processorArchitecture=MSIL">

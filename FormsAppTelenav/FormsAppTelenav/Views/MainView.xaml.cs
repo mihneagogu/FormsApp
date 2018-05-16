@@ -21,25 +21,43 @@ namespace FormsAppTelenav.Views
     {
         void JobsMonkey_Tapped(object sender, System.EventArgs e)
         {
-            DisplayAlert("", "Jobs", "OK");
+            JobsView view = new JobsView();
+            Navigation.PushAsync(view);
         }
-        void CreditsMonkey_Tapped(object sender, System.EventArgs e)
+        async void CreditsMonkey_Tapped(object sender, System.EventArgs e)
         {
-            DisplayAlert("", "Credits", "OK");
+            List<StationaryCredit> credits = await App.LocalDataBase.GetCredits();
+            CreditsFromMainView view = new CreditsFromMainView(credits);
+            await Navigation.PushAsync(view);
         }
 
-        void HistoryMonkey_Tapped(object sender, System.EventArgs e)
+        async void HistoryMonkey_Tapped(object sender, System.EventArgs e)
         {
-            DisplayAlert("", "Purchase History", "OK");
+            List<AuctionBundleForHistory> history = await App.LocalDataBase.GetHistory();
+            if (history.Count != 0)
+            {
+                HistoryView historyView = new HistoryView(history);
+                await Navigation.PushAsync(historyView);
+            }
+            else
+            {
+                await DisplayAlert("", "You have yet to buy auctions from a company", "OK");
+            }
         }
         void BankMonkey_Tapped(object sender, System.EventArgs e)
         {
-            DisplayAlert("", "Bank", "OK");
+            BankView bankView = new BankView();
+
+
+            Navigation.PushAsync(bankView);
         }
 
         void AuctionHouseMonkey_Tapped(object sender, System.EventArgs e)
         {
-            DisplayAlert("", "AuctionHouse", "OK");
+            AuctionHouseView auctionHouseView = new AuctionHouseView();
+
+
+            Navigation.PushAsync(auctionHouseView);
         }
 
 
@@ -54,6 +72,7 @@ namespace FormsAppTelenav.Views
 
         protected override async void OnAppearing()
         {
+            NavigationPage.SetHasNavigationBar(this, false);
             var x = RotateCharacter(bankMonkey, System.Threading.CancellationToken.None, 0);
 
             var Y = RotateCharacter(auctionHouseMonkey, System.Threading.CancellationToken.None, 4);
@@ -117,9 +136,9 @@ namespace FormsAppTelenav.Views
         private async Task RotateCharacter(VisualElement element, System.Threading.CancellationToken token, int sleepTime){
             await Task.Delay(sleepTime);
             while (!token.IsCancellationRequested){
-                await element.RotateTo(5, 25, Easing.Linear);
+                await element.RotateTo(5, 60, Easing.Linear);
                 await element.RotateTo(0, 0);
-                await element.RotateTo(-5, 25, Easing.Linear);
+                await element.RotateTo(-5, 60, Easing.Linear);
                 await element.RotateTo(0, 0);
             }
         }
