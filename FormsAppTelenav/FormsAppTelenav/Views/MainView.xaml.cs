@@ -187,7 +187,7 @@ namespace FormsAppTelenav.Views
                 }
 
                 DateTime currentTime = DateTime.Now.ToLocalTime();
-                double currentAmount = CalculateMoneyToEarn(Convert.ToDateTime(/*DeleteLastLetter(*/setting.LastRealLogin)/*)*/, person);
+                double currentAmount = CalculateMoneyToEarn(Convert.ToDateTime(setting.LastRealLogin), person);
                
                 if (currentAmount != person.Amount)
                 {

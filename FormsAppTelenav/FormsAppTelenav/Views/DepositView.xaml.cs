@@ -60,5 +60,49 @@ namespace FormsAppTelenav.Views
             DepositListView view = new DepositListView();
             Navigation.PushAsync(view);
         }
+
+        private async void MakeDeposit_Tapped(object sender, EventArgs e)
+        {
+            // de verificat daca datele introduse sunt bune
+            AppSettings setting = (await App.LocalDataBase.GetAppSettings())[0];
+            Income income = new Income();
+            income.AbsoluteValue = double.Parse(AbsoluteValueEntry.Text, App.DoubleCultureInfo);
+            income.Times = -1;
+            income.ContractTime = setting.LastRealLogin;
+            income.Category = IncomeCategory.DefaultDeposit;
+            income.LastAppPayment = setting.LastLogin;
+            income.LastRealPayment = setting.LastRealLogin;
+            income.Periodical = true;
+            double frequency = double.Parse(FrequencyEntry.Text, App.DoubleCultureInfo);
+            switch (frequency)
+            {
+                case 1:
+                    frequency = 31;
+                    break;
+                case 3:
+                    frequency = 92;
+                    break;
+                case 6:
+                    frequency = 182;
+                    break;
+                case 12:
+                    frequency = 365;
+                    break;
+
+            }
+            income.OverTimeAddition = 0;
+            income.Frequency = frequency;
+            income.LastRealSupposedPayment = setting.LastRealLogin;
+            income.LastSupposedPayment = setting.LastLogin;
+            income.DepositInterest = double.Parse(InterestEntry.Text, App.DoubleCultureInfo);
+            await App.LocalDataBase.AddIncome(income);
+            await DisplayAlert("", "Thank you for depositing", "OK");
+        }
+
+        private void DepositList_Tapped(object sender, EventArgs e)
+        {
+            DepositListView view = new DepositListView();
+            Navigation.PushAsync(view);
+        }
     }
 }

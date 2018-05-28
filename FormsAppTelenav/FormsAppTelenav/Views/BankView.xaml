@@ -5,14 +5,18 @@
              BackgroundImage="bank_background.jpg"
                 >
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="{Binding MoneyStatement}" HorizontalOptions="Center"/>
-            <Button Text="Buy a credit"
-                    Clicked="ToCreditView_Clicked"/>
-            <Button Text="Despoits"
-                    Clicked="ToDepositView_Clicked" />
-            <Label Text="{Binding ExpensesToPay}" HorizontalOptions="Center"/>
-            <Label Text="{Binding MonthlyIncomeStatement}" HorizontalOptions="Center"/>
-        </StackLayout>
+        <AbsoluteLayout Padding="0,0,0,0">
+            <Image Source="deposit_icon.png" x:Name="DepositIcon" AbsoluteLayout.LayoutBounds="0.7,0.70,0.16,0.16"  AbsoluteLayout.LayoutFlags="All">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="DepositIcon_Tapped" />
+                </Image.GestureRecognizers>
+            </Image>
+            
+                <Image Source="hand_credit_icon.png" x:Name="CreditIcon" AbsoluteLayout.LayoutBounds="0.7,0.85,0.16,0.16"  AbsoluteLayout.LayoutFlags="All">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="CreditIcon_Tapped" />
+                    </Image.GestureRecognizers>
+                </Image>
+            </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>
