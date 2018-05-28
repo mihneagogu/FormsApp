@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="FormsAppTelenav.Views.AuctionHouseView">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="FormsAppTelenav.Views.AuctionHouseView" BackgroundImage="pergament_background.jpg">
 	<ContentPage.Content>
        <ListView x:Name="symbolListView" CachingStrategy="RecycleElement"  ItemsSource="{Binding Symbols}" ItemSelected="Handle_ItemSelected">
             <ListView.Header>
@@ -9,8 +9,8 @@
                         <ColumnDefinition Width="1*" />
 
                     </Grid.ColumnDefinitions>
-                    <Label Text="Name" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" />
-                    <Label Text="Symbol" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" />
+                    <Label Text="Name" Grid.Row="0" FontAttributes="Bold" Grid.Column="0" HorizontalOptions="Center" />
+                    <Label Text="Symbol" Grid.Row="0" FontAttributes="Bold" Grid.Column="1" HorizontalOptions="Center" />
 
                 </Grid>
             </ListView.Header>
@@ -22,8 +22,8 @@
                                 <ColumnDefinition Width="3*" />
                                 <ColumnDefinition Width="1*" />
                             </Grid.ColumnDefinitions>
-                            <Label Text="{Binding Name}" Grid.Row="0" Grid.Column="0" VerticalOptions="Center" FontSize="13"/>
-                            <Label Text="{Binding Symbol}" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            <Label Text="{Binding Name}" Grid.Row="0" FontAttributes="Bold" Grid.Column="0" VerticalOptions="Center" FontSize="13"/>
+                            <Label Text="{Binding Symbol}" Grid.Row="0" FontAttributes="Bold" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center"/>
                            
                         </Grid>
                     </ViewCell>

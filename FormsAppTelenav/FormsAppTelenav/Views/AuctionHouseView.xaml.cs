@@ -9,6 +9,11 @@ namespace FormsAppTelenav.Views
     public partial class AuctionHouseView : ContentPage
     {
 
+        protected override async void OnAppearing()
+        {
+            NavigationPage.SetHasNavigationBar(this, false);
+        }
+
         protected override Boolean OnBackButtonPressed(){
             bool b = false;
             if (!b)
