@@ -110,5 +110,19 @@ namespace FormsAppTelenav.Views
             int x = 0;
             ((ListView)sender).SelectedItem = null;
         }
+
+        private async void QuitJobIcon_Tapped(object sender, EventArgs e)
+        {
+            List<Income> incomes = await App.LocalDataBase.GetIncomes();
+            foreach (Income i in incomes)
+            {
+                if (i.Category == IncomeCategory.Job)
+                {
+
+                    await App.LocalDataBase.DeleteIncome(i);
+                    await DisplayAlert("", "You have just quit your job as a " + i.Name, "OK");
+                }
+            }
+        }
     }
 }

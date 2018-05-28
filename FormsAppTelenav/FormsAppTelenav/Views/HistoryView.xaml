@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="FormsAppTelenav.Views.HistoryView">
+             x:Class="FormsAppTelenav.Views.HistoryView"
+             BackgroundImage="pergament_background.jpg"
+             >
     <ContentPage.Content>
-        <ListView x:Name="historyListView" ItemsSource="{Binding Bundles}">
+        <AbsoluteLayout>
+            <ListView x:Name="historyListView" ItemsSource="{Binding Bundles}" AbsoluteLayout.LayoutBounds="0.375,0.2,0.9,0.75"  AbsoluteLayout.LayoutFlags="All">
             <ListView.Header>
                 <Grid Padding="7">
                     <Grid.ColumnDefinitions>
@@ -13,11 +16,11 @@
                         <ColumnDefinition Width="1*" />
                         <ColumnDefinition Width="1*" />
                     </Grid.ColumnDefinitions>
-                    <Label Text="Value" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" />
-                    <Label Text="Date" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" />
-                    <Label Text="Amount" Grid.Row="0" Grid.Column="2" HorizontalOptions="Center" />
-                    <Label Text="Company Symbol" Grid.Row="0" Grid.Column="3" HorizontalOptions="Center" />
-                            <Label Text="Action" Grid.Row="0" Grid.Column="4" HorizontalOptions="Center" />
+                    <Label Text="Value" FontAttributes="Bold" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" />
+                    <Label Text="Date" Grid.Row="0" FontAttributes="Bold" Grid.Column="1" HorizontalOptions="Center" />
+                    <Label Text="Amount" Grid.Row="0" FontAttributes="Bold" Grid.Column="2" HorizontalOptions="Center" />
+                    <Label Text="Company Symbol" Grid.Row="0" FontAttributes="Bold" Grid.Column="3" HorizontalOptions="Center" />
+                            <Label Text="Action" Grid.Row="0"  FontAttributes="Bold" Grid.Column="4" HorizontalOptions="Center" />
                 </Grid>
             </ListView.Header>
             <ListView.ItemTemplate>
@@ -29,15 +32,16 @@
                                 <ColumnDefinition Width="1*" />
                                 <ColumnDefinition Width="1*" />
                             </Grid.ColumnDefinitions>
-                            <Label Text="{Binding OpenValueAtDateBought}" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" />
-                            <Label Text="{Binding DateBought}" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" FontSize="12"/>
-                            <Label Text="{Binding Number}" Grid.Row="0" Grid.Column="2" HorizontalOptions="Center" />
-                            <Label Text="{Binding Symbol}" Grid.Row="0" Grid.Column="3" HorizontalOptions="Center" />
-                            <Label Text="{Binding Action, Converter={StaticResource auctionActionStringCnv}}}" Grid.Row="0" Grid.Column="4" HorizontalOptions="Center"/>
+                            <Label Text="{Binding OpenValueAtDateBought}" FontAttributes="Bold" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" />
+                            <Label Text="{Binding DateBought}" Grid.Row="0"  FontAttributes="Bold" Grid.Column="1" HorizontalOptions="Center" FontSize="12"/>
+                            <Label Text="{Binding Number}" Grid.Row="0" FontAttributes="Bold"  Grid.Column="2" HorizontalOptions="Center" />
+                            <Label Text="{Binding Symbol}" Grid.Row="0" FontAttributes="Bold" Grid.Column="3" HorizontalOptions="Center" />
+                            <Label Text="{Binding Action, Converter={StaticResource auctionActionStringCnv}}}" FontAttributes="Bold" Grid.Row="0" Grid.Column="4" HorizontalOptions="Center"/>
                         </Grid>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

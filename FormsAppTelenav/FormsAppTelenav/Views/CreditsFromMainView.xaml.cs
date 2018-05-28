@@ -13,6 +13,12 @@ namespace FormsAppTelenav.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CreditsFromMainView : ContentPage
     {
+
+        protected override async void OnAppearing()
+        {
+            NavigationPage.SetHasNavigationBar(this, false);
+        }
+
         List<StationaryCredit> credits = new List<StationaryCredit>();
         public List<StationaryCredit> Credits { set { credits = value; } get { return credits; } }
         public CreditsFromMainView(List<StationaryCredit> credits)

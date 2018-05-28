@@ -126,16 +126,28 @@ namespace FormsAppTelenav.Views
                 profit /= 100;
                 PriceLabel.Text = string.Format("{0:0.000000} %", profit);
                 Person person = App.User;
-                BuyButton.IsEnabled = true;
+               // BuyButton.IsEnabled = true;
                 AuctionBundleForDb boughtBundle = await App.LocalDataBase.GetAuctionBundleForSymbol(symbol, person);
                 if (boughtBundle != null && boughtBundle.Number != 0)
                 {
-                    SellButton.IsEnabled = true;
+                 //   SellButton.IsEnabled = true;
                 }
             }
 
             }
+
+        private  void BuyAuction_Tapped(object sender, EventArgs e)
+        {
+            BuyAuctionsView buyAuctionsView = new BuyAuctionsView(new ToBuyAuction(symbol, auctionName, stock[0].CloseValue, stock[0].Date), AuctionAction.BOUGHT);
+            Navigation.PushAsync(buyAuctionsView);
         }
+
+        private  void SellAuction_Tapped(object sender, EventArgs e)
+        {
+            BuyAuctionsView buyAuctionsView = new BuyAuctionsView(new ToBuyAuction(symbol, auctionName, stock[0].CloseValue, stock[0].Date), AuctionAction.SOLD);
+            Navigation.PushAsync(buyAuctionsView);
+        }
+    }
 
         
     }

@@ -15,6 +15,12 @@ namespace FormsAppTelenav.Views
     public partial class HistoryView : ContentPage
     {
         private ObservableCollection<AuctionBundleForHistory> history = new ObservableCollection<AuctionBundleForHistory>();
+
+        protected override async void OnAppearing()
+        {
+            NavigationPage.SetHasNavigationBar(this, false);
+        }
+
         public HistoryView(List<AuctionBundleForHistory> bundles)
         {
             foreach(AuctionBundleForHistory b in bundles)

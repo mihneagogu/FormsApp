@@ -116,6 +116,12 @@ namespace FormsAppTelenav.Views
             }
 
         }
+
+        private void ConfirmPayment_Tapped(object sender, EventArgs e)
+        {
+            AuctionBundle auctionBundle = new AuctionBundle(auctionToBuy.Symbol, auctionToBuy.Name, auctionToBuy.CloseValueAtDateBought, auctionToBuy.CloseValueAtDateBought, auctionToBuy.Date, NumberEntry.Text);
+            AddBundleToStockPortfolio(auctionBundle);
+        }
     }
 
 }

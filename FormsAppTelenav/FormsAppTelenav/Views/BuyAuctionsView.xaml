@@ -2,14 +2,21 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:forms="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
-             x:Class="FormsAppTelenav.Views.BuyAuctionsView">
+             x:Class="FormsAppTelenav.Views.BuyAuctionsView"
+             BackgroundImage="pergament_background.jpg"
+             >
     <ContentPage.Content>
         <StackLayout>
             <Label Text="{Binding CompanyNameStatement}" />
             <Label x:Name="BuyOrSellLabel" Text="How many auctions do you want to buy?" />
             <Entry x:Name="NumberEntry" Keyboard="Numeric"/>
             <Label Text="{Binding PriceValueStatement}" />
-            <Button Text="Confirm payment" Clicked="ConfirmedPayment_Clicked"/>
+            <!--Button Text="Confirm payment" Clicked="ConfirmedPayment_Clicked"/ -->
+            <Image Source="deal_icon.png" x:Name="DealIcon">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ConfirmedPayment_Clicked" />
+                </Image.GestureRecognizers>
+            </Image>
             <Label x:Name="ProfitLabel" IsVisible="False"/>
            
         </StackLayout>
