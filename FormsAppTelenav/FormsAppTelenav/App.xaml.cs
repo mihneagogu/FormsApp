@@ -19,6 +19,8 @@ namespace FormsAppTelenav
             get; set;
         }
 
+
+
         /// Divider = cate minute din realitate inseamna 1 luna a aplicatiei
         public static System.Globalization.CultureInfo DoubleCultureInfo { get { return System.Globalization.CultureInfo.InvariantCulture; } }
         public const double Divider = 2;

@@ -15,9 +15,13 @@ namespace FormsAppTelenav.Views
     public partial class JobsView : ContentPage
     {
         private ObservableCollection<Income> jobs = new ObservableCollection<Income>();
-        
 
-        public ObservableCollection<Income> Jobs
+		protected override void OnAppearing()
+		{
+            NavigationPage.SetHasNavigationBar(this, false);
+		}
+
+		public ObservableCollection<Income> Jobs
         {
             get { return jobs; }
             set { jobs = value; }

@@ -4,7 +4,6 @@
              xmlns:local="clr-namespace:FormsAppTelenav.Classes;assembly=FormsAppTelenav"
              x:Class="FormsAppTelenav.App">
 	<Application.Resources>
-
         <ResourceDictionary>
             <local:DoubleStringConverter x:Key="doubleStringCnv" />
             <local:AuctionActionStringConverter x:Key="auctionActionStringCnv" />
@@ -14,5 +13,6 @@
         
         </ResourceDictionary>
     </Application.Resources>
+
     
 </Application>

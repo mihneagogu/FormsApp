@@ -35,7 +35,7 @@
                 </Image.GestureRecognizers>
              </Image>
 
-            <forms:ChartView x:Name="AuctionChart" HeightRequest="250" WidthRequest="150" BackgroundColor="#DEBF88" />
+            <forms:ChartView x:Name="AuctionChart"  HeightRequest="250" WidthRequest="150" IsEnabled="false" BackgroundColor="#FEF4AF" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -8,20 +8,20 @@
 
     <ContentPage.Content >
 
-        <AbsoluteLayout >
-            <Label Text="Credit cost" VerticalOptions="Center" FontAttributes="Bold" HorizontalOptions="Center" AbsoluteLayout.LayoutBounds="0.2,0.1,1,0.06"  AbsoluteLayout.LayoutFlags="All"/>
+        <AbsoluteLayout Padding="70,0,20,0" >
+            <Label Text="Credit cost" FontFamily="Verdana" VerticalOptions="Center" FontAttributes="Bold" HorizontalOptions="Center" AbsoluteLayout.LayoutBounds="0.2,0.1,1,0.06"  AbsoluteLayout.LayoutFlags="All"/>
             <Entry x:Name="CostEntry"  FontAttributes="Bold" Text="{Binding Cost, Mode=TwoWay, Converter={StaticResource doubleStringCnv}}" AbsoluteLayout.LayoutBounds="0.2,0.2,1,0.06"  AbsoluteLayout.LayoutFlags="All"/>
             <Label Text="Duration in months"  FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center" AbsoluteLayout.LayoutBounds="0.2,0.3,1,0.06"  AbsoluteLayout.LayoutFlags="All" />
             <Entry x:Name="DurationEntry"  FontAttributes="Bold" Text="{Binding Duration, Mode=TwoWay, Converter={StaticResource doubleStringCnv}}" AbsoluteLayout.LayoutBounds="0.2,0.4,1,0.06"  AbsoluteLayout.LayoutFlags="All"/>
             <Label Text="Total interest in %"  FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" AbsoluteLayout.LayoutBounds="0.2,0.5,1,0.06"  AbsoluteLayout.LayoutFlags="All"/>
             <Entry x:Name="InterestEntry"   FontAttributes="Bold" Text="{Binding Interest, Mode=TwoWay, Converter={StaticResource doubleStringCnv}}" AbsoluteLayout.LayoutBounds="0.2,0.6,1,0.06"  AbsoluteLayout.LayoutFlags="All"/>
-            <Image Source="buy_credit_icon.png"  x:Name="BuyIcon" AbsoluteLayout.LayoutBounds="0.2,0.70,1,0.06"  AbsoluteLayout.LayoutFlags="All" >
+            <Image Source="buy_credit_icon.png"  x:Name="BuyIcon" AbsoluteLayout.LayoutBounds="0.5,0.75,0.16,0.16"  AbsoluteLayout.LayoutFlags="All" >
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Tapped="BuyIcon_Tapped" />
                 </Image.GestureRecognizers>
             </Image>
             <!--Button Text="Buy Credit" Clicked="ShowCreditButton_Clicked" AbsoluteLayout.LayoutBounds="0.2,0.7,1,0.060"  AbsoluteLayout.LayoutFlags="All" / -->
-            <Label Text="{Binding AffordableCredit, Mode=OneWay}"  FontAttributes="Bold" HorizontalOptions="Center" AbsoluteLayout.LayoutBounds="0.2,0.88,1,0.15"  AbsoluteLayout.LayoutFlags="All"/>
+            <Label Text="{Binding AffordableCredit, Mode=OneWay}" HorizontalOptions="Center" FontAttributes="Bold" AbsoluteLayout.LayoutBounds="1,1,1,0.15"  AbsoluteLayout.LayoutFlags="All"/>
         </AbsoluteLayout>
         
     </ContentPage.Content>

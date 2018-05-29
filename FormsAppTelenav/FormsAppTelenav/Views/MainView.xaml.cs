@@ -133,13 +133,16 @@ namespace FormsAppTelenav.Views
             Navigation.PushAsync(auctionHouseView);
         }
 
-        private async Task RotateCharacter(VisualElement element, System.Threading.CancellationToken token, int sleepTime){
+        private async Task RotateCharacter(VisualElement element, System.Threading.CancellationToken token, int sleepTime)
+        {
             await Task.Delay(sleepTime);
-            while (!token.IsCancellationRequested){
+            while (!token.IsCancellationRequested)
+            {
                 await element.RotateTo(5, 60, Easing.Linear);
                 await element.RotateTo(0, 0);
                 await element.RotateTo(-5, 60, Easing.Linear);
                 await element.RotateTo(0, 0);
+
             }
         }
 

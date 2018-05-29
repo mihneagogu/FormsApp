@@ -15,17 +15,19 @@ namespace FormsAppTelenav.Views
 	public partial class BankView : ContentPage
 	{
        
+      
+
+
         private Credit credit = new Credit();
 		public BankView ()
 		{
-			InitializeComponent();
-            
-
+            InitializeComponent();
 
         }
 
         protected override async void OnAppearing()
         {
+            NavigationPage.SetHasNavigationBar(this, false);
             var x = RotateCharacter(DepositIcon, System.Threading.CancellationToken.None, 0);
 
             var Y = RotateCharacter(CreditIcon, System.Threading.CancellationToken.None, 4);

@@ -18,9 +18,12 @@ namespace FormsAppTelenav.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class BuyAuctionsView : ContentPage
     {
+		protected override void OnAppearing()
+		{
+            NavigationPage.SetHasNavigationBar(this, false);
+		}
 
-       
-        private ToBuyAuction auctionToBuy;
+		private ToBuyAuction auctionToBuy;
         private AuctionAction action;
         public BuyAuctionsView(ToBuyAuction auctionToBuy, AuctionAction action)
         {

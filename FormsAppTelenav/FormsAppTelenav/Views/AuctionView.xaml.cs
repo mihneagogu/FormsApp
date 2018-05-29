@@ -24,7 +24,12 @@ namespace FormsAppTelenav.Views
 
         private List<MEntry> entries = new List<MEntry>();
 
-        string lastColor;
+		protected override void OnAppearing()
+		{
+            NavigationPage.SetHasNavigationBar(this, false);
+		}
+
+		string lastColor;
 
         private AuctionsFromAPI auctions = new AuctionsFromAPI();
         private string auctionName;
@@ -110,10 +115,13 @@ namespace FormsAppTelenav.Views
 
 
                 LineChart chart = new LineChart() { Entries = entries };
+                chart.LineAreaAlpha = 0;
                 chart.MaxValue = float.Parse(entries[0].Value.ToString(), App.DoubleCultureInfo);
                 chart.MinValue = float.Parse(entries[5].Value.ToString(), App.DoubleCultureInfo);
                 chart.LabelTextSize = 25;
                 AuctionChart.Chart = chart;
+                AuctionChart.IsEnabled = true;
+
 
 
 
