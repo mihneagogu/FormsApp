@@ -5,8 +5,8 @@
              BackgroundImage="pergament_background.jpg"
              >
     <ContentPage.Content>
-        <AbsoluteLayout>
-        <ListView x:Name="historyListView" ItemsSource="{Binding Credits}" AbsoluteLayout.LayoutBounds="0.375,0.3,0.9,0.75"  AbsoluteLayout.LayoutFlags="All">
+        <AbsoluteLayout Padding="70,0,20,0">
+        <ListView x:Name="historyListView" ItemsSource="{Binding Credits}" AbsoluteLayout.LayoutBounds="0.15,0.3,1,0.75"  AbsoluteLayout.LayoutFlags="All">
             <ListView.Header>
                 <Grid Padding="7">
                     <Grid.ColumnDefinitions>
@@ -17,7 +17,7 @@
                         
                     </Grid.ColumnDefinitions>
                     <Label Text="Cost" FontAttributes="Bold" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" />
-                    <Label Text="Date bought" FontAttributes="Bold" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" />
+                    <Label Text="Date" FontAttributes="Bold" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" />
                     <Label Text="Total interest" FontAttributes="Bold" Grid.Row="0" Grid.Column="2" HorizontalOptions="Center" />
                     <Label Text="Duration" FontAttributes="Bold" Grid.Row="0" Grid.Column="3" HorizontalOptions="Center" />
                     
