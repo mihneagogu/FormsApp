@@ -15,11 +15,13 @@ namespace FormsAppTelenav
     {
         public static FormsAppTelenav.Databases.Dealer MiddleDealer { get; set; }
 
-        public static DataBase LocalDataBase {
+        public static DataBase LocalDataBase
+        {
             get; set;
         }
 
 
+        public static uint GeneralMovementDuration { get { return 60; } }
 
         /// Divider = cate minute din realitate inseamna 1 luna a aplicatiei
         public static System.Globalization.CultureInfo DoubleCultureInfo { get { return System.Globalization.CultureInfo.InvariantCulture; } }
@@ -28,6 +30,27 @@ namespace FormsAppTelenav
         public const double Multiplier = 100;
 
        
+        public static void MoveButtons(List<VisualElement> elements){
+            
+            int span = (int)(GeneralMovementDuration / elements.Count);
+            for (int i = 0; i < elements.Count; i++){
+                var x = RotateCharacter(elements[i], System.Threading.CancellationToken.None, 0 + (i*span));
+            }
+        }
+
+        private static async Task RotateCharacter(VisualElement element, System.Threading.CancellationToken token, int sleepTime)
+        {
+            await Task.Delay(sleepTime);
+            while (!token.IsCancellationRequested)
+            {
+                await element.RotateTo(5, GeneralMovementDuration, Easing.Linear);
+                await element.RotateTo(0, 0);
+                await element.RotateTo(-5, GeneralMovementDuration, Easing.Linear);
+                await element.RotateTo(0, 0);
+
+            }
+        }
+
 
         // Daca se schimba person, sa se trimite la middleware mesaj ca sa schime si User din App.xaml.cs ?
         public static Person User 

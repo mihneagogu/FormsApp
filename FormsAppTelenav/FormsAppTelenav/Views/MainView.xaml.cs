@@ -73,12 +73,13 @@ namespace FormsAppTelenav.Views
         protected override async void OnAppearing()
         {
             NavigationPage.SetHasNavigationBar(this, false);
-            var x = RotateCharacter(bankMonkey, System.Threading.CancellationToken.None, 0);
-
-            var Y = RotateCharacter(auctionHouseMonkey, System.Threading.CancellationToken.None, 4);
-            var z = RotateCharacter(historyMonkey, System.Threading.CancellationToken.None, 8);
-            var a = RotateCharacter(creditsMonkey, System.Threading.CancellationToken.None, 12);
-            var b = RotateCharacter(jobsMonkey, System.Threading.CancellationToken.None, 17);
+            List<VisualElement> elements = new List<VisualElement>();
+            elements.Add(bankMonkey);
+            elements.Add(auctionHouseMonkey);
+            elements.Add(historyMonkey);
+            elements.Add(creditsMonkey);
+            elements.Add(jobsMonkey);
+            App.MoveButtons(elements);
 
 
 

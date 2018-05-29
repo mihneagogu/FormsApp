@@ -27,6 +27,10 @@ namespace FormsAppTelenav.Views
 		protected override void OnAppearing()
 		{
             NavigationPage.SetHasNavigationBar(this, false);
+            List<VisualElement> elements = new List<VisualElement>();
+            elements.Add(BuyAuctionIcon);
+            elements.Add(SellAuctionIcon);
+            App.MoveButtons(elements);
 		}
 
 		string lastColor;

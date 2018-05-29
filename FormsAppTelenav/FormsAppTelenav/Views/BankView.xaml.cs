@@ -28,9 +28,10 @@ namespace FormsAppTelenav.Views
         protected override async void OnAppearing()
         {
             NavigationPage.SetHasNavigationBar(this, false);
-            var x = RotateCharacter(DepositIcon, System.Threading.CancellationToken.None, 0);
-
-            var Y = RotateCharacter(CreditIcon, System.Threading.CancellationToken.None, 4);
+            List<VisualElement> elements = new List<VisualElement>();
+            elements.Add(DepositIcon); 
+            elements.Add(CreditIcon);
+            App.MoveButtons(elements);
         }
 
         private async Task RotateCharacter(VisualElement element, System.Threading.CancellationToken token, int sleepTime)

@@ -19,6 +19,9 @@ namespace FormsAppTelenav.Views
         protected override async void OnAppearing()
         {
             NavigationPage.SetHasNavigationBar(this, false);
+            List<VisualElement> elements = new List<VisualElement>();
+            elements.Add(BuyIcon);
+            App.MoveButtons(elements);
         }
         public CreditView()
         {

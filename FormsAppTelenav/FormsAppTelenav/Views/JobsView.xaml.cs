@@ -19,6 +19,9 @@ namespace FormsAppTelenav.Views
 		protected override void OnAppearing()
 		{
             NavigationPage.SetHasNavigationBar(this, false);
+            List<VisualElement> elements = new List<VisualElement>();
+            elements.Add(QuitJobIcon);
+            App.MoveButtons(elements);
 		}
 
 		public ObservableCollection<Income> Jobs

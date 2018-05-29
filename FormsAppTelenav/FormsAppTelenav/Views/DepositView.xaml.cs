@@ -21,6 +21,10 @@ namespace FormsAppTelenav.Views
         protected override async void OnAppearing()
         {
             NavigationPage.SetHasNavigationBar(this, false);
+            List<VisualElement> elements = new List<VisualElement>();
+            elements.Add(MakeDepositIcon);
+            elements.Add(DepositListIcon);
+            App.MoveButtons(elements);
         }
 
         private async void MakeDefaultDeposit_Clicked(object sender, EventArgs e)

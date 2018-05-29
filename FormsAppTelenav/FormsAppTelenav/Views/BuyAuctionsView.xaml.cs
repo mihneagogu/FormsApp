@@ -21,6 +21,9 @@ namespace FormsAppTelenav.Views
 		protected override void OnAppearing()
 		{
             NavigationPage.SetHasNavigationBar(this, false);
+            List<VisualElement> elements = new List<VisualElement>();
+            elements.Add(DealIcon);
+            App.MoveButtons(elements);
 		}
 
 		private ToBuyAuction auctionToBuy;
