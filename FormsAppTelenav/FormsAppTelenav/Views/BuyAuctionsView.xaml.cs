@@ -53,8 +53,15 @@ namespace FormsAppTelenav.Views
 
         private void ConfirmedPayment_Clicked(object sender, EventArgs e)
         {
-            AuctionBundle auctionBundle = new AuctionBundle(auctionToBuy.Symbol, auctionToBuy.Name, auctionToBuy.CloseValueAtDateBought, auctionToBuy.CloseValueAtDateBought, auctionToBuy.Date, NumberEntry.Text);
-            AddBundleToStockPortfolio(auctionBundle);
+            if (NumberEntry.Text != null && !(NumberEntry.Text.ToString().Equals("")))
+            {
+                AuctionBundle auctionBundle = new AuctionBundle(auctionToBuy.Symbol, auctionToBuy.Name, auctionToBuy.CloseValueAtDateBought, auctionToBuy.CloseValueAtDateBought, auctionToBuy.Date, NumberEntry.Text);
+                AddBundleToStockPortfolio(auctionBundle);
+            }
+            else
+            {
+                DisplayAlert("", "Please enter the number of auctions you want to transfer", "OK");
+            }
 
         }
 
@@ -89,36 +96,45 @@ namespace FormsAppTelenav.Views
             else
             {
                 AuctionBundleForDb boughtBundle = await App.LocalDataBase.GetAuctionBundleForSymbol(auctionBundle.Symbol, person);
-                double profit = (auctionBundle.OpenValueAtDateBought - boughtBundle.MedianValue) * double.Parse(auctionBundle.Number, System.Globalization.CultureInfo.InvariantCulture);
-                ProfitLabel.Text = "You gain " + profit + " from transactioning " + auctionBundle.Number + " auctions from " + auctionBundle.Name;
-                ProfitLabel.IsVisible = true;
-                DealerResponse response = await App.LocalDataBase.SellAuctionBundle(auctionBundle);
-                switch(response){
-                    case DealerResponse.Success:
-                        {
-                            await DisplayAlert("", "Congratuations, you have just sold " + auctionBundle.Number, "OK");
-                            //await Navigation.PushAsync(new AuctionHouseView());
-                            break;
-                        }
-                    case DealerResponse.NoAuctions:
-                        {
-                            await DisplayAlert("", "You have no auctions", "OK");
-                            break; 
-                        }
-                    case DealerResponse.NoAuctionsFromCompany:
-                        {
-                            await DisplayAlert("", "You have not bought auctions froms this company yet or have sold them all", "OK");
-                            break;
-                        }
-                    case DealerResponse.NotEnoughAuctions:
-                        {
-                            await DisplayAlert("", "You do not have enough auctions", "OK");
-                            break;
-                        }
+                if (boughtBundle == null)
+                {
+                    await DisplayAlert("", "You have not bought auctions from this company yet", "OK");
 
                 }
+                else
+                {
+                    double profit = (auctionBundle.OpenValueAtDateBought - boughtBundle.MedianValue) * double.Parse(auctionBundle.Number, System.Globalization.CultureInfo.InvariantCulture);
 
+                    ProfitLabel.Text = "You gain " + profit + " from transactioning " + auctionBundle.Number + " auctions from " + auctionBundle.Name;
+                    ProfitLabel.IsVisible = true;
+                    DealerResponse response = await App.LocalDataBase.SellAuctionBundle(auctionBundle);
+                    switch (response)
+                    {
+                        case DealerResponse.Success:
+                            {
+                                await DisplayAlert("", "Congratuations, you have just sold " + auctionBundle.Number, "OK");
+                                //await Navigation.PushAsync(new AuctionHouseView());
+                                break;
+                            }
+                        case DealerResponse.NoAuctions:
+                            {
+                                await DisplayAlert("", "You have no auctions", "OK");
+                                break;
+                            }
+                        case DealerResponse.NoAuctionsFromCompany:
+                            {
+                                await DisplayAlert("", "You have not bought auctions froms this company yet or have sold them all", "OK");
+                                break;
+                            }
+                        case DealerResponse.NotEnoughAuctions:
+                            {
+                                await DisplayAlert("", "You do not have enough auctions", "OK");
+                                break;
+                            }
 
+                    }
+
+                }
             }
 
         }
