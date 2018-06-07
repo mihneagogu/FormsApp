@@ -16,12 +16,12 @@
                 <Label Text="{Binding CloseValueAtDateBought}" FontAttributes="Bold" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" />
             </Grid>
             
-            <Image Source="buy_auction_icon.png" x:Name="BuyAuctionIcon" AbsoluteLayout.LayoutBounds="0.44,0.2,0.16,0.16" AbsoluteLayout.LayoutFlags="All" >
+            <Image Source="buy_auction_icon.png" x:Name="BuyAuctionIcon" AbsoluteLayout.LayoutBounds="0.44,0.2,0.16,0.16" AbsoluteLayout.LayoutFlags="All" IsEnabled="False">
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Tapped="BuyAuction_Tapped" />
                 </Image.GestureRecognizers>
             </Image>
-            <Image Source="sell_auction_icon.png" x:Name="SellAuctionIcon" AbsoluteLayout.LayoutBounds="0.44,0.35,0.16,0.16" AbsoluteLayout.LayoutFlags="All" >
+            <Image Source="sell_auction_icon.png" x:Name="SellAuctionIcon" AbsoluteLayout.LayoutBounds="0.44,0.35,0.16,0.16" AbsoluteLayout.LayoutFlags="All" IsEnabled="False">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer Tapped="SellAuction_Tapped" />
                         </Image.GestureRecognizers>

@@ -117,7 +117,8 @@ namespace FormsAppTelenav.Views
                     
                 }
 
-
+                SellAuctionIcon.IsEnabled = true;
+                BuyAuctionIcon.IsEnabled = true;
                 LineChart chart = new LineChart() { Entries = entries };
                 chart.LineAreaAlpha = 0;
                 chart.MaxValue = float.Parse(entries[0].Value.ToString(), App.DoubleCultureInfo);
