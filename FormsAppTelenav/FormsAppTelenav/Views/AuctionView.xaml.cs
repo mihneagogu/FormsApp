@@ -136,7 +136,7 @@ namespace FormsAppTelenav.Views
                 AuctiomGrid.BindingContext = SingularyStock[0];
                 double profit = (inverseStock[0].CloseValue - inverseStock[inverseStock.Count - 1].CloseValue) / inverseStock[inverseStock.Count - 1].CloseValue;
                 profit /= 100;
-                PriceLabel.Text = string.Format("{0:0.000000} %", profit);
+                //PriceLabel.Text = string.Format("{0:0.000000} %", profit);
                 Person person = App.User;
                // BuyButton.IsEnabled = true;
                 AuctionBundleForDb boughtBundle = await App.LocalDataBase.GetAuctionBundleForSymbol(symbol, person);

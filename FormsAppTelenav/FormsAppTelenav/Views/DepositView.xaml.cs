@@ -133,8 +133,8 @@ namespace FormsAppTelenav.Views
 
         private void DepositList_Tapped(object sender, EventArgs e)
         {
-            DepositListView view = new DepositListView();
-            Navigation.PushAsync(view);
+           // DepositListView view = new DepositListView();
+           // Navigation.PushAsync(view);
         }
     }
 }

@@ -6,11 +6,13 @@
              BackgroundImage="pergament_background.jpg"
              >
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="{Binding CompanyNameStatement}" />
-            <Label x:Name="BuyOrSellLabel" Text="How many auctions do you want to buy?" />
-            <Entry x:Name="NumberEntry" Keyboard="Numeric"/>
-            <Label Text="{Binding PriceValueStatement}" />
+        <AbsoluteLayout Padding="70,0,20,0">
+            <ContentView AbsoluteLayout.LayoutBounds="0.2,0.25,0.8,0.75" AbsoluteLayout.LayoutFlags="All">
+            <StackLayout>
+            <Label Text="{Binding CompanyNameStatement}" FontAttributes="Bold"/>
+            <Label x:Name="BuyOrSellLabel" Text="How many auctions do you want to buy?" FontAttributes="Bold" />
+            <Entry x:Name="NumberEntry" Keyboard="Numeric" FontAttributes="Bold"/>
+            <Label Text="{Binding PriceValueStatement}" FontAttributes="Bold" />
             <!--Button Text="Confirm payment" Clicked="ConfirmedPayment_Clicked"/ -->
             <Image Source="deal_icon.png" x:Name="DealIcon">
                 <Image.GestureRecognizers>
@@ -18,7 +20,8 @@
                 </Image.GestureRecognizers>
             </Image>
             <Label x:Name="ProfitLabel" IsVisible="False"/>
-           
-        </StackLayout>
+            </StackLayout>
+            </ContentView>
+        </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -19,7 +19,7 @@
                     <TapGestureRecognizer Tapped="MakeDeposit_Tapped" />
                 </Image.GestureRecognizers>
             </Image>
-            <Image Source="deposit_list_icon.png" x:Name="DepositListIcon" AbsoluteLayout.LayoutBounds="0.5,0.85,0.16,0.16"  AbsoluteLayout.LayoutFlags="All">
+            <Image Source="deposit_list_icon.png" x:Name="DepositListIcon" AbsoluteLayout.LayoutBounds="0.5,0.92,0.16,0.16"  AbsoluteLayout.LayoutFlags="All" IsVisible="False">
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Tapped="DepositList_Tapped" />
                 </Image.GestureRecognizers>

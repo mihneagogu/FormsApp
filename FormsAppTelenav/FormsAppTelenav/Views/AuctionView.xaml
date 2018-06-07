@@ -5,37 +5,30 @@
              x:Class="FormsAppTelenav.Views.AuctionView"
              BackgroundImage="pergament_background.jpg">
     <ContentPage.Content>
-        <StackLayout>
-            <Grid Padding="7" x:Name="AuctiomGrid">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*" />
-                                <ColumnDefinition Width="1*" />
-                                </Grid.ColumnDefinitions>
-                            <Label Text="{Binding Symbol}" Grid.Row="0" FontAttributes="Bold" Grid.Column="0" HorizontalOptions="Center" />
-                            <Label Text="{Binding CloseValueAtDateBought}" FontAttributes="Bold" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" />
-                            </Grid>
-         
-            <Label x:Name ="PriceLabel" FontAttributes="Bold"
-                   Text="" 
-                   HorizontalOptions="Center"/>
-            <!--Button x:Name="BuyButton" Text="Buy auctions" 
-                Clicked="ToBuyAuctions_Clicked" IsEnabled="False"/>
-            <Button x:Name="SellButton"
-                Text="Sell auctions"
-                    
-                    Clicked="ToSellAuctions_Clicked" IsEnabled="False"/ -->
-            <Image Source="buy_auction_icon.png" x:Name="BuyAuctionIcon">
+        <AbsoluteLayout Padding="70,0,20,0">
+
+            <Grid Padding="7" x:Name="AuctiomGrid" AbsoluteLayout.LayoutBounds="0.2, 0.105,0.9,0.06" AbsoluteLayout.LayoutFlags="All" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Label Text="{Binding Symbol}" Grid.Row="0" FontAttributes="Bold" Grid.Column="0" HorizontalOptions="Center" />
+                <Label Text="{Binding CloseValueAtDateBought}" FontAttributes="Bold" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" />
+            </Grid>
+            
+            <Image Source="buy_auction_icon.png" x:Name="BuyAuctionIcon" AbsoluteLayout.LayoutBounds="0.44,0.2,0.16,0.16" AbsoluteLayout.LayoutFlags="All" >
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Tapped="BuyAuction_Tapped" />
                 </Image.GestureRecognizers>
             </Image>
-            <Image Source="sell_auction_icon.png" x:Name="SellAuctionIcon" >
-                <Image.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="SellAuction_Tapped" />
-                </Image.GestureRecognizers>
-             </Image>
+            <Image Source="sell_auction_icon.png" x:Name="SellAuctionIcon" AbsoluteLayout.LayoutBounds="0.44,0.35,0.16,0.16" AbsoluteLayout.LayoutFlags="All" >
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="SellAuction_Tapped" />
+                        </Image.GestureRecognizers>
+            </Image>
 
-            <forms:ChartView x:Name="AuctionChart"  HeightRequest="250" WidthRequest="150" IsEnabled="false" BackgroundColor="#FEF4AF" />
-        </StackLayout>
+            <forms:ChartView x:Name="AuctionChart"  HeightRequest="250" WidthRequest="150" IsEnabled="false" BackgroundColor="#FEF4AF" AbsoluteLayout.LayoutBounds="0.2,0.64,0.9,0.3"  AbsoluteLayout.LayoutFlags="All" /> 
+
+        </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>
