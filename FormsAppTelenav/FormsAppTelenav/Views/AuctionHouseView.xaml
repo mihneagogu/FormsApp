@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="FormsAppTelenav.Views.AuctionHouseView" BackgroundImage="pergament_background.jpg">
 	<ContentPage.Content>
        <AbsoluteLayout Padding="70,0,20,0">
-            <ListView x:Name="symbolListView" CachingStrategy="RecycleElement"  ItemsSource="{Binding Symbols}" ItemSelected="Handle_ItemSelected" AbsoluteLayout.LayoutBounds="0.2,0.25,0.8,0.75"  AbsoluteLayout.LayoutFlags="All">
+            <ListView x:Name="symbolListView" CachingStrategy="RecycleElement"  ItemsSource="{Binding Symbols}" ItemSelected="Handle_ItemSelected" AbsoluteLayout.LayoutBounds="0.2,0.25,0.9,0.75"  AbsoluteLayout.LayoutFlags="All">
             <ListView.Header>
                 <Grid Padding="7">
                     <Grid.ColumnDefinitions>
@@ -10,8 +10,8 @@
                         <ColumnDefinition Width="1*" />
 
                     </Grid.ColumnDefinitions>
-                    <Label Text="Name" Grid.Row="0" FontAttributes="Bold" Grid.Column="0" HorizontalOptions="Center" />
-                    <Label Text="Symbol" Grid.Row="0" FontAttributes="Bold" Grid.Column="1" HorizontalOptions="Center" />
+                    <Label Text="Name" Grid.Row="0" FontAttributes="Bold" FontSize="Medium" Grid.Column="0" HorizontalOptions="Start" />
+                    <Label Text="Symbol" Grid.Row="0" FontAttributes="Bold" FontSize="Medium"  Grid.Column="1" HorizontalOptions="Start" />
 
                 </Grid>
             </ListView.Header>
@@ -23,7 +23,7 @@
                                 <ColumnDefinition Width="3*" />
                                 <ColumnDefinition Width="1*" />
                             </Grid.ColumnDefinitions>
-                            <Label Text="{Binding Name}" Grid.Row="0" FontAttributes="Bold" Grid.Column="0" VerticalOptions="Center" FontSize="13"/>
+                            <Label Text="{Binding Name}" Grid.Row="0" FontAttributes="Bold" Grid.Column="0" VerticalOptions="Start" FontSize="13"/>
                             <Label Text="{Binding Symbol}" Grid.Row="0" FontAttributes="Bold" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center"/>
                            
                         </Grid>

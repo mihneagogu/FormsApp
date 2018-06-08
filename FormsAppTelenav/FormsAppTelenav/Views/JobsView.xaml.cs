@@ -60,15 +60,15 @@ namespace FormsAppTelenav.Views
             Jobs.Add(gardner);
 
             Income programmer = new Income("Senior programmer", 9000, true, IncomeCategory.Job, 30);
-            gardner.Times = -1;
-            gardner.LastRealPayment = setting.LastRealLogin;
-            gardner.LastAppPayment = setting.LastLogin;
-            gardner.ContractTime = gardner.LastRealPayment.ToString();
+            programmer.Times = -1;
+            programmer.LastRealPayment = setting.LastRealLogin;
+            programmer.LastAppPayment = setting.LastLogin;
+            programmer.ContractTime = gardner.LastRealPayment.ToString();
             
-            gardner.LastRealSupposedPayment = setting.LastRealLogin;
-            gardner.LastSupposedPayment = setting.LastLogin;
-            gardner.LastRealSupposedPayment = setting.LastRealLogin;
-            gardner.LastSupposedPayment = setting.LastLogin;
+            programmer.LastRealSupposedPayment = setting.LastRealLogin;
+            programmer.LastSupposedPayment = setting.LastLogin;
+            programmer.LastRealSupposedPayment = setting.LastRealLogin;
+            programmer.LastSupposedPayment = setting.LastLogin;
             Jobs.Add(programmer); 
 
         }

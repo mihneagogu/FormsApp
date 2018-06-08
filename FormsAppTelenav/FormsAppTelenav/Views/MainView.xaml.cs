@@ -187,7 +187,7 @@ namespace FormsAppTelenav.Views
                 incomes = await App.LocalDataBase.GetIncomes();
 
                 if (response == DealerResponse.Success){
-                    await DisplayAlert("", "Successfyully updated time!" + s[0].LastLogin.ToString(), "OK");
+                    //await DisplayAlert("", "Successfyully updated time!" + s[0].LastLogin.ToString(), "OK");
                 }
 
                 DateTime currentTime = DateTime.Now.ToLocalTime();

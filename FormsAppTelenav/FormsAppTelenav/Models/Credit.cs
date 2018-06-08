@@ -16,7 +16,7 @@ namespace FormsAppTelenav.Classes
         private double buyerMonthlyIncome;
         private List<CreditForCustomRow> payments = new List<CreditForCustomRow>();
         private Nullable<Double> doubleCreditInterest;
-        private string affordableCredit = "OK";
+        private string affordableCredit = "";
 
         private string KEY_COST_CHANGED = "Cost";
         private string KEY_DURATION_CHANGED = "Duration";

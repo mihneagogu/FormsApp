@@ -18,7 +18,7 @@ namespace FormsAppTelenav.Views
             bool b = false;
             if (!b)
             {
-                this.DisplayAlert("", "Pressed phone back button", "OK");
+                
                 Navigation.PushAsync(new MainView());
                 return true;
             }

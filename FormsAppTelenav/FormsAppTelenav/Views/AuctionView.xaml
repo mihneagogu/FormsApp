@@ -6,14 +6,14 @@
              BackgroundImage="pergament_background.jpg">
     <ContentPage.Content>
         <AbsoluteLayout Padding="70,0,20,0">
-
-            <Grid Padding="7" x:Name="AuctiomGrid" AbsoluteLayout.LayoutBounds="0.2, 0.105,0.9,0.06" AbsoluteLayout.LayoutFlags="All" >
+            <Label Text="Company" FontAttributes="Bold" AbsoluteLayout.LayoutBounds="0.5, 0.07, 0.35, 0.07" FontSize="Large" AbsoluteLayout.LayoutFlags="All"/>
+            <Grid Padding="7" x:Name="AuctiomGrid" AbsoluteLayout.LayoutBounds="0.2, 0.125,0.9,0.06" AbsoluteLayout.LayoutFlags="All" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="3*" />
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
-                <Label Text="{Binding Symbol}" Grid.Row="0" FontAttributes="Bold" Grid.Column="0" HorizontalOptions="Center" />
-                <Label Text="{Binding CloseValueAtDateBought}" FontAttributes="Bold" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" />
+                <Label Text="{Binding Symbol}" FontSize="Large" Grid.Row="0" FontAttributes="Bold" Grid.Column="0" HorizontalOptions="Start" />
+                <Label Text="{Binding CloseValueAtDateBought}" FontSize="Large" FontAttributes="Bold" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" />
             </Grid>
             
             <Image Source="buy_auction_icon.png" x:Name="BuyAuctionIcon" AbsoluteLayout.LayoutBounds="0.44,0.2,0.16,0.16" AbsoluteLayout.LayoutFlags="All" IsEnabled="False">

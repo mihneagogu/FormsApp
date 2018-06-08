@@ -525,11 +525,7 @@ namespace FormsAppTelenav.Databases
                                     {
                                         // se sustrage/se adauga la persoana cat trebuie sa plateasca
                                         
-                                        //
-                                     /*   if (i.LastSupposedPayment.Equals(i.LastRealSupposedPayment))
-                                        {
-                                            i.LastSupposedPayment = setting.LastLogin;
-                                        } */
+
                                         double timesToSubtract = appMinutes / i.Frequency;
                                         timesToSubtract = Math.Floor(timesToSubtract);
                                         i.TimesLeft -= int.Parse(Math.Floor(timesToSubtract).ToString());
@@ -538,7 +534,8 @@ namespace FormsAppTelenav.Databases
                                         i.LastAppPayment = setting.LastLogin;
                                         i.LastRealPayment = setting.LastRealLogin;
                                         SaveIncome(i);
-                                        person.Amount += (i.AbsoluteValue * timesToSubtract); 
+                                        person.Amount += (i.AbsoluteValue * timesToSubtract);
+                                        SavePerson(person);
                                     }
 
                                 }
@@ -574,11 +571,14 @@ namespace FormsAppTelenav.Databases
                                             {
                                                 double timesToSubtract = appMinutes / i.Frequency;
                                                 timesToSubtract = Math.Floor(timesToSubtract);
- 
+                                                // se adauga la person banii
                                                 i.LastSupposedPayment = (DateTime.Parse(i.LastSupposedPayment).AddMinutes(timesToSubtract * i.Frequency)).ToString();
                                                 i.LastRealSupposedPayment = (DateTime.Parse(i.LastRealSupposedPayment).AddMinutes((timesToSubtract * i.Frequency) / App.Multiplier)).ToString();
                                                 i.LastAppPayment = setting.LastLogin;
                                                 i.LastRealPayment = setting.LastRealLogin;
+                                                person.Amount += i.AbsoluteValue * timesToSubtract;
+                                                SavePerson(person);
+                                                SaveIncome(i);
                                             }
                                             break;
                                         }
