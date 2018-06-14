@@ -23,7 +23,7 @@ namespace FormsAppTelenav.Views
             NavigationPage.SetHasNavigationBar(this, false);
             List<VisualElement> elements = new List<VisualElement>();
             elements.Add(MakeDepositIcon);
-            elements.Add(DepositListIcon);
+          //  elements.Add(DepositListIcon);
             App.MoveButtons(elements);
         }
 

@@ -5,25 +5,22 @@
              BackgroundImage="pergament_background.jpg">
     <ContentPage.Content>
         <AbsoluteLayout Padding="70,0,20,0">
-            <Label Text="Amount to deposit" HorizontalOptions="Center" FontAttributes="Bold" AbsoluteLayout.LayoutBounds="0.2,0.1,1,0.06"  AbsoluteLayout.LayoutFlags="All"/>
-            <Entry x:Name="AbsoluteValueEntry"  FontAttributes="Bold" AbsoluteLayout.LayoutBounds="0.2,0.2,1,0.06"  AbsoluteLayout.LayoutFlags="All"/>
-            <Label Text="Nummber of months: 1/3/6/9" HorizontalOptions="Center" FontAttributes="Bold" AbsoluteLayout.LayoutBounds="0.2,0.3,1,0.06"  AbsoluteLayout.LayoutFlags="All" />
-            <Entry x:Name="FrequencyEntry"  FontAttributes="Bold" AbsoluteLayout.LayoutBounds="0.2,0.4,1,0.06"  AbsoluteLayout.LayoutFlags="All"/>
-            <Label Text="Interest per period" FontAttributes="Bold" HorizontalOptions="Center" AbsoluteLayout.LayoutBounds="0.2,0.5,1,0.06"  AbsoluteLayout.LayoutFlags="All"/>
-            <Entry x:Name="InterestEntry"  FontAttributes="Bold" AbsoluteLayout.LayoutBounds="0.2,0.6,1,0.06"  AbsoluteLayout.LayoutFlags="All"/>
+            <Label Text="Deposit" FontAttributes="Bold" FontSize="Large"  AbsoluteLayout.LayoutBounds="0.55,0.075,0.4,0.15" AbsoluteLayout.LayoutFlags="All" />
+            <Label Text="Amount to deposit" HorizontalOptions="Center" FontAttributes="Bold" AbsoluteLayout.LayoutBounds="0.2,0.175,1,0.06"  AbsoluteLayout.LayoutFlags="All"/>
+            <Entry x:Name="AbsoluteValueEntry"  FontAttributes="Bold" AbsoluteLayout.LayoutBounds="0.2,0.275,1,0.06"  AbsoluteLayout.LayoutFlags="All"/>
+            <Label Text="Nummber of months: 1/3/6/9" HorizontalOptions="Center" FontAttributes="Bold" AbsoluteLayout.LayoutBounds="0.2,0.375,1,0.06"  AbsoluteLayout.LayoutFlags="All" />
+            <Entry x:Name="FrequencyEntry"  FontAttributes="Bold" AbsoluteLayout.LayoutBounds="0.2,0.475,1,0.06"  AbsoluteLayout.LayoutFlags="All"/>
+            <Label Text="Interest per period" FontAttributes="Bold" HorizontalOptions="Center" AbsoluteLayout.LayoutBounds="0.2,0.575,1,0.06"  AbsoluteLayout.LayoutFlags="All"/>
+            <Entry x:Name="InterestEntry"  FontAttributes="Bold" AbsoluteLayout.LayoutBounds="0.2,0.675,1,0.06"  AbsoluteLayout.LayoutFlags="All"/>
             
             <!--Button Text="Make deposit" x:Name="CreateDepositButton" Clicked="MakeDefaultDeposit_Clicked" />
             <Button Text="See your deposits" x:Name="ShowDepositListButton" Clicked="ToDepositListView_Clicked" / -->
-            <Image Source="buy_credit_icon.png" x:Name="MakeDepositIcon" AbsoluteLayout.LayoutBounds="0.5,0.70,0.16,0.16"  AbsoluteLayout.LayoutFlags="All">
+            <Image Source="buy_credit_icon.png" x:Name="MakeDepositIcon" AbsoluteLayout.LayoutBounds="0.5,0.875,0.16,0.16"  AbsoluteLayout.LayoutFlags="All">
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Tapped="MakeDeposit_Tapped" />
                 </Image.GestureRecognizers>
             </Image>
-            <Image Source="deposit_list_icon.png" x:Name="DepositListIcon" AbsoluteLayout.LayoutBounds="0.5,0.92,0.16,0.16"  AbsoluteLayout.LayoutFlags="All" IsVisible="False">
-                <Image.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="DepositList_Tapped" />
-                </Image.GestureRecognizers>
-            </Image>
+            
             
         </AbsoluteLayout>
     </ContentPage.Content>

@@ -6,7 +6,8 @@
              >
     <ContentPage.Content>
         <AbsoluteLayout Padding="60,0,10,0">
-            <ListView x:Name="historyListView" ItemsSource="{Binding Bundles}" AbsoluteLayout.LayoutBounds="0.2,0.2,1,0.8"  AbsoluteLayout.LayoutFlags="All">
+            <Label Text="History" FontAttributes="Bold" AbsoluteLayout.LayoutBounds="0.55, 0.07, 0.35, 0.07" FontSize="Large" AbsoluteLayout.LayoutFlags="All"/>
+            <ListView x:Name="historyListView" ItemsSource="{Binding Bundles}" AbsoluteLayout.LayoutBounds="0.2,0.35,1,0.6"  AbsoluteLayout.LayoutFlags="All">
             <ListView.Header>
                 <Grid Padding="7">
                     <Grid.ColumnDefinitions>

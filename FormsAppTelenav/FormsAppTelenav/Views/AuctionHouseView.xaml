@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="FormsAppTelenav.Views.AuctionHouseView" BackgroundImage="pergament_background.jpg">
 	<ContentPage.Content>
        <AbsoluteLayout Padding="70,0,20,0">
-            <ListView x:Name="symbolListView" CachingStrategy="RecycleElement"  ItemsSource="{Binding Symbols}" ItemSelected="Handle_ItemSelected" AbsoluteLayout.LayoutBounds="0.2,0.25,0.9,0.75"  AbsoluteLayout.LayoutFlags="All">
+            <Label Text="Stock Market" AbsoluteLayout.LayoutBounds="0.55,0.075,0.4,0.15" AbsoluteLayout.LayoutFlags="All" FontSize="Large" FontAttributes="Bold" />
+            <ListView x:Name="symbolListView" CachingStrategy="RecycleElement"  ItemsSource="{Binding Symbols}" ItemSelected="Handle_ItemSelected" AbsoluteLayout.LayoutBounds="0.2,0.7,0.9,0.75"  AbsoluteLayout.LayoutFlags="All" >
             <ListView.Header>
                 <Grid Padding="7">
                     <Grid.ColumnDefinitions>

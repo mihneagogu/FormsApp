@@ -15,7 +15,7 @@
             <Entry x:Name="DurationEntry"  FontAttributes="Bold" Text="{Binding Duration, Mode=TwoWay, Converter={StaticResource doubleStringCnv}}" AbsoluteLayout.LayoutBounds="0.2,0.4,1,0.06"  AbsoluteLayout.LayoutFlags="All"/>
             <Label Text="Total interest in %"  FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" AbsoluteLayout.LayoutBounds="0.2,0.5,1,0.06"  AbsoluteLayout.LayoutFlags="All"/>
             <Entry x:Name="InterestEntry"   FontAttributes="Bold" Text="{Binding Interest, Mode=TwoWay, Converter={StaticResource doubleStringCnv}}" AbsoluteLayout.LayoutBounds="0.2,0.6,1,0.06"  AbsoluteLayout.LayoutFlags="All"/>
-            <Image Source="buy_credit_icon.png"  x:Name="BuyIcon" AbsoluteLayout.LayoutBounds="0.5,0.75,0.16,0.16"  AbsoluteLayout.LayoutFlags="All" >
+            <Image Source="buy_credit_icon.png"  x:Name="BuyIcon" AbsoluteLayout.LayoutBounds="0.45,0.81,0.16,0.16"  AbsoluteLayout.LayoutFlags="All"  >
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Tapped="BuyIcon_Tapped" />
                 </Image.GestureRecognizers>
