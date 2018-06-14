@@ -34,7 +34,7 @@ namespace FormsAppTelenav.Views
            
             this.auctionToBuy = auctionToBuy;
             this.action = action;
-            BuyOrSellLabel.Text = "How many auctions do you want to " + action + "?";
+            BuyOrSellLabel.Text = "How many auctions do you want to " + ((action == AuctionAction.BOUGHT) ? "buy" : "sell" ) + "?";
             BindingContext = this;
         }
 

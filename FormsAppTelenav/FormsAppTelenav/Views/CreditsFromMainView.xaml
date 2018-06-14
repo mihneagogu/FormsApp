@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FormsAppTelenav.Views.CreditsFromMainView"
@@ -6,7 +6,7 @@
              >
     <ContentPage.Content>
         <AbsoluteLayout Padding="70,0,20,0">
-            <Label Text="Credits and Deposits" FontSize="Large" FontAttributes="Bold" AbsoluteLayout.LayoutBounds="0.5,0.1,0.5,0.15" AbsoluteLayout.LayoutFlags="All" />
+            <Label Text="Credits and Deposits" FontSize="Large" FontAttributes="Bold" AbsoluteLayout.LayoutBounds="0.6,0.1,0.75,0.15" AbsoluteLayout.LayoutFlags="All" />
             <ContentView  AbsoluteLayout.LayoutBounds="0.15,0.3,1,0.4"  AbsoluteLayout.LayoutFlags="All" >
                 <ListView x:Name="historyListView" ItemsSource="{Binding Credits}">
             <ListView.Header>
